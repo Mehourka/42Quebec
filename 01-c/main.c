@@ -10,7 +10,12 @@ void ft_ultimate_div_mod(int *a, int *b) __attribute__((weak));
 void ft_putstr(char *str) __attribute__((weak));
 int ft_strlen(char *str) __attribute__((weak));
 void ft_rev_int_tab(int *tab, int size) __attribute__((weak));
-// void ft_print_combn(int n) __attribute__((weak));
+void ft_sort_int_tab(int *tab, int size) __attribute__((weak));
+
+// Custom functions
+void print_arr(int* arr, int size);
+
+
 int main(void)
 {
 	// Exercice 0
@@ -93,21 +98,32 @@ int main(void)
 		ft_rev_int_tab(odds, 3);
 
 		printf("Expect : 123 4567\nOutput : ");
-		for (int i = 0; i < 3; i++)
-		{
-			printf("%i", odds[i]);
-		}
+		print_arr(odds, 3);
 		printf(" ");
-		for (int i = 0; i < 4; i++)
-		{
-			printf("%i", even[i]);
-		}
+		print_arr(even, 4);
 		printf("\n");
-
-
 	}
 
 	// // Exercice 8
-	// if (ft_print_combn)
-	// 	ft_print_combn(2);
+	if (ft_sort_int_tab)
+	{
+	int size = 5;
+    int arr[5] = {5, 3, 1, 2, 4};
+
+    ft_sort_int_tab(arr, size);
+
+	printf("Expect : 12345\nOutput : ");
+    print_arr(arr, size);
+	printf("\n");
+
+	}
+}
+
+
+void print_arr(int* arr, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        printf("%i", arr[i]);
+    }
 }

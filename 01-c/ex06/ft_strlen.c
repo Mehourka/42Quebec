@@ -9,9 +9,3 @@ int ft_strlen(char *str)
     }
     return i;
 }
-
-#include <stdio.h>
-int main(void)
-{
-    printf("%i", ft_strlen("123456789"));
-}

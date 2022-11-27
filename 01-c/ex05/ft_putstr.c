@@ -11,10 +11,3 @@ void ft_putstr(char *str)
         i++;
     }
 }
-
-int main(void)
-{
-    char *str = "Hello\n";
-
-    ft_putstr(str);
-}

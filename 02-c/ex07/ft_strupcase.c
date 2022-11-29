@@ -9,6 +9,5 @@ char	*ft_strupcase(char *str)
 			str[i] += ('A' - 'a');
 		i++;
 	}
-	// printf("%s", str);
 	return (str);
 }

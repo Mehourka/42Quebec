@@ -5,7 +5,7 @@ char *ft_strupcase(char *str) __attribute__((weak));
 char *ft_strlowcase(char *str) __attribute__((weak));
 char *ft_strcapitalize(char *str) __attribute__((weak));
 unsigned int ft_strlcpy(char *dest, char *src, unsigned int size) __attribute__((weak));
-
+void	ft_putstr_non_printable(char *str) __attribute__((weak));
 
 
 int main(void)
@@ -53,5 +53,11 @@ int main(void)
 
 		length = ft_strlcpy(stack_buffer, src, sizeof(stack_buffer));
 		printf("copy : %s\nLength : %i\n", stack_buffer, length);
+	}
+
+	// Exercice 11
+	if (ft_putstr_non_printable)
+	{
+		ft_putstr_non_printable("Hello\nWorld!");
 	}
 }

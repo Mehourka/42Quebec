@@ -1,5 +1,4 @@
 #include <unistd.h>
-#include <stdio.h>
 
 void print_hexa(int n);
 
@@ -23,6 +22,8 @@ void	ft_putstr_non_printable(char *str)
 
 void print_hexa(int n)
 {
+	// Convert an int n into 2 hexadecimal digit form
+	// And print it in the following format -> /xx
 	char	hexa_char[2];
 	int	i;
 	int mod;
@@ -38,7 +39,6 @@ void print_hexa(int n)
 		n = n / 16;
 		i++;
 	}
-
 	write(1, "\\", 1);
 	write(1, &hexa_char[1], 1);
 	write(1, &hexa_char[0], 1);

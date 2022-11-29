@@ -15,7 +15,8 @@ char	*ft_strncat(char *dest, char *src, unsigned int nb)
 		i++;
 		j++;
 	}
-	dest[i] = '\0';
+	// Add NUL-character ??
+	// dest[i] = '\0';
 	return (dest);
 }
 
@@ -23,6 +24,7 @@ int str_len(char *str)
 {
 	int	i;
 
+	int = 0;
 	while (str[i])
 	{
 		i++;

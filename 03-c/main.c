@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 int ft_strcmp(char *s1, char *s2) __attribute__((weak));
-int	ft_strncmp(char *s1, char *s2, unsigned int n) __attribute__((weak));
-char	*ft_strcat(char *dest, char *src) __attribute__((weak));
-char	*ft_strncat(char *dest, char *src, unsigned int nb) __attribute__((weak));
-char	*ft_strstr(char *str, char *to_find) __attribute__((weak));
+int ft_strncmp(char *s1, char *s2, unsigned int n) __attribute__((weak));
+char *ft_strcat(char *dest, char *src) __attribute__((weak));
+char *ft_strncat(char *dest, char *src, unsigned int nb) __attribute__((weak));
+char *ft_strstr(char *str, char *to_find) __attribute__((weak));
+unsigned int ft_strlcat(char *dest, char *src, unsigned int size) __attribute__((weak));
 
 int main(void)
 {
@@ -13,16 +15,14 @@ int main(void)
 	if (ft_strcmp)
 	{
 		printf("%i\n",
-			ft_strcmp("abc1", "abc2")
-		);
+			   ft_strcmp("abc1", "abc2"));
 	}
 
-		// Exercice 01
+	// Exercice 01
 	if (ft_strncmp)
 	{
 		printf("%i\n",
-			ft_strncmp("ab", "ab", 0)
-		);
+			   ft_strncmp("ab", "ab", 0));
 	}
 
 	// Exercice 02
@@ -30,8 +30,7 @@ int main(void)
 	{
 		char dest[10] = "Quebec ";
 		printf("%s\n",
-			ft_strcat(dest, "42\n")
-		);
+			   ft_strcat(dest, "42\n"));
 	}
 
 	// Exercice 03
@@ -39,8 +38,7 @@ int main(void)
 	{
 		char dest[20] = "Quebec ";
 		printf("%s\n",
-			ft_strncat(dest, "42\nNOPE\n", 3)
-		);
+			   ft_strncat(dest, "42\nNOPE\n", 3));
 	}
 
 	// Exercice 04
@@ -49,9 +47,15 @@ int main(void)
 		char hay[] = "XXaabXXab";
 		char needle[] = "ab";
 		printf("Expect: abXXab\nOutput: %s \n",
-			ft_strstr(hay, needle)
-		);
+			   ft_strstr(hay, needle));
 	}
 
-
+	// Exercice 04
+	if (ft_strlcat)
+	{
+		char dest[15] = "Quebec ";
+		printf("%i : %s \n",
+			   ft_strlcat(dest, "42\nNOTTHIS", sizeof(dest)),
+			   dest);
+	}
 }

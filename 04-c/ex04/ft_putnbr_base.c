@@ -29,7 +29,6 @@ int validate_base(char *base)
 	return (size);
 }
 
-#include<stdio.h>
 void rec_putnbr_base(int nbr, char *base_str, int base_int)
 {
 	int mod;
@@ -55,6 +54,7 @@ void ft_putnbr_base(int nbr, char *base)
 
 
 
+#include<stdio.h>
 int main(void)
 {
 	// char *bin = "01";

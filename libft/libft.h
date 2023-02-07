@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 15:23:56 by kmehour           #+#    #+#             */
-/*   Updated: 2023/02/06 18:01:27 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/02/06 19:35:18 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *str, char c);
 
 char	*ft_itoa(int n);
+
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 #endif

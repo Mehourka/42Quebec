@@ -6,13 +6,12 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:35:44 by kmehour           #+#    #+#             */
-/*   Updated: 2023/02/05 19:56:07 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/02/09 20:41:22 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
-#include <stdio.h>
 
 int	count_chunks(char const *str, char c)
 {
@@ -23,78 +22,63 @@ int	count_chunks(char const *str, char c)
 	count = 0;
 	while (str[i])
 	{
-		if ((str[i] != c)
-			&& (i == 0 || str[i - 1] == c))
-		{
+		while (str[i] && str[i] == c)
+			i++;
+		if (str[i])
 			count++;
-			while (str[i] == c)
-				i++;
-		}
-		i++;
+		while (str[i] && str[i] != c)
+			i++;
 	}
 	return (count);
 }
 
-char	*ft_strndup(const char *s1, size_t n)
+static char	**free_tab(char **tab)
 {
-	char	*str;
-	size_t	len;
+	int	i;
 
-	if (!s1)
-		return (NULL);
-	len = ft_strlen(s1);
-	if (n < len)
-		len = n;
-	str = (char *)malloc(len + 1);
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s1, len + 1);
-	return (str);
+	i = 0;
+	while (tab[i])
+		free(tab[i++]);
+	free(tab);
+	return (NULL);
 }
 
-int	word_len(char const *str, char c)
+static char	**split(char **tab, char const *str, int word_count, char c)
 {
-	int	len;
+	int		i;
+	int		j;
+	int		pin;
 
-	len = 0;
-	while (str[len] && (str[len] != c))
-		len++;
-	return (len);
-}
-
-char	*get_chunk(char const *str, char c)
-{
-	int		len;
-	char	*new_str;
-
-	len = word_len(str, c);
-	new_str = ft_strndup(str, len);
-	return (new_str);
+	i = 0;
+	j = 0;
+	while (j < word_count)
+	{
+		while (str[i] && str[i] == c)
+			i++;
+		if (str[i])
+			pin = i;
+		while (str[i] && str[i] != c)
+			i++;
+		if (pin != i)
+			tab[j] = ft_substr((char *)str, pin, (i - pin));
+		if (!tab[j++])
+			return (free_tab(tab));
+	}
+	return (tab);
 }
 
 char	**ft_split(char const *str, char c)
 {
 	int		word_count;
 	char	**tab;
-	int		i;
-	int		j;
 
+	if (!str)
+		return (NULL);
 	word_count = count_chunks(str, c);
 	tab = NULL;
 	tab = (char **) malloc(sizeof(char *) * (word_count + 1));
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] && (str[i] != c)
-			&& (i == 0 || str[i - 1] == c))
-		{
-			tab[j++] = get_chunk(&str[i], c);
-			i += word_len(&str[i], c);
-		}
-		else
-			i++;
-	}
-	tab[j] = 0;
-	return (tab);
+	if (!tab)
+		return (NULL);
+	tab[word_count] = NULL;
+	return (split(tab, str, word_count, c));
 }

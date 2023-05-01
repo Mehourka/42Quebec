@@ -1,36 +1,43 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 CFLAGS =
-NAME = prog
+NAME = libftprintf.a
+
+IDIR = lib/
 
 
-
-SRC =	ft_printf.c \
+SDIR = src/
+SRCS =	ft_printf.c \
 		ft_printf_char.c \
 		ft_printf_dec.c\
-		ft_printf_ptr.c\
 		ft_printf_hex.c\
-		ft_printf_dec.c\
 
-SRC = $(wildcard ft_*.c)
-OBJ =
+ODIR = obj/
+OBJS := $(SRCS:%.c=$(ODIR)%.o)
+SRCS := $(SRCS:%=$(SDIR)%)
 
-all : re test
+all : $(NAME)
 
-$(NAME) :
-	@$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+$(ODIR)%.o:  $(SDIR)%.c
+	@$(MAKE) -s makedir
+	@$(CC) -c $(CFLAGS) $< -o $@ -I$(IDIR)
+
+$(NAME) : $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
 clean :
-	@$(RM) $(OBJ)
+	@$(RM) -rf $(ODIR)
 
 fclean : clean
 	@$(RM) $(NAME)
 
 re : fclean $(NAME)
-	@echo "recompile ...\n"
 
-test : $(NAME)
-	@./$(NAME)
+makedir :
+	@mkdir -p $(ODIR)
+
+test :
+	$(CC) $(CFLAGS) main.c -o main -I$(IDIR) -lftprintf -L.
 
 .PHONY :
-	all clean fclean re test
+	all clean fclean re test makedir

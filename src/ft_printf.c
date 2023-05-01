@@ -1,9 +1,6 @@
 #include <stdarg.h>
-#include <stdio.h>
-
 #include "ft_printf.h"
 
-#include <limits.h>
 
 int	ft_printflag(char flag, va_list args)
 {
@@ -44,18 +41,4 @@ int	ft_printf(char *format, ...)
 			char_count += ft_putchar(format[i]);
 	}
 	return (char_count);
-}
-
-int	main(void)
-{
-	char	*format;
-	int X = -1;
-
-	format ="%u \n";
-
-	ft_printf("\nReturns : %d - %i  \n",
-		printf(format, X, X,-1),
-		ft_printf(format,X, X, -2)
-	);
-	// ft_puthex(256);
 }

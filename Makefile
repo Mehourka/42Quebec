@@ -6,7 +6,13 @@ NAME = prog
 
 
 SRC =	ft_printf.c \
-		ft_printf_char.c
+		ft_printf_char.c \
+		ft_printf_dec.c\
+		ft_printf_ptr.c\
+		ft_printf_hex.c\
+		ft_printf_dec.c\
+
+SRC = $(wildcard ft_*.c)
 OBJ =
 
 all : re test

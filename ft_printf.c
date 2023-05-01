@@ -3,18 +3,24 @@
 
 #include "ft_printf.h"
 
+#include <limits.h>
 
-
-int ft_printflag(char flag, va_list args)
+int	ft_printflag(char flag, va_list args)
 {
 	if (flag == 's')
 		return ft_putstr(va_arg(args, char*));
 	if (flag == 'c')
 		return ft_putchar(va_arg(args, int));
+	if (flag == 'p')
+		return ft_putchar(va_arg(args, int));
+	if (flag == 'd' || flag == 'i')
+		return ft_putnbr(va_arg(args, int));
+	if (flag == '%')
+		return ft_putchar('%');
 	return 0;
 }
 
-int ft_printf(char *format, ...)
+int	ft_printf(char *format, ...)
 {
 	va_list	args;
 	int		i;
@@ -31,20 +37,20 @@ int ft_printf(char *format, ...)
 		else
 			char_count += ft_putchar(format[i]);
 	}
-
 	return (char_count);
 }
 
-int main(void)
+int	main(void)
 {
 	char	*format;
 
-	format ="Hello %s, %cIN for chars\n ";
 
+	format ="%d, %i";
 
-	printf("Returns : %d - %d\n",
-		ft_printf(format, "Karim", 'W'),
-		printf(format, "Karim", 'W')
+	ft_printf("\nReturns : %d - %i  \n",
+		printf(format, INT_MAX, INT_MIN),
+		ft_printf(format, INT_MAX, INT_MIN)
 	);
+
 
 }

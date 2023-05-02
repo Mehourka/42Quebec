@@ -23,7 +23,7 @@ int	ft_printflag(char flag, va_list args)
 	return 0;
 }
 
-int	ft_printf(char *format, ...)
+int	ft_printf(const char* format, ...)
 {
 	va_list	args;
 	int		i;

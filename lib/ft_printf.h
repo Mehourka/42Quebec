@@ -9,6 +9,6 @@ int ft_putnbr_uns(unsigned n);
 int	ft_putnbr_base(long n, char*);
 int ft_puthex(int, int);
 int	ft_putptr(int n);
-int	ft_printf(char *format, ...);
+int	ft_printf(const char* format, ...);
 
 #endif

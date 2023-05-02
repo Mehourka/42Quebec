@@ -2,13 +2,11 @@
 # include <stdio.h>
 # include "ft_printf.h"
 
-int	ft_numlen_hex(unsigned num)
+int	ft_numlen_hex(unsigned long num)
 {
 	int	l;
 
 	l = 1;
-	if (num < 0)
-		l++;
 	while (num / 16)
 	{
 		num /= 16;
@@ -17,17 +15,12 @@ int	ft_numlen_hex(unsigned num)
 	return (l);
 }
 
-int	ft_putnbr_base(long n, char* base)
+int	ft_putnbr_base(unsigned long n, char* base)
 {
-	long	nb;
+	long unsigned	nb;
 	char	c;
 
 	nb = n;
-	if (nb < 0)
-	{
-		nb *= (-1);
-		ft_putchar('-');
-	}
 	c = base[nb % 16];
 	if (nb > 15)
 		ft_putnbr_base(nb/16, base);
@@ -35,24 +28,27 @@ int	ft_putnbr_base(long n, char* base)
 	return ft_numlen_hex(n);
 }
 
-int	ft_puthex(int n, int ucase)
+int	ft_puthex(unsigned long n, int ucase)
 {
 	char*		base;
 	char*		prefix;
-	unsigned	nb;
 
-	nb = n;
 	base = "0123456789abcdef";
 	if (ucase)
 		base = "0123456789ABCDEF";
-	return ft_putnbr_base(nb, base);
+	return ft_putnbr_base(n, base);
 }
 
-int	ft_putptr(int n)
+int	ft_putptr(unsigned long n)
 {
 	char*	prefix;
 	int		count;
 
+	if (!n)
+	{
+		ft_putstr("(nil)");
+		return (5);
+	}
 	prefix = "0x";
 	count = 2;
 	ft_putstr(prefix);

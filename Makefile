@@ -1,6 +1,5 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS =
 NAME = libftprintf.a
 
 IDIR = lib/

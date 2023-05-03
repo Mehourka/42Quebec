@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:44:22 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/03 17:07:32 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:36:18 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,27 @@ static char	*load(int fd, char *cache)
 
 	ret = BUFFER_SIZE;
 	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buff)
+	{
+		free(cache);
+		return (NULL);
+	}
 	while (ft_strichr(cache, '\n') < 0 && ret != 0)
 	{
 		ret = read(fd, buff, BUFFER_SIZE);
+		if (ret < 0)
+		{
+			free(buff);
+			free(cache);
+			return (NULL);
+		}
 		buff[ret] = '\0';
 		cache = ft_strjoin(cache, buff);
+		if (!cache)
+		{
+			free(buff);
+			return (NULL);
+		}
 	}
 	free(buff);
 	return (cache);
@@ -43,12 +59,18 @@ static char	*get_line(char *cache)
 	while(cache[i] && cache[i - 1] != '\n')
 		i++;
 	next_line = malloc(i * sizeof(char) + 1);
+	if (!next_line)
+	{
+		free(cache);
+		return (NULL);
+	}
 	next_line[i--] = '\0';
 	while(i >= 0)
 	{
 		next_line[i] = cache[i];
 		i--;
 	}
+	
 	return(next_line);
 }
 
@@ -74,6 +96,11 @@ static char	*prune(char *cache)
 		i++;
 		
 	pruned = malloc((ft_strlen(cache + i) + 1) * sizeof(char));
+	if(!pruned)
+	{
+		free(cache);
+		return (NULL);
+	}
 	
 
 	while(cache[i])
@@ -88,16 +115,26 @@ char	*get_next_line(int fd)
 	char static	*cache;
 	char		*next_line;
 
-	if (fd <= 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	// load
 	cache = load(fd, cache);
 	// printf("\n\nCache : %s\n", cache);
 	// get line
 	next_line = get_line(cache);
+	if (!next_line)
+	{
+		free(cache);
+		return (NULL);
+	}
 	// printf("Next line : %s\n", next_line);
 	// prune
 	cache = prune(cache);
+	if (!cache)
+	{
+		free(next_line);
+		return (NULL);
+	}
 
 	// printf("Next line : %s \n", next_line);
 	// printf("Pruned Cache : %s \n\n", cache);

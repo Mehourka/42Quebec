@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:44:21 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/03 14:54:23 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:31:49 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,19 @@ char	*ft_strjoin(char *str1, char *str2)
 	if (!str1)
 	{
 		str1 = malloc(sizeof(char));
+		if (!str1)
+		{
+			return (NULL);
+		}
 		str1[0] = '\0';
 	}
 	tot_size = ft_strlen(str1) + ft_strlen(str2) + 1;
 	joined = (char *)malloc(tot_size * sizeof(char));
+	if (!joined)
+	{
+		free(str1);
+		return (NULL);
+	}
 	while (str1 && str1[j])
 		joined[i++] = str1[j++];
 	j = 0;

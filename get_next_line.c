@@ -55,8 +55,10 @@ static char	*get_line(char *cache)
 	// get all chars before \n in a new char*
 	if (!cache || !cache[0])
 		return NULL;
-	
-	while(cache[i] && cache[i - 1] != '\n')
+
+	while(cache[i] && cache[i] != '\n')
+		i++;
+	if (cache[i] == '\n')
 		i++;
 	next_line = malloc(i * sizeof(char) + 1);
 	if (!next_line)
@@ -70,7 +72,7 @@ static char	*get_line(char *cache)
 		next_line[i] = cache[i];
 		i--;
 	}
-	
+
 	return(next_line);
 }
 
@@ -82,37 +84,37 @@ static char	*prune(char *cache)
 
 	i = 0;
 	j = 0;
-	
+
 	// get all chars before \n in a new char*
 	if (!cache || !cache[0])
 	{
 		return NULL;
 	}
-	
+
 	while(cache[i] && cache[i] != '\n')
 		i++;
-	
+
 	if (cache[i] == '\n')
 		i++;
-		
+
 	pruned = malloc((ft_strlen(cache + i) + 1) * sizeof(char));
 	if(!pruned)
 	{
 		free(cache);
 		return (NULL);
 	}
-	
+
 
 	while(cache[i])
 		pruned[j++] = cache[i++];
-	
+
 	free(cache);
 	return pruned;
 }
 
 char	*get_next_line(int fd)
 {
-	char static	*cache;
+	static char	*cache;
 	char		*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -120,6 +122,8 @@ char	*get_next_line(int fd)
 	// load
 	cache = load(fd, cache);
 	// printf("\n\nCache : %s\n", cache);
+
+
 	// get line
 	next_line = get_line(cache);
 	if (!next_line)
@@ -128,6 +132,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	// printf("Next line : %s\n", next_line);
+
+
 	// prune
 	cache = prune(cache);
 	if (!cache)
@@ -135,9 +141,10 @@ char	*get_next_line(int fd)
 		free(next_line);
 		return (NULL);
 	}
-
-	// printf("Next line : %s \n", next_line);
 	// printf("Pruned Cache : %s \n\n", cache);
+	if (!cache[0])
+		free(cache);
+
 	return (next_line);
 
 }

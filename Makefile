@@ -26,7 +26,7 @@ RM		=	rm
 SDIR	=	src/
 
 SRCS	=	main.c\
-			\
+			pipex_utils.c\
 			\
 			\
 			\
@@ -66,12 +66,12 @@ $(ODIR)%.o : $(SDIR)%.c directories
 
 # Remove objects
 clean :
-	@$(RM) -rf $(OBJS)
+	@$(RM) -rf $(ODIR)
 	@echo "$(RED)	Removed objects	$(NC)"
 
 # Remove all
 fclean : clean
-	@$(RM) -rf $(ODIR)
+	@$(RM) -r $(NAME) 
 	@$(MAKE) fclean -C $(LDIR) -s
 	@echo "$(RED)	Removed executablesand libft	$(NC)"
 

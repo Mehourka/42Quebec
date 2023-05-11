@@ -43,8 +43,9 @@ SRCS	:=	$(SRCS:%.c=$(SDIR)%.c)
 #------------------------------------------------------------------------------#
 
 all : directories $(NAME)
-	@echo
-	./$(NAME)
+
+exec : all
+	./$(NAME) cd
 
 # Compile exec
 $(NAME) : $(OBJS) $(INC) $(LIBFT) 
@@ -80,7 +81,7 @@ re : fclean all
 
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(NAME) cd
 
 test:
 	@echo $(INCLUDES)

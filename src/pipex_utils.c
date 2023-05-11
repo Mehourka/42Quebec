@@ -2,8 +2,11 @@
 #include "pipex.h"
 
 
-
-int ft_check_cmd(char *cmd, char *const envp[])
+/*
+Checks if command (first word of cmd string) exists in path
+return the path if it exists, else NULL
+*/
+char *ft_check_cmd(char *cmd, char *const envp[])
 {
 	char **path_tab;
 	char *tmp;
@@ -12,21 +15,23 @@ int ft_check_cmd(char *cmd, char *const envp[])
 
 	i = 0;
 	path_tab = ft_getenvpaths(envp);
-
+	cmd = ft_getfwd(cmd);
 	res = -1;
 	// try out every path
 	while(path_tab[i])
 	{
-		// tmp = ft_strjoin(path_tab[i], "/"); // LEAK HERE
-		tmp = ft_strjoin_path(path_tab[i], cmd); // idea : Maybe check that te joind str is a valid folder (has '/')
+		tmp = ft_strjoin_path(path_tab[i], cmd);
 		res = access(tmp, R_OK);
-		free(tmp);
 		if (res == 0)
 			break;
+		free(tmp);
 		i++;
 	}
 	ft_free_tab(path_tab);
-	return res;
+	free(cmd);
+	if (res == 0)
+		return (tmp);
+	return NULL;
 
 }
 
@@ -52,6 +57,9 @@ char **ft_getenvpaths(char *const envp[])
 	return tab;
 }
 
+/*
+Free ft_split tab
+*/
 void ft_free_tab(char **tab)
 {
 	int i = 0;
@@ -64,6 +72,9 @@ void ft_free_tab(char **tab)
 	free(tab);
 }
 
+/*
+Str join but add  '/' between joined words
+*/
 char	*ft_strjoin_path(const char *str1, const char *str2)
 {
 	char	*new_string;
@@ -80,4 +91,27 @@ char	*ft_strjoin_path(const char *str1, const char *str2)
 	ft_memcpy((new_string + len_str1), "/",1);
 	ft_memcpy((new_string + len_str1 + 1), (void *)str2, len_str2);
 	return (new_string);
+}
+
+/*
+Gets the first word of a string
+*/
+char *ft_getfwd(char *str)
+{
+	int i;
+	char *word;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (str[i] && !ft_iswhitsp(str[i]))
+		i++;
+	word = ft_substr(str, 0, i);
+	return (word);
+}
+
+// Check if char is whitespace
+int ft_iswhitsp(char c)
+{
+	return ((c >= 9 && c <=13) || c == 32);
 }

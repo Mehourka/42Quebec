@@ -10,6 +10,8 @@ HEADERS	=	$(IDIR)/pipex.h \
 			$(LDIR)/libft.h
 INCLUDES= $(patsubst %, -I%, $(dir $(HEADERS)))
 
+CMD = "ls"
+
 # Color
 GREEN	=	\033[0;32m
 RED		=	\033[0;31m
@@ -45,7 +47,7 @@ SRCS	:=	$(SRCS:%.c=$(SDIR)%.c)
 all : directories $(NAME)
 
 exec : all
-	./$(NAME) cd
+	./$(NAME) $(CMD)
 
 # Compile exec
 $(NAME) : $(OBJS) $(INC) $(LIBFT) 

@@ -20,7 +20,7 @@ NC		=	\033[0m
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	#-Wall -Werror -Wextra
+CFLAGS	=	-g #-Wall -Werror -Wextra
 CFLAGS +=	$(INCLUDES)
 RM		=	rm
 
@@ -83,7 +83,7 @@ re : fclean all
 
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(NAME) cd
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./$(NAME) $(CMD)
 
 test:
 	@echo $(INCLUDES)

@@ -54,7 +54,9 @@ int main(int argc, char *argv[], char *const envp[])
 			// Child Process
 	if (pid == 0)
 	{
-		err = execve(cmd_path, cmd_tab, envp);
+		if (cmd_path)
+			err = execve(cmd_path, cmd_tab, envp);
+		ft_free_tab(cmd_tab);
 		if (err == -1)
 			printf("Execve ERROR\n");
 		return (2);
@@ -75,6 +77,7 @@ int main(int argc, char *argv[], char *const envp[])
 		}
 	}
 	free(cmd_path);
+	ft_free_tab(cmd_tab);
 	return (0);
 }
 

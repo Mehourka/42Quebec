@@ -10,7 +10,7 @@ HEADERS	=	$(IDIR)/pipex.h \
 			$(LDIR)/libft.h
 INCLUDES= $(patsubst %, -I%, $(dir $(HEADERS)))
 
-CMD = "ls"
+CMD = "lss -l"
 
 # Color
 GREEN	=	\033[0;32m
@@ -50,12 +50,12 @@ exec : all
 	./$(NAME) $(CMD)
 
 # Compile exec
-$(NAME) : $(OBJS) $(INC) $(LIBFT) 
-	@echo "$(GREEN)	Compiling $(NAME)... $(NC)" 
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -I. 
+$(NAME) : $(OBJS) $(INC) $(LIBFT)
+	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -I.
 
 # Compile libft
-$(LIBFT): 
+$(LIBFT):
 	@echo "$(BLUE)	Compiling libft ...	$(NC)"
 	@$(MAKE) -C $(@D) -s
 
@@ -74,7 +74,7 @@ clean :
 
 # Remove all
 fclean : clean
-	@$(RM) -r $(NAME) 
+	@$(RM) -r $(NAME)
 	@$(MAKE) fclean -C $(LDIR) -s
 	@echo "$(RED)	Removed executablesand libft	$(NC)"
 

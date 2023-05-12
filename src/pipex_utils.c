@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "pipex.h"
 
 
@@ -37,7 +36,7 @@ char *ft_check_cmd(char *cmd, char *const envp[])
 
 /*
 Extracts the PATH env variable as a string
-*/ 
+*/
 char **ft_getenvpaths(char *const envp[])
 {
 	char *env_paths;
@@ -114,4 +113,12 @@ char *ft_getfwd(char *str)
 int ft_iswhitsp(char c)
 {
 	return ((c >= 9 && c <=13) || c == 32);
+}
+
+// Output to outfile instad of stdout
+void ft_dup_stdout(int argc, char *argv[])
+{
+	int fd;
+	fd = open(argv[argc - 1], O_WRONLY| O_CREAT, 0777);
+	dup2(fd, STDOUT_FILENO);
 }

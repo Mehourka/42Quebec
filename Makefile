@@ -2,6 +2,9 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
+CMD = "ls -l" outfile
+
+
 NAME = pipex
 LDIR	=	libft/
 LIBFT	=	$(LDIR)/libft.a
@@ -10,7 +13,6 @@ HEADERS	=	$(IDIR)/pipex.h \
 			$(LDIR)/libft.h
 INCLUDES= $(patsubst %, -I%, $(dir $(HEADERS)))
 
-CMD = "lss -l"
 
 # Color
 GREEN	=	\033[0;32m
@@ -70,6 +72,7 @@ $(ODIR)%.o : $(SDIR)%.c directories
 # Remove objects
 clean :
 	@$(RM) -rf $(ODIR)
+	@$(RM) outfile infile
 	@echo "$(RED)	Removed objects	$(NC)"
 
 # Remove all

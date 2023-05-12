@@ -1,10 +1,6 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include "libft.h"
 #include "pipex.h"
-#include <string.h>
-#include <sys/wait.h>
+
+#include <stdio.h>
 
 /*
 Testing programm execution
@@ -21,8 +17,6 @@ Execution :
 	Replicate execpl() with execve ==> DONE
 	Print to stdout
  */
-
-
 
 int main(int argc, char *argv[], char *const envp[])
 {
@@ -41,6 +35,8 @@ int main(int argc, char *argv[], char *const envp[])
 		return (1);
 	}
 
+	ft_dup_stdout(argc, argv);
+
 	// Split command
 	cmd_tab = ft_split(argv[1], ' ');
 	// Check cmd exists and get path
@@ -51,7 +47,7 @@ int main(int argc, char *argv[], char *const envp[])
 	// Forking
 	pid = fork();
 
-			// Child Process
+	// Child Process
 	if (pid == 0)
 	{
 		if (cmd_path)
@@ -61,8 +57,9 @@ int main(int argc, char *argv[], char *const envp[])
 			printf("Execve ERROR\n");
 		return (2);
 	}
-			// Parent process
-	else{
+	// Parent process
+	else
+	{
 		wait(&wstatus);
 		if (WIFEXITED(wstatus))
 		{
@@ -70,7 +67,8 @@ int main(int argc, char *argv[], char *const envp[])
 			if (statuscode == 0)
 			{
 				printf("Success !\n");
-			} else
+			}
+			else
 			{
 				perror("FAILED PIPEX\n");
 			}
@@ -80,8 +78,6 @@ int main(int argc, char *argv[], char *const envp[])
 	ft_free_tab(cmd_tab);
 	return (0);
 }
-
-
 
 /*
 	int pid = fork();

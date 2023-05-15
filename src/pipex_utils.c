@@ -122,3 +122,59 @@ void ft_dup_stdout(int argc, char *argv[])
 	fd = open(argv[argc - 1], O_WRONLY| O_CREAT, 0777);
 	dup2(fd, STDOUT_FILENO);
 }
+
+/*
+Executes a Unix string command
+*/
+int exec_strcmd(char *cmd, char *const envp[], int fd_in, int fd_out)
+{
+	char **cmd_tab;
+	char *cmd_path;
+	int pid;
+	int err;
+	int wstatus;
+	
+	
+
+	// Split command
+	cmd_tab = ft_split(cmd, ' ');
+	// Check cmd exists and get path
+	cmd_path = ft_check_cmd(cmd, envp);
+
+	err = 0;
+
+	// Forking
+	pid = fork();
+
+	// Child Process
+	if (pid == 0)
+	{
+		if (cmd_path)
+			err = execve(cmd_path, cmd_tab, envp);
+		ft_free_tab(cmd_tab);
+		if (err == -1)
+			printf("Execve ERROR\n");
+		return (2);
+	}
+	// Parent process
+	else
+	{
+		wait(&wstatus);
+		if (WIFEXITED(wstatus))
+		{
+			int statuscode = WEXITSTATUS(wstatus);
+			if (statuscode == 0)
+			{
+				printf("Success !\n");
+			}
+			else
+			{
+				perror("FAILED PIPEX\n");
+			}
+		}
+	}
+	free(cmd_path);
+	ft_free_tab(cmd_tab);
+	return (0);
+
+}

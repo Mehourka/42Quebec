@@ -1,5 +1,8 @@
-libft/
-obj/
-pipex
-tutorials/
-outfile
+#Ignor all files and directories
+*
+
+#Except :
+!Makefile
+!lib/
+!src/
+!infile

@@ -2,7 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-CMD = "ls -l" outfile
+CMD = infile "ls -l" "wc" outfile
 
 
 NAME = pipex

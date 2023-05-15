@@ -2,7 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-CMD = infile "ls -l" "wc" outfile
+CMD = infile "cat" 'grep "cat"' /etc/stdout
 
 
 NAME = pipex
@@ -46,13 +46,14 @@ SRCS	:=	$(SRCS:%.c=$(SDIR)%.c)
 #                                TARGETS                                       #
 #------------------------------------------------------------------------------#
 
-all : directories $(NAME)
+all : $(NAME)
 
 exec : all
+	@ echo "Hello cat!\nHello World!" > infile
 	./$(NAME) $(CMD)
 
 # Compile exec
-$(NAME) : $(OBJS) $(INC) $(LIBFT)
+$(NAME) :  $(HEADERS) $(LIBFT) $(OBJS)
 	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -I.
 
@@ -61,12 +62,9 @@ $(LIBFT):
 	@echo "$(BLUE)	Compiling libft ...	$(NC)"
 	@$(MAKE) -C $(@D) -s
 
-# Create directories
-directories :
-	@mkdir -p $(ODIR);
-
 # Compile objects
-$(ODIR)%.o : $(SDIR)%.c directories
+$(ODIR)%.o : $(SDIR)%.c 
+	@mkdir -p $(ODIR);
 	@$(CC) -c $(CFLAGS) $< -o $@
 
 # Remove objects
@@ -86,7 +84,7 @@ re : fclean all
 
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./$(NAME) $(CMD)
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=yes ./$(NAME) $(CMD)
 
 test:
 	@echo $(INCLUDES)

@@ -16,4 +16,5 @@ char	*ft_getfwd(char *str);
 int		ft_iswhitsp(char c);
 void ft_dup_stdout(int argc, char *argv[]);
 int exec_strcmd(char *cmd, char *const envp[], int fd_in, int fd_out);
+void ft_raise_err(char *err_str, int err_nb, int err_ret);
 #endif

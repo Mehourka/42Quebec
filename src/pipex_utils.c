@@ -176,5 +176,4 @@ int exec_strcmd(char *cmd, char *const envp[], int fd_in, int fd_out)
 	free(cmd_path);
 	ft_free_tab(cmd_tab);
 	return (0);
-
 }

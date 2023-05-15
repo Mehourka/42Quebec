@@ -2,7 +2,9 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-CMD = infile "cat" 'grep "cat"' /etc/stdout
+# CMD = infile cat "grep Dog" wc /dev/stdout
+CMD = infile "top -l 2" "wc -l" /dev/stdout
+INFILE = "Hello cats!\nHello Dog!\nHello World!"
 
 
 NAME = pipex
@@ -31,7 +33,7 @@ SDIR	=	src/
 
 SRCS	=	main.c\
 			pipex_utils.c\
-			\
+			pipex_checks.c\
 			\
 			\
 
@@ -49,7 +51,7 @@ SRCS	:=	$(SRCS:%.c=$(SDIR)%.c)
 all : $(NAME)
 
 exec : all
-	@ echo "Hello cat!\nHello World!" > infile
+	@ echo $(INFILE)  > infile
 	./$(NAME) $(CMD)
 
 # Compile exec
@@ -84,7 +86,7 @@ re : fclean all
 
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=yes ./$(NAME) $(CMD)
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(CMD)
 
 test:
 	@echo $(INCLUDES)

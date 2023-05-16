@@ -2,9 +2,13 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-OUT = /dev/stdout
+OUT = outfile
+# Working commands
 # CMD = infile cat "grep Dog" $(OUT)
-CMD = infile "ping -c 3 google.com" "wc -l" $(OUT)
+# CMD = infile "ping -c 3 google.com" "wc -l" $(OUT)
+
+# Error cms
+CMD = infile cat "grep Dog" $(OUT)
 INFILE = "Hello cats!\nHello Dog!\nHello World!"
 
 

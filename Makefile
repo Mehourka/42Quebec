@@ -2,8 +2,9 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-# CMD = infile cat "grep Dog" wc /dev/stdout
-CMD = infile "top -l 2" "wc -l" /dev/stdout
+OUT = /dev/stdout
+# CMD = infile cat "grep Dog" $(OUT)
+CMD = infile "ping -c 3 google.com" "wc -l" $(OUT)
 INFILE = "Hello cats!\nHello Dog!\nHello World!"
 
 
@@ -65,7 +66,7 @@ $(LIBFT):
 	@$(MAKE) -C $(@D) -s
 
 # Compile objects
-$(ODIR)%.o : $(SDIR)%.c 
+$(ODIR)%.o : $(SDIR)%.c
 	@mkdir -p $(ODIR);
 	@$(CC) -c $(CFLAGS) $< -o $@
 

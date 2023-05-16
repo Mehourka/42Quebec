@@ -5,34 +5,7 @@
 Checks if command (first word of cmd string) exists in path
 return the path if it exists, else NULL
 */
-char *ft_check_cmd(char *cmd, char *const envp[])
-{
-	char **path_tab;
-	char *tmp;
-	int res;
-	int i;
 
-	i = 0;
-	path_tab = ft_getenvpaths(envp);
-	cmd = ft_getfwd(cmd);
-	res = -1;
-	// try out every path
-	while(path_tab[i])
-	{
-		tmp = ft_strjoin_path(path_tab[i], cmd);
-		res = access(tmp, R_OK);
-		if (res == 0)
-			break;
-		free(tmp);
-		i++;
-	}
-	ft_free_tab(path_tab);
-	free(cmd);
-	if (res == 0)
-		return (tmp);
-	return NULL;
-
-}
 
 /*
 Extracts the PATH env variable as a string
@@ -130,31 +103,47 @@ int exec_strcmd(char *cmd, char *const envp[], int fd_in, int fd_out)
 {
 	char **cmd_tab;
 	char *cmd_path;
-	int pid;
-	int err;
-	int wstatus;
-	
-	
 
-	// Split command
 	cmd_tab = ft_split(cmd, ' ');
-	// Check cmd exists and get path
 	cmd_path = ft_check_cmd(cmd, envp);
 
-	err = 0;
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_out);
 
-	// Forking
-	pid = fork();
+	if (cmd_path)
+		execve(cmd_path, cmd_tab, envp);
+	ft_free_tab(cmd_tab);
+	return (2);
+}
+/*
+Sets and duplicats input and set output file descriptors according to cmd
+Returns the file descriptor of the output
+*/
+int ft_dupio(int argc, char *argv[],int i, int *fd)
+{
+	int	input;
+	int	output;
 
+	if (i == 2)
+	{
+		input= open(argv[1], O_RDONLY, 0700);
+	} else {
+		input = fd[0];
+	}
+	dup2(input, STDIN_FILENO);
+	close(fd[0]);
+	set_pipe(fd);
+	if (i == argc - 2)
+		output = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0700);
+	else
+		output = fd[1];
+	return output;
+}
+/*
 	// Child Process
 	if (pid == 0)
 	{
-		if (cmd_path)
-			err = execve(cmd_path, cmd_tab, envp);
-		ft_free_tab(cmd_tab);
-		if (err == -1)
-			printf("Execve ERROR\n");
-		return (2);
+		return(0);
 	}
 	// Parent process
 	else
@@ -163,17 +152,13 @@ int exec_strcmd(char *cmd, char *const envp[], int fd_in, int fd_out)
 		if (WIFEXITED(wstatus))
 		{
 			int statuscode = WEXITSTATUS(wstatus);
-			if (statuscode == 0)
-			{
-				printf("Success !\n");
-			}
-			else
-			{
-				perror("FAILED PIPEX\n");
-			}
+			if (statuscode)
+				ft_raise_err("Process status error", statuscode);
 		}
 	}
 	free(cmd_path);
 	ft_free_tab(cmd_tab);
 	return (0);
 }
+ */
+

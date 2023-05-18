@@ -2,13 +2,14 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-OUT = outfile
+OUT = /def/stdout
 # Working commands
 # CMD = infile cat "grep Dog" $(OUT)
 # CMD = infile "ping -c 3 google.com" "wc -l" $(OUT)
 
 # Error cms
-CMD = infile cat "grep Dog" $(OUT)
+CMD = infile cat wc $(OUT)
+CMD = /dev/urandom cat "head -1" $(OUT)
 INFILE = "Hello cats!\nHello Dog!\nHello World!"
 
 
@@ -55,7 +56,7 @@ SRCS	:=	$(SRCS:%.c=$(SDIR)%.c)
 
 all : $(NAME)
 
-exec : all
+exec : re
 	@ echo $(INFILE)  > infile
 	./$(NAME) $(CMD)
 
@@ -77,13 +78,13 @@ $(ODIR)%.o : $(SDIR)%.c
 # Remove objects
 clean :
 	@$(RM) -rf $(ODIR)
-	@$(RM) outfile infile
+	@$(RM) -f outfile infile
 	@echo "$(RED)	Removed objects	$(NC)"
 
 # Remove all
 fclean : clean
-	@$(RM) -r $(NAME)
-	@$(MAKE) fclean -C $(LDIR) -s
+	@$(RM) -f $(NAME)
+#	@$(MAKE) fclean -C $(LDIR) -s
 	@echo "$(RED)	Removed executablesand libft	$(NC)"
 
 # Remake
@@ -91,7 +92,7 @@ re : fclean all
 
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(CMD)
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=all ./$(NAME) $(CMD)
 
 test:
 	@echo $(INCLUDES)

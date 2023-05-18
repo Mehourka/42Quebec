@@ -99,16 +99,13 @@ void ft_dup_stdout(int argc, char *argv[])
 /*
 Executes a Unix string command
 */
-int exec_strcmd(char *cmd, char *const envp[], int fd_in, int fd_out)
+int exec_strcmd(char *cmd, char *const envp[])
 {
 	char **cmd_tab;
 	char *cmd_path;
 
 	cmd_tab = ft_split(cmd, ' ');
 	cmd_path = ft_check_cmd(cmd, envp);
-
-	dup2(fd_out, STDOUT_FILENO);
-	close(fd_out);
 
 	if (cmd_path)
 		execve(cmd_path, cmd_tab, envp);
@@ -119,25 +116,28 @@ int exec_strcmd(char *cmd, char *const envp[], int fd_in, int fd_out)
 Sets and duplicats input and set output file descriptors according to cmd
 Returns the file descriptor of the output
 */
-int ft_dupio(int argc, char *argv[],int i, int *fd)
+void ft_setio(t_data *data)
 {
-	int	input;
-	int	output;
+	int i;
+	int argc;
+	char **argv;
+
+	i = data->cmd_idx;
+	argc = data->argc;
+	argv = data->argv;
 
 	if (i == 2)
 	{
-		input= open(argv[1], O_RDONLY, 0700);
+		data->in = open(argv[1], O_RDONLY, 0700);
 	} else {
-		input = fd[0];
+		data->in = data->fd[0];
 	}
-	dup2(input, STDIN_FILENO);
-	close(fd[0]);
-	set_pipe(fd);
-	if (i == argc - 2)
-		output = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0700);
+	set_pipe(data->fd);
+	
+	if (i == data->argc - 2)
+		data->out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0700);
 	else
-		output = fd[1];
-	return output;
+		data->out = data->fd[1];
 }
 /*
 	// Child Process

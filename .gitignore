@@ -1,9 +1,11 @@
 #Ignor all files and directories
-*file
-libft/
+# *file
+# libft/
 obj/
 pipex
 tutorials/
+.vscode/
+learning/
 
 #Except :
 # !Makefile

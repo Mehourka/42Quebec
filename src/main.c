@@ -32,7 +32,7 @@ void check_args(int argc, char *argv[])
 	// check input or output files
 	if(access(argv[1], R_OK) == 0)
 	{
-		printf("%s, exists and is readable\n", argv[1]);
+		// printf("%s, exists and is readable\n", argv[1]);
 	} else {
 		ft_raise_err("File access error", 73);
 	}
@@ -43,29 +43,41 @@ void check_args(int argc, char *argv[])
 int main(int argc, char *argv[], char *const envp[])
 {
 	int fd[2];
-	int output_fd;
-	int i;
+	t_data data;
+	int cmd_i;
+
+	data.argc = argc;
+	data.argv = argv;
+	data.fd = fd;
+	data.in = 0;
+	data.out = 0;
+	// data.infile = open(argv[1], O_RDONLY, 0700);
+	data.cmd_idx = 2;
 
 	// Check args and files
 	check_args(argc, argv);
-	i = 2;
-	fd[0] = -1;
+	cmd_i = 2;
 	// For each command
-	while (i < argc - 1)
+	while (cmd_i < argc - 1)
 	{
 		// Change the stdin
-		output_fd = ft_dupio(argc, argv, i, fd);
-
+		ft_setio(&data);
 		// In child process :
 		if (set_fork() == 0){
 			// Execute command
-			exec_strcmd(argv[i], envp, 0, output_fd);
+			dup2(data.in, STDIN_FILENO);
+			dup2(data.out, STDOUT_FILENO);
+			close(data.in);
+			close(data.out);
+			exec_strcmd(argv[cmd_i], envp);
 			return (1);
 		}
-		close(fd[1]);
-		i++;
+		close(data.in);
+		close(data.out);
+		data.cmd_idx++;
+		cmd_i++;
 	}
-	while (i-- >= 2)
+	while (cmd_i-- >= 2)
 		waitpid(-1, NULL, 0);
 	return (0);
 }

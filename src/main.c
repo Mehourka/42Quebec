@@ -1,5 +1,16 @@
-#include "pipex.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/18 15:42:53 by kmehour           #+#    #+#             */
+/*   Updated: 2023/05/18 16:19:02 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "pipex.h"
 #include <stdio.h>
 
 /*
@@ -24,47 +35,46 @@ Error handeling :
 	correctly handle errors			==> TBD
  */
 
-void check_args(int argc, char *argv[])
+void	check_args(int argc, char *argv[])
 {
 	if (argc < 4)
-		ft_raise_err("Not enough arguments: ./pipex infile cmd1 cmd2 outfile", 2);
-
+		ft_raise_err("Not enough arguments: ./pipex infile cmd1 cmd2 outfile",
+				2);
 	// check input or output files
-	if(access(argv[1], R_OK) == 0)
+	if (access(argv[1], R_OK) == 0)
 	{
 		// printf("%s, exists and is readable\n", argv[1]);
-	} else {
+	}
+	else
+	{
 		ft_raise_err("File access error", 73);
 	}
-
 	// TODO : check if outfile is writable
 }
 
-int main(int argc, char *argv[], char *const envp[])
+int	main(int argc, char *argv[], char *const envp[])
 {
-	int fd[2];
-	t_data data;
-	int cmd_i;
+	int		fd[2];
+	t_data	data;
+	int pid[100];
+	int		cmd_i;
+	// int		pid;
 
 	data.argc = argc;
 	data.argv = argv;
 	data.fd = fd;
 	data.in = 0;
 	data.out = 0;
-	// data.infile = open(argv[1], O_RDONLY, 0700);
 	data.cmd_idx = 2;
-
-	// Check args and files
 	check_args(argc, argv);
 	cmd_i = 2;
-	// For each command
 	while (cmd_i < argc - 1)
 	{
-		// Change the stdin
 		ft_setio(&data);
-		// In child process :
-		if (set_fork() == 0){
-			// Execute command
+		pid[cmd_i - 2] = set_fork();
+		if (pid[cmd_i - 2] == 0)
+		{
+	
 			dup2(data.in, STDIN_FILENO);
 			dup2(data.out, STDOUT_FILENO);
 			close(data.in);
@@ -77,7 +87,11 @@ int main(int argc, char *argv[], char *const envp[])
 		data.cmd_idx++;
 		cmd_i++;
 	}
-	while (cmd_i-- >= 2)
-		waitpid(-1, NULL, 0);
+	while (cmd_i > 2)
+	{
+		waitpid(pid[cmd_i - 2], NULL, 0);
+		// wait(NULL);
+		cmd_i--;
+	}
 	return (0);
 }

@@ -8,7 +8,7 @@ OUT = /def/stdout
 # CMD = infile "ping -c 3 google.com" "wc -l" $(OUT)
 
 # Error cms
-CMD = infile cat wc $(OUT)
+# CMD = infile cat wc $(OUT)
 CMD = /dev/urandom cat "head -1" $(OUT)
 INFILE = "Hello cats!\nHello Dog!\nHello World!"
 

@@ -51,3 +51,5 @@ int set_fork(void)
 		ft_raise_err("Fork error", 5);
 	return (pid);
 }
+
+

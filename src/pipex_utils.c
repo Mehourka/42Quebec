@@ -132,12 +132,29 @@ void ft_setio(t_data *data)
 	} else {
 		data->in = data->fd[0];
 	}
-	set_pipe(data->fd);
 	
 	if (i == data->argc - 2)
 		data->out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0700);
 	else
+	{
+		set_pipe(data->fd);
 		data->out = data->fd[1];
+	}
+}
+
+t_data init_data(int argc, char *argv[])
+{
+	t_data	data;
+	int		static fd[2];
+
+	data.argc = argc;
+	data.argv = argv;
+	data.fd = fd;
+	data.in = 0;
+	data.out = 0;
+	data.cmd_idx = 2;
+
+	return data;
 }
 /*
 	// Child Process

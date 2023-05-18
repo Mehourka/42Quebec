@@ -32,5 +32,6 @@ void ft_raise_err(char *err_str, int err_nb);
 void set_pipe(int *fd);
 int set_fork(void);
 void ft_setio(t_data *data);
+t_data init_data(int argc, char *argv[]);
 
 #endif

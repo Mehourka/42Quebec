@@ -52,4 +52,26 @@ int set_fork(void)
 	return (pid);
 }
 
-
+void	check_args(int argc, char *argv[])
+{
+	int fd_in;
+	int fd_out;
+	if (argc < 5)
+		ft_raise_err("Not enough arguments\nUsage : ./pipex infile cmd1 cmd2 outfile",
+				2);
+	// check input or output files
+	
+	fd_in = open(argv[1], O_RDONLY, 0644);
+	
+	if(fd_in == -1)
+	{
+		ft_raise_err(ERR_INFILE, 1);
+	}
+	close(fd_in);
+	fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd_out == -1)
+	{
+		ft_raise_err(ERR_OUTFILE, 1);
+	}
+	close(fd_out);
+}

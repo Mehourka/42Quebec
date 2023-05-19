@@ -20,6 +20,10 @@ typedef struct	s_data
 
 }				t_data;
 
+# define ERR_INFILE "infile"
+# define ERR_OUTFILE "outfile"
+
+void	check_args(int argc, char *argv[]);
 char	*ft_check_cmd(char *cmd, char *const envp[]);
 char	**ft_getenvpaths(char *const envp[]);
 void	ft_free_tab(char **tab);
@@ -33,5 +37,4 @@ void set_pipe(int *fd);
 int set_fork(void);
 void ft_setio(t_data *data);
 t_data init_data(int argc, char *argv[]);
-
 #endif

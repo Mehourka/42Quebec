@@ -2,14 +2,16 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-OUT = /def/stdout
+OUT =/dev/stdout
+# OUT = outfile
 # Working commands
 # CMD = infile cat "grep Dog" $(OUT)
 # CMD = infile "ping -c 3 google.com" "wc -l" $(OUT)
 
 # Error cms
-# CMD = infile cat wc $(OUT)
-CMD = /dev/urandom cat "head -1" $(OUT)
+# CMD = /dev/urandom cat "head -1" $(OUT)
+CMD = infile "grep Hello" "awk '{count++} END {print count}'" $(OUT)
+CMD = infile "grep 'Hello W'" wc $(OUT)
 INFILE = "Hello cats!\nHello Dog!\nHello World!"
 
 
@@ -40,7 +42,6 @@ SDIR	=	src/
 SRCS	=	main.c\
 			pipex_utils.c\
 			pipex_checks.c\
-			\
 			\
 
 

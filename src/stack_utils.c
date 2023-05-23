@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void push_stack(t_stack **head, int val)
+int push_stack(t_stack **head, int val)
 {
 	t_stack *new;
 	t_stack *ptr;
@@ -13,7 +13,7 @@ void push_stack(t_stack **head, int val)
 	if (*head == NULL)
 	{
 		 *head = new;
-		return ;
+		return (0);
 	}
 
 	ptr = *head;
@@ -21,10 +21,14 @@ void push_stack(t_stack **head, int val)
 	{
 		prev = ptr;
 		if (ptr->data == val)
-			raise_error();
+		{
+			free(new);
+			return (1);
+		}
 		ptr = ptr->next;
 	}
 	prev->next = new;
+	return (0);
 }
 void read_stack(t_stack *head)
 {

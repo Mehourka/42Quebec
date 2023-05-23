@@ -2,7 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS = 1 2  "3"
+ARGS = "1 2 3 a 2"
 
 NAME = push_swap
 LDIR	=	libft/
@@ -90,7 +90,7 @@ re : fclean all
 
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=all ./$(NAME) $(ARGS)
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)
 
 test:
 	@echo $(INCLUDES)

@@ -20,20 +20,21 @@
 # include <unistd.h>
 
 typedef struct		s_stack{
-	int				data;
+	int				val;
 	struct s_stack	*next;
 }					t_stack;
 
 typedef struct		s_data{
 	t_stack			*a_stack;
-	
+
 }					t_data;
-void	push_stack(t_stack **head, int val);
+int		push_stack(t_stack **head, int val);
 void	read_stack(t_stack *head);
 void	free_stack(t_stack *head);
 void	stack_arg(t_stack **head, char *arg);
 void	init_stack(t_stack **stack, int argc, char* argv[]);
 void	raise_error();
+void	ft_free_data();
 t_data	*init_data();
 
 #endif

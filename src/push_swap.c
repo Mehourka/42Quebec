@@ -3,7 +3,7 @@
 
 t_data *init_data()
 {
-	t_data static *data;
+	static t_data	*data;
 
 	if (!data)
 	{
@@ -19,19 +19,19 @@ void ft_free_data()
 
 	data = init_data();
 
+	free_stack(data->a_stack);
 	free(data);
 }
 
 int main(int argc, char *argv[])
 {
-	t_stack **pile;
+	// t_stack **pile;
 	t_data *data;
 
 	data = init_data();
-	pile = &data->a_stack;
+	// pile = &data->a_stack;
 
 
-	(void) data;
 	(void) argv;
 	(void) argc;
 
@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
 	init_stack(&data->a_stack, argc, argv);
 	printf("Reading stack\n");
 	read_stack(data->a_stack);
-	printf("Freeing stack\n");
-	free_stack(data->a_stack);
+	printf("Freeing data\n");
+	// free_stack(data->a_stack);
 
 	ft_free_data();
-	
+
 }

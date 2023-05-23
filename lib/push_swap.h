@@ -19,18 +19,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct	s_data
-{
-	int			*fd;
-	int			infile;
-	int			cmd_idx;
-	int			in;
-	int			out;
-	int			argc;
-	int			*pids;
-	char		**argv;
+typedef struct		s_stack{
+	int				data;
+	struct s_stack	*next;
+}					t_stack;
 
-}				t_data;
-
+void	push_stack(t_stack **head, int val);
+void	read_stack(t_stack *head);
+void	free_stack(t_stack *head);
 
 #endif

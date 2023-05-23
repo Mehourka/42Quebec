@@ -28,19 +28,12 @@ SDIR	=	src/
 BDIR	=	bonus/
 
 SRCS	=	push_swap.c\
-
-# SRCS_BONUS	=	main_bonus.c\
-# 			pipex_utils_bonus.c\
-# 			pipex_checks_bonus.c\
-# 			pipex_parse_bonus.c\
-
+			stack_utils.c\
 # Objects
 ODIR	=	obj/
 OBJS		:=	$(SRCS:%.c=$(ODIR)%.o)
-# OBJS_BONUS	:=	$(SRCS_BONUS:%.c=$(ODIR)%.o)
 
 SRCS		:=	$(SRCS:%.c=$(SDIR)%.c)
-# SRCS_BONUS	:=	$(SRCS_BONUS:%.c=$(BDIR)%.c)
 
 
 #------------------------------------------------------------------------------#

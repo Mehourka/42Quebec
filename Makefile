@@ -2,7 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS = "3 2 1" "5 4 5"
+ARGS = 1 2  "3"
 
 NAME = push_swap
 LDIR	=	libft/
@@ -51,7 +51,7 @@ exec : $(NAME)
 # Compile exec
 $(NAME) :  $(LIBFT) $(OBJS)
 	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -I.
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -I.
 
 $(BONUS) :  $(LIBFT) $(OBJS_BONUS)
 	@echo "$(GREEN)	Compiling $(NAME)... $(NC)"
@@ -80,6 +80,8 @@ clean :
 # Remove all
 fclean : clean
 	@$(RM) -f $(NAME) $(BONUS)
+	@$(RM) -rf $(NAME).dSYM
+
 	@$(MAKE) fclean -C $(LDIR) -s
 	@echo "$(RED)	Removed executablesand libft	$(NC)"
 

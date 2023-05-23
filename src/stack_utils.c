@@ -4,6 +4,7 @@ void push_stack(t_stack **head, int val)
 {
 	t_stack *new;
 	t_stack *ptr;
+	t_stack *prev;
 
 	new = malloc(sizeof(t_stack));
 	new->data = val;
@@ -16,9 +17,14 @@ void push_stack(t_stack **head, int val)
 	}
 
 	ptr = *head;
-	while(ptr->next)
+	while(ptr)
+	{
+		prev = ptr;
+		if (ptr->data == val)
+			raise_error();
 		ptr = ptr->next;
-	ptr->next = new;
+	}
+	prev->next = new;
 }
 void read_stack(t_stack *head)
 {

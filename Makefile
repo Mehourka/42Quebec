@@ -2,6 +2,8 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
+ARGS = "3 2 1" "5 4 5"
+
 NAME = push_swap
 LDIR	=	libft/
 LIBFT	=	$(LDIR)/libft.a
@@ -29,6 +31,7 @@ BDIR	=	bonus/
 
 SRCS	=	push_swap.c\
 			stack_utils.c\
+			parsing.c\
 # Objects
 ODIR	=	obj/
 OBJS		:=	$(SRCS:%.c=$(ODIR)%.o)
@@ -42,8 +45,8 @@ SRCS		:=	$(SRCS:%.c=$(SDIR)%.c)
 
 all : $(NAME)
 
-exec : re
-	./$(NAME) $(CMD)
+exec : $(NAME)
+	./$(NAME) $(ARGS)
 
 # Compile exec
 $(NAME) :  $(LIBFT) $(OBJS)
@@ -85,7 +88,7 @@ re : fclean all
 
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=all ./$(NAME) $(CMD)
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=all ./$(NAME) $(ARGS)
 
 test:
 	@echo $(INCLUDES)

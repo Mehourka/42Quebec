@@ -27,5 +27,7 @@ typedef struct		s_stack{
 void	push_stack(t_stack **head, int val);
 void	read_stack(t_stack *head);
 void	free_stack(t_stack *head);
+void	stack_arg(t_stack **head, char *arg);
+void	init_stack(t_stack **stack, int argc, char* argv[]);
 
 #endif

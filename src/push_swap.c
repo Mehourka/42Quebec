@@ -12,8 +12,11 @@ int main(int argc, char *argv[])
 	init_stack(&data->a_stack, argc, argv);
 
 	printf("Reading stacks\n");
-	read_stack(data->a_stack);
-	// print_stacks();
+	print_stacks();
+
+	sb();
+	print_stacks();
+
 
 	printf("Freeing data\n");
 	ft_free_data();

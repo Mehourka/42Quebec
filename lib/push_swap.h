@@ -39,6 +39,10 @@ void	raise_error();
 void	ft_free_data();
 t_data	*init_data();
 
+void	sa();
+void	sb();
+void	ss();
+
 
 // TESTING
 void print_stacks();

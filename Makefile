@@ -29,10 +29,11 @@ RM		=	rm
 SDIR	=	src/
 BDIR	=	bonus/
 
-SRCS	=	push_swap.c\
-			stack_utils.c\
-			parsing.c\
-			testing.c\
+SRCS	=	push_swap.c		\
+			stack_utils.c	\
+			parsing.c		\
+			moves.c			\
+			testing.c		\
 
 # Objects
 ODIR	=	obj/

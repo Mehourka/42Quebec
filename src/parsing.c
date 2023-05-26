@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:16:25 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 10:21:02 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/26 11:10:39 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	int_check(char *nb)
 	i = 0;
 	while (nb[i])
 	{
-		if (!ft_isdigit(nb[i]))
+		if (!ft_isdigit(nb[i]) && !ft_strchr("+-", nb[i]))
 			return (1);
 		i++;
 	}

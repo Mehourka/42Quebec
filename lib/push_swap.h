@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 10:27:54 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/26 11:16:07 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	stack_arg(t_stack **head, char *arg);
 void	raise_error(void);
 void	ft_free_data(void);
 t_data	*init_data(void);
+void	index_stack(t_stack *head);
 void	sa(void);
 void	sb(void);
 void	ss(void);
@@ -50,5 +51,6 @@ void	rrb(void);
 void	rrr(void);
 // TESTING
 void	print_stacks(void);
-//
+// int *get_sorted_array(t_stack *head);
+// TESTING
 #endif

@@ -2,7 +2,8 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS = "2 1 3 6 5 8"
+ARGS = "1 2 2"
+
 
 NAME = push_swap
 LDIR	=	libft/
@@ -35,8 +36,9 @@ SRCS	=	push_swap.c		\
 			push.c			\
 			swap.c			\
 			rot.c			\
-			rev_rot.c			\
+			rev_rot.c		\
 			testing.c		\
+			index.c			\
 
 # Objects
 ODIR	=	obj/

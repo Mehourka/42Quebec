@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:16:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 10:22:05 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/26 11:15:55 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,13 @@ int	main(int argc, char *argv[])
 	data = init_data();
 	printf("Pushing to stack\n");
 	init_stack(&data->a_stack, argc, argv);
+	printf("Indexing stack\n");
+	index_stack(data->a_stack);
 	printf("Reading stacks\n");
 	print_stacks();
+	ra();
 	sa();
-	pb();
-	pb();
-	pb();
-	rr();
-	rrr();
-	sa();
-	pa();
-	pa();
-	pa();
+	rra();
 	print_stacks();
 	printf("Freeing data\n");
 	ft_free_data();

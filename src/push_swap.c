@@ -1,19 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/26 10:16:31 by kmehour           #+#    #+#             */
+/*   Updated: 2023/05/26 10:22:05 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 #include <stdio.h>
 
-int main(int argc, char *argv[])
+t_data	*init_data(void)
 {
-	t_data *data;
+	static t_data	*data;
+
+	if (!data)
+	{
+		data = malloc(sizeof(t_data));
+		data->a_stack = NULL;
+		data->b_stack = NULL;
+	}
+	return (data);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_data	*data;
 
 	data = init_data();
-
-
 	printf("Pushing to stack\n");
 	init_stack(&data->a_stack, argc, argv);
-
 	printf("Reading stacks\n");
 	print_stacks();
-
 	sa();
 	pb();
 	pb();
@@ -24,10 +45,7 @@ int main(int argc, char *argv[])
 	pa();
 	pa();
 	pa();
-	
 	print_stacks();
-
-
 	printf("Freeing data\n");
 	ft_free_data();
 }

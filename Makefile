@@ -2,6 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
+
 ARGS = "10 9 12 -12 14 32"
 
 NAME = push_swap
@@ -104,7 +105,9 @@ test:
 	@echo $(INCLUDES)
 
 visualizer:
-	
+	./push_swap_visualizer/build/bin/visualizer
+
+
 
 .PHONY:
 	clean fclean re test all directories

@@ -1,7 +1,7 @@
 # Ignore
 # libft/
 obj/
-pysh_swap.dSYM/
+push_swap.dSYM/
 
 
 push_swap

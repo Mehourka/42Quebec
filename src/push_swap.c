@@ -14,11 +14,20 @@ int main(int argc, char *argv[])
 	printf("Reading stacks\n");
 	print_stacks();
 
-	sb();
+	sa();
+	pb();
+	pb();
+	pb();
+	rr();
+	rrr();
+	sa();
+	pa();
+	pa();
+	pa();
+	
 	print_stacks();
 
 
 	printf("Freeing data\n");
 	ft_free_data();
-
 }

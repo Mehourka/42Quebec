@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/23 16:38:53 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/26 10:00:03 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ t_data	*init_data();
 void	sa();
 void	sb();
 void	ss();
+void	pa();
+void	pb();
+void	ra();
+void	rb();
+void	rr();
+void	rra();
+void	rrb();
+void	rrr();
 
 
 // TESTING

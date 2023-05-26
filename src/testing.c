@@ -17,19 +17,23 @@ void print_stacks()
 	printf(" _______\n");
 	while(a_stack || b_stack)
 	{
-		a = "_";
-		b = "_";
 		if(a_stack)
 		{
 			a = ft_itoa(a_stack->val);
 			a_stack = a_stack->next;
-		}
+		} else
+			a = ft_strdup("_");
+
 		if(b_stack)
 		{
 			b = ft_itoa(b_stack->val);
 			b_stack = b_stack->next;
-		}
+		} else
+			b = ft_strdup("_");
+			
 		printf(" %s --- %s\n",a , b);
+		free(a);
+		free(b);
 	}
 	printf("\n\n");
 }

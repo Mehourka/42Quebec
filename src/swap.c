@@ -1,44 +1,37 @@
 #include "push_swap.h"
-void swap(t_stack **head)
+
+void	swap(t_stack **head)
 {
+	t_stack	*top;
+	t_stack	*bot;
 
 	if (!*head || !(*head)->next)
-		return;
-
-	t_stack *top;
-	t_stack *bot;
-
+		return ;
 	top = *head;
 	bot = top->next;
-
 	top->next = bot->next;
 	bot->next = top;
 	*head = bot;
-
-
 }
 
-void sa()
+void	sa(void)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = init_data();
 	swap(&data->a_stack);
 }
 
-void sb()
+void	sb(void)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = init_data();
 	swap(&data->b_stack);
 }
 
-void ss()
+void	ss(void)
 {
-	t_data *data;
-
-	data = init_data();
-	swap(&data->a_stack);
-	swap(&data->b_stack);
+	sa();
+	sb();
 }

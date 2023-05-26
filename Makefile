@@ -2,7 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS = 1 2 3 4 5
+ARGS = "2 1 3 6 5 8"
 
 NAME = push_swap
 LDIR	=	libft/
@@ -32,7 +32,10 @@ BDIR	=	bonus/
 SRCS	=	push_swap.c		\
 			stack_utils.c	\
 			parsing.c		\
-			moves.c			\
+			push.c			\
+			swap.c			\
+			rot.c			\
+			rev_rot.c			\
 			testing.c		\
 
 # Objects

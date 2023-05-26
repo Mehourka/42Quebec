@@ -2,8 +2,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS = "1 2 2"
-
+ARGS = "10 9 12 -12 14 32"
 
 NAME = push_swap
 LDIR	=	libft/
@@ -39,6 +38,7 @@ SRCS	=	push_swap.c		\
 			rev_rot.c		\
 			testing.c		\
 			index.c			\
+			stack_sort.c			\
 
 # Objects
 ODIR	=	obj/
@@ -102,6 +102,9 @@ leak :
 
 test:
 	@echo $(INCLUDES)
+
+visualizer:
+	
 
 .PHONY:
 	clean fclean re test all directories

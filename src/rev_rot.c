@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:16:23 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 10:24:39 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/26 12:40:06 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	rra(void)
 
 	data = init_data();
 	rev_rot(&data->a_stack);
+	write(1, "rra\n", 3);
 }
 
 void	rrb(void)
@@ -43,6 +44,7 @@ void	rrb(void)
 
 	data = init_data();
 	rev_rot(&data->b_stack);
+	write(1, "rrb\n", 3);
 }
 
 void	rrr(void)

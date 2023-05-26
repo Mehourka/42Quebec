@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:51:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 11:13:38 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/26 13:35:58 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_array(t_stack *head, int *arr)
 	}
 }
 
-static int	stack_len(t_stack *head)
+int	stack_len(t_stack *head)
 {
 	t_stack	*ptr;
 	int		arr_size;
@@ -99,4 +99,5 @@ void	index_stack(t_stack *head)
 		head->val = i + 1;
 		head = head->next;
 	}
+	free(arr);
 }

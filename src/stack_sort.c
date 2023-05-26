@@ -1,44 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   stack_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 10:16:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 13:26:02 by kmehour          ###   ########.fr       */
+/*   Created: 2023/05/26 13:13:15 by kmehour           #+#    #+#             */
+/*   Updated: 2023/05/26 13:39:54 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-t_data	*init_data(void)
-{
-	static t_data	*data;
-
-	if (!data)
-	{
-		data = malloc(sizeof(t_data));
-		data->a_stack = NULL;
-		data->b_stack = NULL;
-	}
-	return (data);
-}
-
-int	main(int argc, char *argv[])
+void	rot_sort(void)
 {
 	t_data	*data;
+	int		a_min ;
 
 	data = init_data();
-	printf("Pushing to stack\n");
-	init_stack(&data->a_stack, argc, argv);
-	printf("Indexing stack\n");
-	index_stack(data->a_stack);
-	printf("Reading stacks\n");
-	print_stacks();
-	rot_sort();
-	print_stacks();
-	printf("Freeing data\n");
-	ft_free_data();
+	a_min = 1;
+	while (data->a_stack)
+	{
+		while (data->a_stack->val != a_min)
+		{
+			ra();
+		}
+		pb();
+		a_min++;
+	}
+	while (data->b_stack)
+		pa();
 }

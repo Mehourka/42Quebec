@@ -1,3 +1,6 @@
 [submodule "libft"]
 	path = libft
 	url = git@github.com:Mehourka/libft.git
+[submodule "ps_visu"]
+	path = ps_visu
+	url = git@github.com:o-reo/push_swap_visualizer.git

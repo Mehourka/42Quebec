@@ -31,7 +31,7 @@ void	sa(void)
 	t_data	*data;
 
 	data = init_data();
-	swap(&data->a_stack);
+	swap(&data->aStack);
 	write(1, "sa\n", 3);
 }
 
@@ -40,7 +40,7 @@ void	sb(void)
 	t_data	*data;
 
 	data = init_data();
-	swap(&data->b_stack);
+	swap(&data->bStack);
 	write(1, "sb\n", 3);
 }
 

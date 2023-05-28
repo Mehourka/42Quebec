@@ -13,31 +13,31 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-void	print_stacks(void)
+void print_stacks(void)
 {
-	t_data	*data;
-	t_stack	*a_stack;
-	t_stack	*b_stack;
-	char	*a;
-	char	*b;
+	t_data *data;
+	t_stack *aStack;
+	t_stack *bStack;
+	char *a;
+	char *b;
 
 	data = init_data();
-	a_stack = data->a_stack;
-	b_stack = data->b_stack;
+	aStack = data->aStack;
+	bStack = data->bStack;
 	printf("\n A     B\n _______\n");
-	while (a_stack || b_stack)
+	while (aStack || bStack)
 	{
-		if (a_stack)
+		if (aStack)
 		{
-			a = ft_itoa(a_stack->val);
-			a_stack = a_stack->next;
+			a = ft_itoa(aStack->val);
+			aStack = aStack->next;
 		}
 		else
 			a = ft_strdup("_");
-		if (b_stack)
+		if (bStack)
 		{
-			b = ft_itoa(b_stack->val);
-			b_stack = b_stack->next;
+			b = ft_itoa(bStack->val);
+			bStack = bStack->next;
 		}
 		else
 			b = ft_strdup("_");
@@ -48,7 +48,7 @@ void	print_stacks(void)
 	printf("\n\n");
 }
 
-void	read_stack(t_stack *head)
+void read_stack(t_stack *head)
 {
 	while (head)
 	{

@@ -29,7 +29,7 @@ void	pa(void)
 	t_data	*data;
 
 	data = init_data();
-	push(&data->b_stack, &data->a_stack);
+	push(&data->bStack, &data->aStack);
 	write(1, "pa\n", 3);
 }
 
@@ -38,6 +38,6 @@ void	pb(void)
 	t_data	*data;
 
 	data = init_data();
-	push(&data->a_stack, &data->b_stack);
+	push(&data->aStack, &data->bStack);
 	write(1, "pb\n", 3);
 }

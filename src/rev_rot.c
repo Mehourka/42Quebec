@@ -34,7 +34,7 @@ void	rra(void)
 	t_data	*data;
 
 	data = init_data();
-	rev_rot(&data->a_stack);
+	rev_rot(&data->aStack);
 	write(1, "rra\n", 3);
 }
 
@@ -43,7 +43,7 @@ void	rrb(void)
 	t_data	*data;
 
 	data = init_data();
-	rev_rot(&data->b_stack);
+	rev_rot(&data->bStack);
 	write(1, "rrb\n", 3);
 }
 

@@ -11,23 +11,25 @@
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#define PUSH_SWAP_H
 
-# include "libft.h"
-# include <fcntl.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <unistd.h>
+#include "libft.h"
+#include <fcntl.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-typedef struct s_stack{
-	int				val;
-	struct s_stack	*next;
-}					t_stack;
+typedef struct s_stack
+{
+	int val;
+	struct s_stack *next;
+} t_stack;
 
-typedef struct s_data{
-	t_stack		*a_stack;
-	t_stack		*b_stack;
-}				t_data;
+typedef struct s_data
+{
+	t_stack *aStack;
+	t_stack *bStack;
+} t_data;
 
 void	init_stack(t_stack **stack, int argc, char *argv[]);
 int		push_stack(t_stack **head, int val);
@@ -51,8 +53,10 @@ void	rr(void);
 void	rra(void);
 void	rrb(void);
 void	rrr(void);
+void radix_sort(void);
+int		is_sorted(t_stack *head);
 // TESTING
-void	print_stacks(void);
+void print_stacks(void);
 // int *get_sorted_array(t_stack *head);
 // TESTING
 #endif

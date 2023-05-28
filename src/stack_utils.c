@@ -58,6 +58,6 @@ void	ft_free_data(void)
 	t_data	*data;
 
 	data = init_data();
-	free_stack(data->a_stack);
+	free_stack(data->aStack);
 	free(data);
 }

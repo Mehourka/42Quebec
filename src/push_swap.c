@@ -20,8 +20,8 @@ t_data	*init_data(void)
 	if (!data)
 	{
 		data = malloc(sizeof(t_data));
-		data->a_stack = NULL;
-		data->b_stack = NULL;
+		data->aStack = NULL;
+		data->bStack = NULL;
 	}
 	return (data);
 }
@@ -32,13 +32,17 @@ int	main(int argc, char *argv[])
 
 	data = init_data();
 	printf("Pushing to stack\n");
-	init_stack(&data->a_stack, argc, argv);
+	init_stack(&data->aStack, argc, argv);
+	printf("Stack length : %d\n", stack_len(data->aStack));
 	printf("Indexing stack\n");
-	index_stack(data->a_stack);
-	printf("Reading stacks\n");
-	print_stacks();
-	rot_sort();
-	print_stacks();
-	printf("Freeing data\n");
+	index_stack(data->aStack);
+	// printf("Reading stacks\n");
+	// print_stacks();
+
+	printf("Sorting ...\n");
+	radix_sort();
+	// print_stacks();
+	// printf("Freeing data\n");
 	ft_free_data();
+
 }

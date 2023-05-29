@@ -1,8 +1,8 @@
 # Ignore
-# libft/
 obj/
 push_swap.dSYM/
 push_swap_visualizer/
+push_swap_visualizer
 testing/
 push_swap_tester
 

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:21:34 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/29 12:20:07 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/29 12:40:55 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define PUSH_SWAP_H
 
 # include "libft.h"
-# include <fcntl.h>
-# include <stdlib.h>
-# include <sys/wait.h>
 # include <unistd.h>
 # include <limits.h>
 
@@ -42,7 +39,6 @@ void		ft_free_data(void);
 t_data		*init_data(void);
 void		index_stack(t_stack *head);
 int			stack_len(t_stack *head);
-void		rot_sort(void);
 void		sa(void);
 void		sb(void);
 void		ss(void);

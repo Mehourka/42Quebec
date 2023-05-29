@@ -39,7 +39,7 @@ SRCS	=	push_swap.c		\
 			rev_rot.c		\
 			index.c			\
 			stack_sort.c	\
-			ps_atoi.c		\
+			long_atoi.c		\
 
 # Objects
 ODIR	=	obj/
@@ -110,4 +110,4 @@ visualizer:
 
 
 .PHONY:
-	clean fclean re test all directories
+	clean fclean re test all directories visualizer leak

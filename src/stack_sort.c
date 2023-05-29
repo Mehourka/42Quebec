@@ -6,42 +6,69 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:13:15 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 13:39:54 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/29 12:20:07 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
 
-void rot_sort(void)
+void	sort_three(void)
 {
-	t_data *data;
-	int a_min;
+	t_data	*data;
+	t_stack	*ptr;
+	int		diff;
+	int		size;
 
 	data = init_data();
-	a_min = 1;
-	if (is_sorted(data->aStack) == 0)
-		return;
-
-	while (data->aStack)
+	ptr = data->astack;
+	size = stack_len(data->astack);
+	if (size > 3)
+		return ;
+	while (ptr->next)
 	{
-		while (data->aStack->val != a_min)
+		diff = ptr->next->val - ptr->val;
+		if (diff == -1)
 		{
-			ra();
+			sa();
+			break ;
 		}
-		pb();
-		a_min++;
+		ptr = ptr->next;
 	}
-	while (data->bStack)
-		pa();
+	if (data->astack->val == 3)
+		ra();
+	if (data->astack->val == 2)
+		rra();
 }
 
-int is_sorted(t_stack *head)
+void	small_sort(void)
 {
-	int prev;
+	t_data	*data;
+
+	data = init_data();
+	while (stack_len(data->astack) > 3)
+	{
+		if (data->astack->val > 3)
+			pb();
+		else
+			ra();
+	}
+	sort_three();
+	if (data->bstack && data->bstack->val == 5)
+		sb();
+	while (data->bstack)
+	{
+		pa();
+		ra();
+	}
+}
+
+int	is_sorted(t_stack *head)
+{
+	int	prev;
 
 	prev = 0;
-	while(head)
+	while (head)
 	{
 		if (prev >= head->val)
 			return (1);
@@ -51,36 +78,32 @@ int is_sorted(t_stack *head)
 	return (0);
 }
 
-int count_bits(int nb)
+int	count_bits(int nb)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (nb >> count)
 		count++;
-	return count;
+	return (count);
 }
 
-void radix_sort(void)
+void	radix_sort(void)
 {
-	t_data *data;
+	t_data	*data;
+	int		size;
+	int		i;
+	int		shift;
 
-	int size;
-	int val;
-	int i;
-	int shift;
 	shift = 0;
-
 	data = init_data();
-	size = stack_len(data->aStack);
-	// while(data->bStack || is_sorted(data->aStack) != 0)
-	while(shift < count_bits(stack_len(data->aStack)))
+	size = stack_len(data->astack);
+	while (shift < count_bits(stack_len(data->astack)))
 	{
 		i = 0;
-		while(i < size)
+		while (i < size)
 		{
-			val = data->aStack->val;
-			if ((val>>shift)&1)
+			if ((data->astack->val >> shift) & 1)
 			{
 				ra();
 			}
@@ -88,7 +111,7 @@ void radix_sort(void)
 				pb();
 			i++;
 		}
-		while(data->bStack)
+		while (data->bstack)
 			pa();
 		shift++;
 	}

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:16:25 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 11:10:39 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/29 11:35:49 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	raise_error(void)
 {
-	printf("Error\n");
+	write(2, "Error\n", 6);
 	ft_free_data();
 	exit(1);
 }
@@ -41,9 +41,15 @@ int	int_check(char *nb)
 	int	i;
 
 	i = 0;
+	if (long_atoi(nb) > INT_MAX || long_atoi(nb) < INT_MIN)
+		return (1);
+	if (nb[0] == '-' || nb[0] == '+')
+		i++;
+	if (!nb[i])
+		return (1);
 	while (nb[i])
 	{
-		if (!ft_isdigit(nb[i]) && !ft_strchr("+-", nb[i]))
+		if (!ft_isdigit(nb[i]))
 			return (1);
 		i++;
 	}

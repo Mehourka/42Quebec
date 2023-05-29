@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 
 
-ARGS = "3 2 1"
+ARGS = " 4 2 3 85 48 -231 23 -3"
 
 NAME = push_swap
 LDIR	=	libft/
@@ -37,9 +37,9 @@ SRCS	=	push_swap.c		\
 			swap.c			\
 			rot.c			\
 			rev_rot.c		\
-			testing.c		\
 			index.c			\
-			stack_sort.c			\
+			stack_sort.c	\
+			ps_atoi.c		\
 
 # Objects
 ODIR	=	obj/

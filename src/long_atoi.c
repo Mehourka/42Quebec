@@ -1,51 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   ps_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 10:16:17 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/29 12:20:07 by kmehour          ###   ########.fr       */
+/*   Created: 2023/01/17 10:23:26 by kmehour           #+#    #+#             */
+/*   Updated: 2023/05/29 11:19:37 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_stack **head)
+long int	long_atoi(const char *str)
 {
-	t_stack	*top;
-	t_stack	*bot;
+	int		signe;
+	int		i;
+	int		result;
 
-	if (!*head || !(*head)->next)
-		return ;
-	top = *head;
-	bot = top->next;
-	top->next = bot->next;
-	bot->next = top;
-	*head = bot;
-}
-
-void	sa(void)
-{
-	t_data	*data;
-
-	data = init_data();
-	swap(&data->astack);
-	write(1, "sa\n", 3);
-}
-
-void	sb(void)
-{
-	t_data	*data;
-
-	data = init_data();
-	swap(&data->bstack);
-	write(1, "sb\n", 3);
-}
-
-void	ss(void)
-{
-	sa();
-	sb();
+	i = 0;
+	signe = 1;
+	result = 0;
+	if (!str)
+		return (0);
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '+' || *str == '-')
+		if (*str++ == '-')
+			signe *= -1;
+	while (ft_isdigit(str[i]))
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (signe * result);
 }

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:16:21 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 12:39:54 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/29 12:20:07 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ra(void)
 	t_data	*data;
 
 	data = init_data();
-	rot(&data->aStack);
+	rot(&data->astack);
 	write(1, "ra\n", 3);
 }
 
@@ -42,7 +42,7 @@ void	rb(void)
 	t_data	*data;
 
 	data = init_data();
-	rot(&data->bStack);
+	rot(&data->bstack);
 	write(1, "rb\n", 3);
 }
 

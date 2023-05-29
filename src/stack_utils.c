@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 10:16:27 by kmehour           #+#    #+#             */
-/*   Updated: 2023/05/26 10:22:46 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/05/29 12:19:51 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	ft_free_data(void)
 	t_data	*data;
 
 	data = init_data();
-	free_stack(data->aStack);
+	free_stack(data->astack);
 	free(data);
 }

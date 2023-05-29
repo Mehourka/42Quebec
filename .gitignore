@@ -3,6 +3,8 @@
 obj/
 push_swap.dSYM/
 push_swap_visualizer/
+testing/
+push_swap_tester
 
 imgui.ini
 push_swap

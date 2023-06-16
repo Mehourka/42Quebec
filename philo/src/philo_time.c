@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_time.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/16 16:30:19 by kmehour           #+#    #+#             */
+/*   Updated: 2023/06/16 16:30:20 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 void micro_sleep(useconds_t milliseconds)
@@ -8,13 +20,13 @@ void micro_sleep(useconds_t milliseconds)
 /*Compute the time difference between two timevals in milliseconds*/
 long int delta_ms(struct timeval start, struct timeval end)
 {
-	long int start_ms;
-	long int end_ms;
+	long int delta_s;
+	long int delta_us;
 	long int delta_ms;
 
-	start_ms = start.tv_sec % 1000 * 1000 + start.tv_usec / 1000;
-	end_ms =  end.tv_sec % 1000 * 1000 + end.tv_usec / 1000;
-	delta_ms = end_ms - start_ms;
+	delta_s = end.tv_sec  - start.tv_sec;
+	delta_us =  end.tv_usec - start.tv_usec;
+	delta_ms = delta_s * 1000 + delta_us / 1000;
 	return (delta_ms);
 }
 

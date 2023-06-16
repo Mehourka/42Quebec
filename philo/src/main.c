@@ -1,51 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
+/*   Updated: 2023/06/16 16:30:13 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "philosophers.h"
 
-void sleep_routine(t_data *data);
-void think_routine(t_data *data);
-void eat_routine(t_data *data);
-void philo_routine(t_data *data);
+void *test_routine(void *arg)
+{
+	(void) arg;
+	printf("Philo in business\n");
+
+	return (NULL);
+}
+
+void describe_philo(t_philo philo)
+{
+	printf("Philo id         : %d\n", philo.id);
+	// printf("Philo left_fork  : %d\n", philo.left_fork);
+	// printf("Philo right_fork : %d\n", philo.right_fork);
+	printf("Philo last meal  : %li\n", philo.last_meal_ms);
+	printf("Philo meal count : %d\n", philo.meal_count);
+}
 
 int main(void)
 {
 	t_data *data;
+	t_philo *philosophers;
+	t_philo curr_philo;
+	
+	int philo_count;
+	int i = 0;
 
 	data = philo_init();
+	philosophers = data->philosophers;
+	philo_count = data->philo_count;
+	while (i < philo_count)
+	{
+		curr_philo = philosophers[i];
+		pthread_create(&(philosophers[i].thread), NULL, philo_routine, &(philosophers[i]));
+		i++;
+	}
 
-	philo_routine(data);
-	printf("runtime : %li\n", get_ms_runtime());
-	free_tdata();
-}
-
-void think_routine(t_data *data)
-{
-	long int think_time;
-
-	think_time = data->time_to.think;
-	micro_sleep(think_time);
-	printf("Philo %d thank %li ms\n", 0, think_time);
-}
-
-void sleep_routine(t_data *data)
-{
-	long int sleep_time;
-
-	sleep_time = data->time_to.sleep; 
-	micro_sleep(sleep_time);
-	printf("Philo %d slept %li ms\n", 0, sleep_time);
-}
-
-void eat_routine(t_data *data)
-{
-	long int eat_time;
-
-	eat_time = data->time_to.eat; 
-	micro_sleep(eat_time);
-	printf("Philo %d slept %li ms\n", 0, eat_time);
-}
-
-void philo_routine(t_data *data)
-{
-	sleep_routine(data);
-	think_routine(data);
-	eat_routine(data);
+	i = 0;
+	while (i < philo_count)
+	{
+		pthread_join(philosophers[i].thread, NULL);
+		i++;
+	}
+	// printf("runtime : %li ms\n", get_ms_runtime());
+	// free_tdata();
 }

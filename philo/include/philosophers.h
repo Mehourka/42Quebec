@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
+/*   Updated: 2023/06/16 16:30:32 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -8,16 +20,36 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef struct s_philo_times{
+# define PHILO_COUNT 2
+# define TIMETO_DIE 400
+# define TIMETO_EAT 100
+# define TIMETO_SLEEP 100
+# define TIMETO_THINK 100
+
+typedef struct s_philo_times
+{
 	long int	die;
 	long int	eat;
 	long int	sleep;
 	long int	think;
 }	t_philo_times;
 
-typedef struct s_data{
+typedef struct s_philo
+{
+	int				id;
+	pthread_t		thread;
+	pthread_mutex_t	right_fork;
+	pthread_mutex_t	left_fork;
+	long int		last_meal_ms;
+	int				meal_count;
+
+}	t_philo;
+
+typedef struct s_data
+{
 	u_int32_t		philo_count;
-	pthread_t		*philo_threads;
+	t_philo			*philosophers;
+	pthread_mutex_t	*fork_mutex;
 	t_philo_times	time_to;
 }	t_data;
 
@@ -31,6 +63,12 @@ long int		get_ms_runtime(void);
 void			micro_sleep(useconds_t milliseconds);
 
 // Thread functions
+
+// Thread routines
+// void sleep_routine(t_data *data, t_philo *philo);
+// void think_routine(t_data *data, t_philo *philo);
+// void eat_routine(t_data *data, t_philo *philo);
+void *philo_routine(void *data);
 
 // Memory managment
 void		free_tdata(void);

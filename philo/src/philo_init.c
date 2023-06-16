@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_init.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
+/*   Updated: 2023/06/16 16:30:30 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-void	init_philo_threads(t_data *data);
+void	init_philosophers(t_data *data);
 void	init_philo_times(t_data *data);
+void	init_fork_mutex(t_data *data);
 
 t_data *philo_init(void)
 {
@@ -14,25 +27,58 @@ t_data *philo_init(void)
 
 		// Init data structure
 		data = malloc(sizeof(t_data));
-		data->philo_count = 3;
-		// init_philo_threads(data);
+		data->philo_count = PHILO_COUNT;
+		init_philosophers(data); 
 		init_philo_times(data);
+		init_fork_mutex(data);
 	}
 	return (data);
 }
 
-void	init_philo_threads(t_data *data)
+void	init_philosophers(t_data *data)
 {
-	int philo_count;
+	int				philo_count;
+	int				i;
+	t_philo			*philosophers;
+	pthread_mutex_t	*forks;
 
 	philo_count = data->philo_count;
-	data->philo_threads = malloc(sizeof(pthread_t) * philo_count);
+	data->philosophers = malloc(sizeof(t_philo) * philo_count);
+	philosophers = data->philosophers;
+	forks = data->fork_mutex;
+
+	i = 0;
+	while (i < philo_count)
+	{
+		philosophers[i].id = i;
+		philosophers[i].left_fork = forks[i];
+		philosophers[i].right_fork = forks[(i + 1) % philo_count];
+		philosophers[i].last_meal_ms = 0;
+		philosophers[i].meal_count = 0;
+		i++;
+	}
 }
 
 void	init_philo_times(t_data *data)
 {
-	data->time_to.die = 400;
-	data->time_to.eat = 100;
-	data->time_to.sleep = 100;
-	data->time_to.think = 100;
+	data->time_to.die = TIMETO_DIE;
+	data->time_to.eat = TIMETO_EAT;
+	data->time_to.sleep = TIMETO_SLEEP;
+	data->time_to.think = TIMETO_THINK;
+}
+
+void	init_fork_mutex(t_data *data)
+{
+	int philo_count;
+	int i;
+	
+	philo_count = data->philo_count;
+	data->fork_mutex = malloc(sizeof(pthread_mutex_t) * philo_count);
+	i = 0;
+	while(i < philo_count)
+	{
+		pthread_mutex_init(&(data->fork_mutex[i]), NULL);
+		i++;
+	}
+	
 }

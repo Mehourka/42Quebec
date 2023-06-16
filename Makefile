@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------#
 
 ARGS	=	""
-NAME	=	main
+NAME	=	philo
 
 # Colors
 GREEN	=	\033[0;32m
@@ -18,9 +18,8 @@ SRCDIR	=	src/
 BONDIR	=	bonus_src/
 
 # Libraries
-LIBFT	=	$(LIBDIR)/libft/libft.a
-INCLUDES=	-I $(LIBDIR)/libft -I $(INCDIR)
-LIBS	=	$(LIBFT)
+INCLUDES=	-I $(INCDIR)
+LIBS	=
 
 # Compiler and flags
 CC		=	gcc
@@ -47,6 +46,7 @@ DEPS		:=	$(OBJS:%.o=%.d)
 #------------------------------------------------------------------------------#
 
 all : $(NAME)
+	@./$(NAME)
 
 # Compile program
 $(NAME) : $(LIBFT) $(OBJS)
@@ -60,19 +60,14 @@ $(OBJDIR)%.o : $(SRCDIR)%.c
 
 -include $(DEPS)
 
-# Compile libft
-$(LIBFT):
-	@ $(MAKE) -C $(LIBDIR)/libft -s
-
 # Compile Bonus
-bonus : $(LIBFT) $(BONUS_OBJS)
-	@echo "$(GREEN)	Compiling $@ ... $(NC)"
-	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBS) -o $@ -I/bonus_src/ $(INCLUDES)
+# bonus : $(BONUS_OBJS)
+# 	@echo "$(GREEN)	Compiling $@ ... $(NC)"
+# 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBS) -o $@ -I/bonus_src/ $(INCLUDES)
 
 $(OBJDIR)%.o : $(BONDIR)%.c
 	@mkdir -p $(OBJDIR);
 	$(CC) -c $(CFLAGS) -MMD -MP $< -o $@ $(INCLUDES)
-
 
 # Remove objects
 clean :
@@ -83,12 +78,12 @@ clean :
 # Remove all
 fclean : clean
 	@$(RM) -f $(NAME) bonus
-	@$(MAKE) fclean -C $(LIBDIR)/libft -s
 	@echo "$(RED)	Removed executables and libft	$(NC)"
 
 # Remake
 re : fclean all
 
+# Valgrind leak check
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)

@@ -1,45 +1,51 @@
 # include "philosophers.h"
 
-long int delta_usec(struct timeval start, struct timeval end)
-{
-	long int delta_s;
-	long int delta_u;
-
-	delta_s = end.tv_sec - start.tv_sec;
-	delta_u = end.tv_usec - start.tv_usec;
-	delta_u += delta_s * 1000000;
-	return (delta_u);
-}
-
-long int get_runtime()
-{
-	struct timeval curr_time;
-	static struct timeval start_time = {0, 0};
-
-	if (start_time.tv_sec == 0)
-	{
-		gettimeofday(&start_time, NULL);
-	}
-
-	gettimeofday(&curr_time, NULL);
-	return (delta_usec(start_time, curr_time));
-}
+void sleep_routine(t_data *data);
+void think_routine(t_data *data);
+void eat_routine(t_data *data);
+void philo_routine(t_data *data);
 
 int main(void)
 {
-	int string_len = 5;
-	char dest_string[string_len + 1];
-	// struct timeval start_time;
-	get_runtime();
+	t_data *data;
 
-	usleep(100);
+	data = philo_init();
 
+	philo_routine(data);
+	printf("runtime : %li\n", get_ms_runtime());
+	free_tdata();
+}
 
-	// gettimeofday(&start_time, NULL);
+void think_routine(t_data *data)
+{
+	long int think_time;
 
-	memset(&dest_string, 'D', string_len);
-	printf("String : %s\n", dest_string);
+	think_time = data->time_to.think;
+	micro_sleep(think_time);
+	printf("Philo %d thank %li ms\n", 0, think_time);
+}
 
-	printf("runtime : %li\n", get_runtime());
+void sleep_routine(t_data *data)
+{
+	long int sleep_time;
 
+	sleep_time = data->time_to.sleep; 
+	micro_sleep(sleep_time);
+	printf("Philo %d slept %li ms\n", 0, sleep_time);
+}
+
+void eat_routine(t_data *data)
+{
+	long int eat_time;
+
+	eat_time = data->time_to.eat; 
+	micro_sleep(eat_time);
+	printf("Philo %d slept %li ms\n", 0, eat_time);
+}
+
+void philo_routine(t_data *data)
+{
+	sleep_routine(data);
+	think_routine(data);
+	eat_routine(data);
 }

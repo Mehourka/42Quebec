@@ -28,7 +28,12 @@ CFLAGS +=	-Wunreachable-code -Ofast
 RM		=	rm
 
 # Sources
-SRCS	:=	main.c
+SRCS	:=	main.c			\
+			philo_time.c	\
+			philo_init.c	\
+			philo_memory.c	\
+
+
 B_SRCS	:=	$(SRCS:%=bonus_%)
 
 

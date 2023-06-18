@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-# define PHILO_COUNT 2
+# define PHILO_COUNT 5
 # define TIMETO_DIE 400
 # define TIMETO_EAT 100
 # define TIMETO_SLEEP 100
@@ -38,8 +38,8 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
 	long int		last_meal_ms;
 	int				meal_count;
 

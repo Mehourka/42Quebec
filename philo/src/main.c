@@ -33,17 +33,17 @@ int main(void)
 {
 	t_data *data;
 	t_philo *philosophers;
-	t_philo curr_philo;
-	
+
 	int philo_count;
 	int i = 0;
 
 	data = philo_init();
+	(void) data;
 	philosophers = data->philosophers;
 	philo_count = data->philo_count;
+
 	while (i < philo_count)
 	{
-		curr_philo = philosophers[i];
 		pthread_create(&(philosophers[i].thread), NULL, philo_routine, &(philosophers[i]));
 		i++;
 	}
@@ -54,6 +54,6 @@ int main(void)
 		pthread_join(philosophers[i].thread, NULL);
 		i++;
 	}
-	// printf("runtime : %li ms\n", get_ms_runtime());
-	// free_tdata();
+	printf("runtime : %li ms\n", get_ms_runtime());
+	free_tdata();
 }

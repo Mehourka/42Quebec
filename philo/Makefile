@@ -36,7 +36,7 @@ LIBS	=
 # Compiler and flags
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
-CFLAGS +=	-Wunreachable-code -Ofast
+# CFLAGS +=	-Wunreachable-code -Ofast
 RM		=	rm
 
 # Sources

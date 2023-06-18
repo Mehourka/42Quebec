@@ -20,11 +20,16 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-# define PHILO_COUNT 5
+# define PHILO_COUNT 2
 # define TIMETO_DIE 400
 # define TIMETO_EAT 100
 # define TIMETO_SLEEP 100
 # define TIMETO_THINK 100
+
+# define LOG_FORK " took a fork\n"
+# define LOG_EAT " is eating\n"
+# define LOG_SLEEP " is sleeping\n"
+# define LOG_THINK " is thinking\n"
 
 typedef struct s_philo_times
 {
@@ -50,6 +55,7 @@ typedef struct s_data
 	u_int32_t		philo_count;
 	t_philo			*philosophers;
 	pthread_mutex_t	*fork_mutex;
+	pthread_mutex_t	write_mutex;
 	t_philo_times	time_to;
 }	t_data;
 
@@ -69,6 +75,12 @@ void			micro_sleep(useconds_t milliseconds);
 // void think_routine(t_data *data, t_philo *philo);
 // void eat_routine(t_data *data, t_philo *philo);
 void *philo_routine(void *data);
+
+// Logs
+void ft_putnbr(long int number);
+void ft_putstr(char *string);
+// void describe_philo(t_philo philo);
+void print_log(int philo_id, char *action);
 
 // Memory managment
 void		free_tdata(void);

@@ -22,15 +22,15 @@ t_data *philo_init(void)
 
 	if (!data)
 	{
-		// Init start runtime
-		get_ms_runtime();
-
 		// Init data structure
 		data = malloc(sizeof(t_data));
 		data->philo_count = PHILO_COUNT;
 		init_fork_mutex(data);
 		init_philosophers(data);
 		init_philo_times(data);
+		
+		// Init start runtime
+		get_ms_runtime();
 	}
 	return (data);
 }
@@ -77,8 +77,8 @@ void	init_fork_mutex(t_data *data)
 	while(i < philo_count)
 	{
 		pthread_mutex_init(&(data->fork_mutex[i]), NULL);
-		printf("Initializing mutex %d - %p\n", i, data->fork_mutex);
 		i++;
 	}
+	pthread_mutex_init(&data->write_mutex, NULL);
 
 }

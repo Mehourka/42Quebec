@@ -38,5 +38,6 @@ void destroy_mutex(t_data *data)
 		pthread_mutex_destroy(&(mutex_arr[i]));
 		i++;
 	}
+	pthread_mutex_destroy(&(data->write_mutex));
 	free(mutex_arr);
 }

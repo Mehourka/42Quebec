@@ -12,47 +12,11 @@
 
 #include "philosophers.h"
 
-void lock_forks(t_philo *philo)
-{
-	pthread_mutex_lock(philo->right_fork);
-	printf("Philo %d took a fork\n", philo->id);
-	pthread_mutex_lock(philo->left_fork);
-	printf("Philo %d took a fork\n", philo->id);
-
-}
-
-void unlock_forks(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
-}
-
-void think_routine(t_data *data, int id)
-{
-	long int think_time;
-
-	think_time = data->time_to.think;
-	micro_sleep(think_time);
-	printf("%ld ms %d is thinking\n", get_ms_runtime(), id);
-}
-
-void sleep_routine(t_data *data, int id)
-{
-	long int sleep_time;
-
-	sleep_time = data->time_to.sleep;
-	micro_sleep(sleep_time);
-	printf("%ld ms %d is sleeping\n", get_ms_runtime(), id);
-}
-
-void eat_routine(t_data *data, int id)
-{
-	long int eat_time;
-
-	eat_time = data->time_to.eat;
-	micro_sleep(eat_time);
-	printf("%ld ms %d is eating\n", get_ms_runtime(), id);
-}
+void lock_forks(t_philo *philo);
+void unlock_forks(t_philo *philo);
+void eat_routine(t_data *data, int id);
+void sleep_routine(t_data *data, int id);
+void think_routine(t_data *data, int id);
 
 void *philo_routine(void *arg)
 {
@@ -75,4 +39,65 @@ void *philo_routine(void *arg)
 	}
 	return (NULL);
 }
+
+void lock_forks(t_philo *philo)
+{
+
+	if (philo->id % 2)
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_log(philo->id, LOG_FORK);
+		pthread_mutex_lock(philo->left_fork);
+		print_log(philo->id, LOG_FORK);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_log(philo->id, LOG_FORK);
+		pthread_mutex_lock(philo->right_fork);
+		print_log(philo->id, LOG_FORK);
+	}
+
+}
+
+void unlock_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+}
+
+void eat_routine(t_data *data, int id)
+{
+	long int eat_time;
+
+	eat_time = data->time_to.eat;
+	micro_sleep(eat_time);
+	// printf("%ld ms %d is eating\n", get_ms_runtime(), id);
+	print_log(id, LOG_EAT);
+}
+
+void sleep_routine(t_data *data, int id)
+{
+	long int sleep_time;
+
+	sleep_time = data->time_to.sleep;
+	micro_sleep(sleep_time);
+	// printf("%ld ms %d is sleeping\n", get_ms_runtime(), id);
+	print_log(id, LOG_SLEEP);
+
+}
+
+void think_routine(t_data *data, int id)
+{
+	long int think_time;
+
+	think_time = data->time_to.think;
+	micro_sleep(think_time);
+	// printf("%ld ms %d is thinking\n", get_ms_runtime(), id);
+	print_log(id, LOG_THINK);
+
+}
+
+
+
 

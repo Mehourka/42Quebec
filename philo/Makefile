@@ -36,7 +36,7 @@ LIBS	=
 # Compiler and flags
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
-# CFLAGS +=	-Wunreachable-code -Ofast
+CFLAGS +=	-fsanitize=thread
 RM		=	rm
 
 # Sources
@@ -45,6 +45,7 @@ SRCS	:=	main.c			\
 			philo_init.c	\
 			philo_memory.c	\
 			philo_routines.c\
+			philo_log.c\
 
 
 B_SRCS	:=	$(SRCS:%=bonus_%)

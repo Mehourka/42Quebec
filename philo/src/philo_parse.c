@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:19 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/19 15:39:02 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:53:17 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int parse_arguments(int argc, char *argv[], t_data *data)
 	if (argc < MIN_ARG_NUM || argc > MAX_ARG_NUM)
 	{
 		print_usage(argv);
-		printf("ARGC : %d", argc);
 		return (1);
 	}
 
@@ -67,7 +66,6 @@ int	parse_uint(char *nb, u_int32_t *dest)
 		result = 10 * result + (nb[i] - '0');
 		i++;
 	}
-	printf("Assigning %d to %p, previously containing %d\n", result, dest, *dest);
 	*dest = result;
 	return (0);
 }

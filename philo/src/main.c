@@ -6,13 +6,14 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/19 15:33:32 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:46:03 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "philosophers.h"
 
 int is_dead(t_philo philo, t_data *data);
+void death_loop(t_data *data);
 
 int main(int argc, char *argv[])
 {
@@ -29,9 +30,6 @@ int main(int argc, char *argv[])
 	if (philo_init(data, argc, argv))
 		return (1);
 
-	printf("Time to :\n%d\n%d\n%d\nCount %d\n", \
-	data->time_to.die, data->time_to.eat, data->time_to.sleep, data->philo_count);
-
 	philosophers = data->philosophers;
 	philo_count = data->philo_count;
 	while (i < philo_count)
@@ -40,10 +38,12 @@ int main(int argc, char *argv[])
 		i++;
 	}
 
+	death_loop(data);
+
 	i = 0;
 	while (i < philo_count)
 	{
-		pthread_join(philosophers[i].thread, NULL);
+		pthread_detach(philosophers[i].thread);
 		i++;
 	}
 	// printf("runtime : %li ms\n", get_ms_runtime());
@@ -58,5 +58,36 @@ int is_dead(t_philo philo, t_data *data)
 
 	time_to_die = data->time_to.die;
 	last_meal = philo.last_meal_ms;
-	return (get_ms_runtime() - last_meal >= time_to_die);
+	return (get_ms_runtime() - last_meal > time_to_die);
+}
+
+void death_loop(t_data *data)
+{
+	int i;
+	int philo_count;
+	t_philo *philosophers;
+	int flag;
+
+	flag = 0;
+	philo_count = data->philo_count;
+	philosophers = data->philosophers;
+	while (!flag)
+	{
+		i = 0;
+		while(i < philo_count)
+		{
+			if (is_dead(philosophers[i], data))
+			{
+				flag++;
+				printf("%d has DIEDED !!!\n", philosophers[i].id);
+				printf("last meal : %li current time : %li\n", philosophers[i].last_meal_ms, get_ms_runtime());
+				break;
+			}
+			i++;
+		}
+		usleep(3000);
+	}
+	pthread_mutex_lock(&data->write_mutex);
+	data->death = 1;
+	pthread_mutex_unlock(&data->write_mutex);
 }

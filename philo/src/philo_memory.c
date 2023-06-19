@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:21 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/19 13:52:09 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:23:48 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void destroy_mutex(t_data *data);
 
 void free_tdata(t_data *data)
 {
-	// free(data->philo_threads);
+	
 	destroy_mutex(data);
 	free(data);
 }

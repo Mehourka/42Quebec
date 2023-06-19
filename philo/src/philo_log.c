@@ -11,13 +11,16 @@ void print_log(int philo_id, char *action)
 
 	data = get_data();
 	philo_id += 1;
-	pthread_mutex_lock(&data->write_mutex);
 	timestamp = get_ms_runtime();
-	// ft_putnbr(timestamp);
-	// ft_putstr(" ms ");
-	// ft_putnbr(philo_id);
-	// ft_putstr(action);
-	printf("%li ms %d %s", timestamp, philo_id, action);
+	pthread_mutex_lock(&data->write_mutex);
+	if (!data->death)
+	{
+		ft_putnbr(timestamp);
+		ft_putstr(" ms ");
+		ft_putnbr(philo_id);
+		ft_putstr(action);
+		// printf("%li ms %d %s", timestamp, philo_id, action);
+	}
 	pthread_mutex_unlock(&data->write_mutex);
 }
 

@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/19 15:37:43 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/19 17:47:57 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,13 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS	=	3 100 100 100 5
+# life
+ARGS	=  5 800 200 200 # l
+ARGS	=  100 810 200 200 # l
+# ARGS	=  4 320 200 100 # d
+
+# ARGS	=  2 200 100 100
+
 NAME	=	philo
 
 # Colors
@@ -36,7 +42,7 @@ LIBS	=
 # Compiler and flags
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
-CFLAGS +=	-fsanitize=thread
+# CFLAGS +=	-fsanitize=thread
 RM		=	rm
 
 # Sources

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/16 16:30:27 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:41:03 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,22 @@ void *philo_routine(void *arg)
 	t_data *data;
 	t_philo *philo;
 
-	data = philo_init();
+	
+	data = get_data();
 	philo = arg;
 	int id = philo->id;
-
 	int i = 0;
-	while(i < 1)
+	while(1)
 	{
 		lock_forks(philo);
+		philo->last_meal_ms = get_ms_runtime();
 		eat_routine(data, id);
 		unlock_forks(philo);
 		sleep_routine(data, id);
 		think_routine(data, id);
 		i++;
 	}
+	printf("PHILO %d FINISHED\n", philo->id);
 	return (NULL);
 }
 
@@ -72,7 +74,6 @@ void eat_routine(t_data *data, int id)
 
 	eat_time = data->time_to.eat;
 	micro_sleep(eat_time);
-	// printf("%ld ms %d is eating\n", get_ms_runtime(), id);
 	print_log(id, LOG_EAT);
 }
 
@@ -82,22 +83,13 @@ void sleep_routine(t_data *data, int id)
 
 	sleep_time = data->time_to.sleep;
 	micro_sleep(sleep_time);
-	// printf("%ld ms %d is sleeping\n", get_ms_runtime(), id);
 	print_log(id, LOG_SLEEP);
 
 }
 
 void think_routine(t_data *data, int id)
 {
-	long int think_time;
-
-	think_time = data->time_to.think;
-	micro_sleep(think_time);
-	// printf("%ld ms %d is thinking\n", get_ms_runtime(), id);
+	(void) data;
+	
 	print_log(id, LOG_THINK);
-
 }
-
-
-
-

@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/16 16:30:36 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/19 15:37:43 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS	=	""
+ARGS	=	3 100 100 100 5
 NAME	=	philo
 
 # Colors
@@ -46,6 +46,7 @@ SRCS	:=	main.c			\
 			philo_memory.c	\
 			philo_routines.c\
 			philo_log.c\
+			philo_parse.c\
 
 
 B_SRCS	:=	$(SRCS:%=bonus_%)
@@ -65,7 +66,7 @@ DEPS		:=	$(OBJS:%.o=%.d)
 #------------------------------------------------------------------------------#
 
 all : $(NAME)
-	@./$(NAME)
+	@./$(NAME) $(ARGS)
 
 # Compile program
 $(NAME) : $(LIBFT) $(OBJS)

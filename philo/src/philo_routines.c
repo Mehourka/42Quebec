@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 18:14:28 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:23:33 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,17 @@ void	unlock_forks(t_philo *philo);
 void	eat_routine(t_data *data, int id, struct timeval *last_meal_tv);
 void	sleep_routine(t_data *data, int id);
 void	think_routine(t_data *data, int id);
-void	test_routine(void *arg);
 
 void	*philo_routine(void *arg)
 {
 	t_data	*data;
 	t_philo	*philo;
-	int		meal_count;
 
 	data = get_data();
 	philo = arg;
-	meal_count = data->meal_count;
 	if (philo->id % 2)
 		micro_sleep(data->time_to.eat / 2);
-	while (meal_count != 0)
+	while (data->meal_count != 0)
 	{
 		pthread_mutex_lock(&data->write_mutex);
 		if (data->death)
@@ -44,7 +41,7 @@ void	*philo_routine(void *arg)
 		unlock_forks(philo);
 		sleep_routine(data, philo->id);
 		think_routine(data, philo->id);
-		meal_count--;
+		data->meal_count--;
 	}
 	pthread_mutex_lock(&data->status_mutex);
 	data->finished_eating++;
@@ -90,6 +87,7 @@ void	think_routine(t_data *data, int id)
 {
 	(void)data;
 	print_log(id, LOG_THINK);
+	usleep(10);
 }
 
 // void	test_routine(void *arg)

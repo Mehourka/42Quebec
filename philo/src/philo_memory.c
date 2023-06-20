@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:21 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/19 16:23:48 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/20 15:15:43 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ void destroy_mutex(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&(data->write_mutex));
+	pthread_mutex_destroy(&(data->status_mutex));
 	free(mutex_arr);
 }

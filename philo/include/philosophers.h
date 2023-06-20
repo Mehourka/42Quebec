@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/19 15:32:50 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/20 17:07:56 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define MIN_ARG_NUM 5
 # define MAX_ARG_NUM 6
 
+typedef struct timeval timeval;
+
 typedef struct s_philo_times
 {
 	u_int32_t	die;
@@ -47,18 +49,22 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
-	long int		last_meal_ms;
-	int				meal_count;
+	struct timeval		last_meal_tv;
+	int					is_full;
+	
 
 }	t_philo;
 
 typedef struct s_data
 {
 	u_int32_t		philo_count;
+	u_int32_t		meal_count;
+	int		finished_eating;
 	int				death;
 	t_philo			*philosophers;
 	pthread_mutex_t	*fork_mutex;
 	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	status_mutex;
 	t_philo_times	time_to;
 }	t_data;
 
@@ -71,6 +77,8 @@ int				philo_init(t_data *data, int argc, char *argv[]);
 long int		delta_ms(struct timeval statrt, struct timeval end);
 long int		get_ms_runtime(void);
 void			micro_sleep(useconds_t milliseconds);
+timeval	get_start_tv(void);
+int64_t get_tv_ms(struct timeval tv);
 
 // Thread functions
 
@@ -91,6 +99,9 @@ void		free_tdata(t_data *data);
 
 // Parsing
 int parse_arguments(int argc, char *argv[], t_data *data);
+void test_routine(void *arg);
+int is_dead(t_philo philo, t_data *data);
+
 
 # define STDOUT_FILENO 1
 #endif

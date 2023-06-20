@@ -11,15 +11,15 @@ void print_log(int philo_id, char *action)
 
 	data = get_data();
 	philo_id += 1;
-	timestamp = get_ms_runtime();
 	pthread_mutex_lock(&data->write_mutex);
+	timestamp = get_ms_runtime();
 	if (!data->death)
 	{
-		ft_putnbr(timestamp);
-		ft_putstr(" ms ");
-		ft_putnbr(philo_id);
-		ft_putstr(action);
-		// printf("%li ms %d %s", timestamp, philo_id, action);
+		// ft_putnbr(timestamp);
+		// ft_putstr(" ms ");
+		// ft_putnbr(philo_id);
+		// ft_putstr(action);
+		printf("%li ms %d %s", timestamp, philo_id, action);
 	}
 	pthread_mutex_unlock(&data->write_mutex);
 }
@@ -49,6 +49,6 @@ void describe_philo(t_philo philo)
 	printf("Philo id         : %d\n", philo.id);
 	// printf("Philo left_fork  : %d\n", philo.left_fork);
 	// printf("Philo right_fork : %d\n", philo.right_fork);
-	printf("Philo last meal  : %li\n", philo.last_meal_ms);
-	printf("Philo meal count : %d\n", philo.meal_count);
+	// printf("Philo last meal  : %li\n", philo.last_meal_ms);
+	// printf("Philo meal count : %d\n", philo.meal_count);
 }

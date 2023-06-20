@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:19 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/19 14:44:57 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/20 15:33:36 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,25 @@ int64_t get_tv_ms(struct timeval tv)
 {
 	return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
-/*Gives the elapsed milliseconds since the first call to this function*/
-long int get_ms_runtime()
+
+struct timeval get_start_tv(void)
 {
-	struct timeval curr_time;
 	static struct timeval start_time;
 
 	if (start_time.tv_sec == 0)
 	{
 		gettimeofday(&start_time, NULL);
 	}
+	return start_time;
+}
+
+/*Gives the elapsed milliseconds since the first call to this function*/
+long int get_ms_runtime()
+{
+	struct timeval curr_time;
+	struct timeval start_time;
+
+	start_time = get_start_tv();
 	gettimeofday(&curr_time, NULL);
 	return (delta_ms(start_time, curr_time));
 }

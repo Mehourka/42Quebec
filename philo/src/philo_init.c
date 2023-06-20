@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/19 16:33:03 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/20 17:08:09 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,17 @@ t_data *get_data(void)
 int philo_init(t_data *data, int argc, char *argv[])
 {
 		// Init data structure
+		data->meal_count = -1;
+		data->death = 0;
 		if (parse_arguments(argc, argv, data))
 		{
 			return (1);
 		}
-		data->death = 0;
 		init_fork_mutex(data);
 		init_philosophers(data);
 
 		// Init start runtime
-		get_ms_runtime();
+		get_start_tv();
 
 		return  (0);
 }
@@ -56,8 +57,8 @@ void	init_philosophers(t_data *data)
 		data->philosophers[i].id = i;
 		data->philosophers[i].left_fork = &data->fork_mutex[i];
 		data->philosophers[i].right_fork = &data->fork_mutex[(i + 1) % philo_count];
-		data->philosophers[i].last_meal_ms = 0;
-		data->philosophers[i].meal_count = 0;
+		data->philosophers[i].last_meal_tv = get_start_tv();
+		data->philosophers[i].is_full = 0;
 		i++;
 	}
 }
@@ -76,5 +77,6 @@ void	init_fork_mutex(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->write_mutex, NULL);
+	pthread_mutex_init(&data->status_mutex, NULL);
 
 }

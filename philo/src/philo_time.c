@@ -6,31 +6,30 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:19 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 15:33:36 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:15:47 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int64_t get_tv_ms(struct timeval tv);
+int64_t			get_tv_ms(struct timeval tv);
 
-void micro_sleep(useconds_t milliseconds)
+void	micro_sleep(useconds_t milliseconds)
 {
-	int64_t target;
+	int64_t	target;
 
 	target = get_ms_runtime() + milliseconds;
 	usleep((milliseconds - 10) * 1000);
-	while(get_ms_runtime() < target)
+	while (get_ms_runtime() < target)
 		usleep(50);
-
 }
 
 /*Compute the time difference between two timevals in milliseconds*/
-long int delta_ms(struct timeval start, struct timeval end)
+long int	delta_ms(struct timeval start, struct timeval end)
 {
-	long int delta_s;
-	long int delta_us;
-	long int delta_ms;
+	long int	delta_s;
+	long int	delta_us;
+	long int	delta_ms;
 
 	delta_s = end.tv_sec - start.tv_sec;
 	delta_us = end.tv_usec - start.tv_usec;
@@ -38,27 +37,27 @@ long int delta_ms(struct timeval start, struct timeval end)
 	return (delta_ms);
 }
 
-int64_t get_tv_ms(struct timeval tv)
+int64_t	get_tv_ms(struct timeval tv)
 {
-	return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-struct timeval get_start_tv(void)
+struct timeval	get_start_tv(void)
 {
-	static struct timeval start_time;
+	static struct timeval	start_time;
 
 	if (start_time.tv_sec == 0)
 	{
 		gettimeofday(&start_time, NULL);
 	}
-	return start_time;
+	return (start_time);
 }
 
 /*Gives the elapsed milliseconds since the first call to this function*/
-long int get_ms_runtime()
+long int	get_ms_runtime(void)
 {
-	struct timeval curr_time;
-	struct timeval start_time;
+	struct timeval	curr_time;
+	struct timeval	start_time;
 
 	start_time = get_start_tv();
 	gettimeofday(&curr_time, NULL);

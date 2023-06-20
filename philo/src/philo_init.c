@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 17:08:09 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:16:26 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,4 @@ void	init_fork_mutex(t_data *data)
 	}
 	pthread_mutex_init(&data->write_mutex, NULL);
 	pthread_mutex_init(&data->status_mutex, NULL);
-
 }

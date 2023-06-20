@@ -1,13 +1,24 @@
-# include <philosophers.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_log.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/20 17:50:59 by kmehour           #+#    #+#             */
+/*   Updated: 2023/06/20 17:51:04 by kmehour          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void ft_putnbr(long int number);
-void ft_putstr(char *string);
-void describe_philo(t_philo philo);
+#include <philosophers.h>
 
-void print_log(int philo_id, char *action)
+void	ft_putnbr(long int number);
+void	ft_putstr(char *string);
+
+void	print_log(int philo_id, char *action)
 {
-	long int timestamp;
-	t_data *data;
+	long int	timestamp;
+	t_data		*data;
 
 	data = get_data();
 	philo_id += 1;
@@ -15,40 +26,28 @@ void print_log(int philo_id, char *action)
 	timestamp = get_ms_runtime();
 	if (!data->death)
 	{
-		// ft_putnbr(timestamp);
-		// ft_putstr(" ms ");
-		// ft_putnbr(philo_id);
-		// ft_putstr(action);
 		printf("%li ms %d %s", timestamp, philo_id, action);
 	}
 	pthread_mutex_unlock(&data->write_mutex);
 }
 
-void ft_putnbr(long int number)
+void	ft_putnbr(long int number)
 {
-	char c;
+	char	c;
+
 	if (number > 9)
 		ft_putnbr(number / 10);
 	c = number % 10 + '0';
 	write(1, &c, 1);
 }
 
-void ft_putstr(char *string)
+void	ft_putstr(char *string)
 {
 	if (!string)
-		return;
-	while(*string)
+		return ;
+	while (*string)
 	{
 		write(1, string, 1);
 		string++;
 	}
-}
-
-void describe_philo(t_philo philo)
-{
-	printf("Philo id         : %d\n", philo.id);
-	// printf("Philo left_fork  : %d\n", philo.left_fork);
-	// printf("Philo right_fork : %d\n", philo.right_fork);
-	// printf("Philo last meal  : %li\n", philo.last_meal_ms);
-	// printf("Philo meal count : %d\n", philo.meal_count);
 }

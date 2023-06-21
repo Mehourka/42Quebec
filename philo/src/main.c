@@ -16,6 +16,7 @@ void	death_loop(t_data *data);
 int		check_finished_eating(t_data *data, int *flag);
 void	creat_threads(t_data *data);
 void	join_threads(t_data *data);
+void	detach_threads(t_data *data);
 
 int	main(int argc, char *argv[])
 {
@@ -69,6 +70,24 @@ void join_threads(t_data *data)
 	}
 }
 
+void detach_threads(t_data *data)
+{
+	t_philo		*philo;
+	pthread_t	*thread;
+	int			count;
+	int			i;
+
+	i = 0;
+	count = data->philo_count;
+	while (i < count)
+	{
+		philo = &data->philosophers[i];
+		thread = &philo->thread;
+		pthread_detach(*thread);
+		i++;
+	}
+}
+
 
 void	death_loop(t_data *data)
 {
@@ -87,7 +106,10 @@ void	death_loop(t_data *data)
 		while (i < philo_count)
 		{
 			if (is_dead(philosophers[i], data, &flag))
+			{
+				// detach_threads(data);
 				break ;
+			}
 			if (check_finished_eating(data, &flag))
 				break ;
 			i++;

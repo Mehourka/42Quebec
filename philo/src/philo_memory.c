@@ -17,6 +17,7 @@ void	destroy_mutex(t_data *data);
 void	free_tdata(t_data *data)
 {
 	destroy_mutex(data);
+	free(data->philosophers);
 	free(data);
 }
 

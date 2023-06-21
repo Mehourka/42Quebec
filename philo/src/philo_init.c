@@ -29,6 +29,7 @@ int	philo_init(t_data *data, int argc, char *argv[])
 {
 	data->meal_count = -1;
 	data->death = 0;
+	data->finished_eating = 0;
 	if (parse_arguments(argc, argv, data))
 	{
 		return (1);

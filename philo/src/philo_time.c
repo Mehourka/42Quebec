@@ -29,12 +29,10 @@ long int	delta_ms(struct timeval start, struct timeval end)
 {
 	long int	delta_s;
 	long int	delta_us;
-	long int	delta_ms;
 
 	delta_s = end.tv_sec - start.tv_sec;
 	delta_us = end.tv_usec - start.tv_usec;
-	delta_ms = delta_s * 1000 + delta_us / 1000;
-	return (delta_ms);
+	return (delta_s * 1000 + delta_us / 1000);
 }
 
 int64_t	get_tv_ms(struct timeval tv)

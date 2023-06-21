@@ -89,7 +89,7 @@ void	think_routine(t_data *data, int id)
 {
 	(void)data;
 	print_log(id, LOG_THINK);
-	usleep(1000);
+	usleep(50);
 }
 
 // void	test_routine(void *arg)

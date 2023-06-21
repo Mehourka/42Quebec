@@ -71,11 +71,8 @@ DEPS		:=	$(OBJS:%.o=%.d)
 #                                TARGETS                                       #
 #------------------------------------------------------------------------------#
 
-echo :
-	echo $(B_OBJS)
-
-all : $(NAME)
-	@./$(NAME) $(ARGS)
+all : $(NAME) bonus
+	./bonus $(ARGS)
 
 # Compile program
 $(NAME) : $(LIBFT) $(OBJS)
@@ -90,9 +87,10 @@ $(OBJDIR)%.o : $(SRCDIR)%.c
 -include $(DEPS)
 
 # Compile Bonus
-bonus : $(BONUS_OBJS)
+bonus : $(B_OBJS)
 	@echo "$(GREEN)	Compiling $@ ... $(NC)"
-	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBS) -o $@ -I/bonus_src/ $(INCLUDES)
+	$(CC) $(CFLAGS) $(B_OBJS) $(LIBS) -o $@ $(INCLUDES)
+	./bonus $(ARGS)
 
 $(OBJDIR)%.o : $(BONDIR)%.c
 	@mkdir -p $(OBJDIR);

@@ -62,7 +62,11 @@ void	init_semaforks(t_data *data)
 	int	philo_count;
 
 	philo_count = data->philo_count;
-	sem_init(&data->sema_forks, 0, philo_count);
-	sem_init(&data->write_sem, 0, 1);
-	sem_init(&data->status_sem, 0, 1);
+
+	data->sema_forks = sem_open(FORKS_SEM, O_CREAT, O_RDWR, philo_count);
+	data->write_sem = sem_open(WRITE_SEM, O_CREAT, O_RDWR, 1);
+	data->state_sem = sem_open(STATE_SEM, O_CREAT, O_RDWR, 1);
+	// sem_init(&data->sema_forks, 0, philo_count);
+	// sem_init(&data->write_sem, 0, 1);
+	// sem_init(&data->status_sem, 0, 1);
 }

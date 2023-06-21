@@ -21,6 +21,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 # define PHILO_COUNT 1
 # define TIMETO_DIE 420
@@ -34,6 +35,10 @@
 
 # define MIN_ARG_NUM 5
 # define MAX_ARG_NUM 6
+
+# define FORKS_SEM "/semaforks"
+# define WRITE_SEM "/writesem"
+# define STATE_SEM "/statesem"
 
 typedef struct s_philo_times
 {
@@ -58,9 +63,9 @@ typedef struct s_data
 	int					finished_eating;
 	int					death;
 	t_philo				*philosophers;
-	sem_t				sema_forks;
-	sem_t				write_sem;
-	sem_t				status_sem;
+	sem_t				*sema_forks;
+	sem_t				*write_sem;
+	sem_t				*state_sem;
 	t_philo_times		time_to;
 }						t_data;
 

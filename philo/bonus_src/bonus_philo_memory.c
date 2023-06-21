@@ -23,7 +23,8 @@ void	free_tdata(t_data *data)
 
 void	destroy_sem(t_data *data)
 {
-	sem_destroy(&data->sema_forks);
-	sem_destroy(&data->write_sem);
-	sem_destroy(&data->status_sem);
+	(void) data;
+	sem_unlink(FORKS_SEM);
+	sem_unlink(WRITE_SEM);
+	sem_unlink(STATE_SEM);
 }

@@ -31,24 +31,24 @@ void	*philo_routine(void *arg)
 		micro_sleep(data->time_to.eat / 2);
 	while (meal_count != 0)
 	{
-		sem_wait(&data->write_sem);
+		sem_wait(data->write_sem);
 		if (data->death)
 		{
-			sem_post(&data->write_sem);
+			sem_post(data->write_sem);
 			break ;
 		}
-		sem_post(&data->write_sem);
-		lock_forks(&data->sema_forks, philo->id);
+		sem_post(data->write_sem);
+		lock_forks(data->sema_forks, philo->id);
 		eat_routine(data, philo->id, &philo->last_meal_tv);
-		unlock_forks(&data->sema_forks);
+		unlock_forks(data->sema_forks);
 		sleep_routine(data, philo->id);
 		think_routine(data, philo->id);
 		meal_count--;
 	}
-	sem_wait(&data->status_sem);
+	sem_wait(data->state_sem);
 	data->finished_eating++;
 	philo->is_full = 1;
-	sem_post(&data->status_sem);
+	sem_post(data->state_sem);
 	return (NULL);
 }
 

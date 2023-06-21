@@ -21,12 +21,12 @@ void	print_log(int philo_id, char *action)
 
 	data = get_data();
 	philo_id += 1;
-	sem_wait(&data->write_sem);
+	sem_wait(data->write_sem);
 	if (!data->death)
 	{
 		printf("%li ms %d %s", get_ms_runtime(), philo_id, action);
 	}
-	sem_post(&data->write_sem);
+	sem_post(data->write_sem);
 }
 
 void	ft_putnbr(long int number)

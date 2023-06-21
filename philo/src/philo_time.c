@@ -14,32 +14,6 @@
 
 int64_t			get_tv_ms(struct timeval tv);
 
-void	micro_sleep(useconds_t milliseconds)
-{
-	int64_t	target;
-
-	target = get_ms_runtime() + milliseconds;
-	usleep((milliseconds - 10) * 1000);
-	while (get_ms_runtime() < target)
-		usleep(50);
-}
-
-/*Compute the time difference between two timevals in milliseconds*/
-long int	delta_ms(struct timeval start, struct timeval end)
-{
-	long int	delta_s;
-	long int	delta_us;
-
-	delta_s = end.tv_sec - start.tv_sec;
-	delta_us = end.tv_usec - start.tv_usec;
-	return (delta_s * 1000 + delta_us / 1000);
-}
-
-int64_t	get_tv_ms(struct timeval tv)
-{
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
 struct timeval	get_start_tv(void)
 {
 	static struct timeval	start_time;
@@ -61,3 +35,32 @@ long int	get_ms_runtime(void)
 	gettimeofday(&curr_time, NULL);
 	return (delta_ms(start_time, curr_time));
 }
+
+/*Compute the time difference between two timevals in milliseconds*/
+long int	delta_ms(struct timeval start, struct timeval end)
+{
+	long int	delta_s;
+	long int	delta_us;
+
+	delta_s = end.tv_sec - start.tv_sec;
+	delta_us = end.tv_usec - start.tv_usec;
+	return (delta_s * 1000 + delta_us / 1000);
+}
+
+void	micro_sleep(useconds_t milliseconds)
+{
+	int64_t	target;
+
+	target = get_ms_runtime() + milliseconds;
+	usleep((milliseconds - 10) * 1000);
+	while (get_ms_runtime() < target)
+		usleep(50);
+}
+
+
+int64_t	get_tv_ms(struct timeval tv)
+{
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+

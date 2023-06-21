@@ -69,6 +69,32 @@ void join_threads(t_data *data)
 	}
 }
 
+
+void	death_loop(t_data *data)
+{
+	int		i;
+	int		philo_count;
+	t_philo	*philosophers;
+	int		flag;
+
+	flag = 0;
+	philo_count = data->philo_count;
+	philosophers = data->philosophers;
+	while (!flag)
+	{
+		usleep(3000);
+		i = 0;
+		while (i < philo_count)
+		{
+			if (is_dead(philosophers[i], data, &flag))
+				break ;
+			if (check_finished_eating(data, &flag))
+				break ;
+			i++;
+		}
+	}
+}
+
 int	is_dead(t_philo philo, t_data *data, int *flag)
 {
 	long int		time_to_die;
@@ -95,31 +121,6 @@ int	is_dead(t_philo philo, t_data *data, int *flag)
 		return (1);
 	}
 	return (0);
-}
-
-void	death_loop(t_data *data)
-{
-	int		i;
-	int		philo_count;
-	t_philo	*philosophers;
-	int		flag;
-
-	flag = 0;
-	philo_count = data->philo_count;
-	philosophers = data->philosophers;
-	while (!flag)
-	{
-		usleep(50);
-		i = 0;
-		while (i < philo_count)
-		{
-			if (is_dead(philosophers[i], data, &flag))
-				break ;
-			if (check_finished_eating(data, &flag))
-				break ;
-			i++;
-		}
-	}
 }
 
 int	check_finished_eating(t_data *data, int *flag)

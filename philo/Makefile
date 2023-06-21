@@ -17,7 +17,7 @@
 # life
 # ARGS	=  2 410 200 200 # l
 # ARGS	=  200 410 200 200 # l
-ARGS	=  200 410 200 200# d
+ARGS	=  200 410 200 200 4# d
 
 # ARGS	=  2 200 100 100
 
@@ -42,7 +42,7 @@ LIBS	=
 # Compiler and flags
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra -g
-# CFLAGS +=	-fsanitize=thread
+CFLAGS +=	-fsanitize=thread
 RM		=	rm
 
 # Sources
@@ -112,7 +112,7 @@ re : fclean all
 # Valgrind leak check
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./bonus $(ARGS)
 
 .PHONY:
 	all clean fclean re leak bonus

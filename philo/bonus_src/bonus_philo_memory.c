@@ -16,14 +16,17 @@ void	destroy_sem(t_data *data);
 
 void	free_tdata(t_data *data)
 {
-	destroy_sem(data);
 	free(data->philosophers);
-	free(data);
+	destroy_sem(data);
+     	free(data);
 }
 
 void	destroy_sem(t_data *data)
 {
 	(void) data;
+	sem_close(data->sema_forks);
+	sem_close(data->state_sem);
+	sem_close(data->write_sem);
 	sem_unlink(FORKS_SEM);
 	sem_unlink(WRITE_SEM);
 	sem_unlink(STATE_SEM);

@@ -48,6 +48,7 @@ void creat_threads(t_data *data)
 		philo = &data->philosophers[i];
 		thread = &philo->thread;
 		pthread_create(thread, NULL, philo_routine, philo);
+		// pthread_create(thread, NULL, test_routine, philo);
 		i++;
 	}
 }
@@ -107,7 +108,7 @@ void	death_loop(t_data *data)
 		{
 			if (is_dead(philosophers[i], data, &flag))
 			{
-				// detach_threads(data);
+				detach_threads(data);
 				break ;
 			}
 			if (check_finished_eating(data, &flag))
@@ -138,7 +139,7 @@ int	is_dead(t_philo philo, t_data *data, int *flag)
 		*flag = 1;
 		sem_wait(data->write_sem);
 		data->death = 1;
-		printf("%li ms %d has died\n", get_ms_runtime(), philo.id + 1);
+		printf("%li ms %d has died\n", get_ms_runtime(), philo.id);
 		sem_post(data->write_sem);
 		return (1);
 	}

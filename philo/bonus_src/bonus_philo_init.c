@@ -50,7 +50,7 @@ void	init_philosophers(t_data *data)
 	i = 0;
 	while (i < philo_count)
 	{
-		data->philosophers[i].id = i;
+		data->philosophers[i].id = i + 1;
 		data->philosophers[i].last_meal_tv = get_start_tv();
 		data->philosophers[i].is_full = 0;
 		i++;
@@ -63,10 +63,10 @@ void	init_semaforks(t_data *data)
 
 	philo_count = data->philo_count;
 
-	data->sema_forks = sem_open(FORKS_SEM, O_CREAT, O_RDWR, philo_count);
-	data->write_sem = sem_open(WRITE_SEM, O_CREAT, O_RDWR, 1);
-	data->state_sem = sem_open(STATE_SEM, O_CREAT, O_RDWR, 1);
-	// sem_init(&data->sema_forks, 0, philo_count);
-	// sem_init(&data->write_sem, 0, 1);
-	// sem_init(&data->status_sem, 0, 1);
+	sem_unlink(FORKS_SEM);
+	sem_unlink(WRITE_SEM);
+	sem_unlink(STATE_SEM);
+	data->sema_forks = sem_open(FORKS_SEM, O_CREAT | O_EXCL, 0644, philo_count);
+	data->write_sem = sem_open(WRITE_SEM, O_CREAT | O_EXCL, 0644, 12);
+	data->state_sem = sem_open(STATE_SEM, O_CREAT | O_EXCL, 0644, 12);
 }

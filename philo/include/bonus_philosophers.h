@@ -95,7 +95,7 @@ void					free_tdata(t_data *data);
 
 // Parsing
 int						parse_arguments(int argc, char *argv[], t_data *data);
-void					test_routine(void *arg);
+void					*test_routine(void *arg);
 int						is_dead(t_philo philo, t_data *data, int *flag);
 
 # define STDOUT_FILENO 1

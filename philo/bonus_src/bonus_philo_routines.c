@@ -92,20 +92,25 @@ void	think_routine(t_data *data, int id)
 	usleep(50);
 }
 
-// void	test_routine(void *arg)
-// {
-// 	t_data *data;
-// 	t_philo *philo;
+void	*test_routine(void *arg)
+{
+	t_data *data;
+	t_philo *philo;
 
-// 	data = get_data();
-// 	philo = arg;
-// 	int id = philo->id;
+	data = get_data();
+	philo = arg;
+	int id = philo->id;
+	// sem_t *write_sem = sem_open(WRITE_SEM, O_RDWR);
 
-// 	for (int i = 0; i < 5; i++)
-// 	{
-// 		// micro_sleep(100);
-// 		eat_routine(data, id, &philo->last_meal_tv);
-// 		// is_dead(*philo, data);
-// 	}
-// 	printf("Runtime %li", get_ms_runtime());
-// }
+	// sem_t *write_sem = data->write_sem;
+	if (id % 2 == 0)
+	{
+		printf("%li ms %d holds back\n", get_ms_runtime(), id);
+		micro_sleep(data->time_to.eat / 2);
+	}
+	lock_forks(data->sema_forks,id);
+	printf("%li ms %d started the routine\n", get_ms_runtime(), id);
+	micro_sleep(data->time_to.eat);
+	unlock_forks(data->sema_forks);
+	return (NULL);
+}

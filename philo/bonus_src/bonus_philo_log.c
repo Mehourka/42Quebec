@@ -20,7 +20,6 @@ void	print_log(int philo_id, char *action)
 	t_data		*data;
 
 	data = get_data();
-	philo_id += 1;
 	sem_wait(data->write_sem);
 	if (!data->death)
 	{

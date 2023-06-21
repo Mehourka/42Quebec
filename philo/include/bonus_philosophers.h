@@ -15,6 +15,7 @@
 
 # include <limits.h>
 # include <pthread.h>
+# include <semaphore.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -45,8 +46,6 @@ typedef struct s_philo
 {
 	int					id;
 	pthread_t			thread;
-	pthread_mutex_t		*right_fork;
-	pthread_mutex_t		*left_fork;
 	struct timeval		last_meal_tv;
 	int					is_full;
 
@@ -59,9 +58,9 @@ typedef struct s_data
 	int					finished_eating;
 	int					death;
 	t_philo				*philosophers;
-	pthread_mutex_t		*fork_mutex;
-	pthread_mutex_t		write_mutex;
-	pthread_mutex_t		status_mutex;
+	sem_t				sema_forks;
+	sem_t				write_sem;
+	sem_t				status_sem;
 	t_philo_times		time_to;
 }						t_data;
 

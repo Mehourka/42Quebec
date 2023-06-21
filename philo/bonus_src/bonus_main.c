@@ -101,7 +101,7 @@ void	death_loop(t_data *data)
 	philosophers = data->philosophers;
 	while (!flag)
 	{
-		usleep(3000);
+		usleep(50);
 		i = 0;
 		while (i < philo_count)
 		{
@@ -123,23 +123,23 @@ int	is_dead(t_philo philo, t_data *data, int *flag)
 	struct timeval	last_meal;
 	struct timeval	curr_time;
 
-	pthread_mutex_lock(&data->status_mutex);
+	sem_wait(&data->status_sem);
 	if (philo.is_full)
 	{
-		pthread_mutex_unlock(&data->status_mutex);
+		sem_post(&data->status_sem);
 		return (0);
 	}
-	pthread_mutex_unlock(&data->status_mutex);
+	sem_post(&data->status_sem);
 	time_to_die = data->time_to.die;
 	last_meal = philo.last_meal_tv;
 	gettimeofday(&curr_time, NULL);
 	if (delta_ms(last_meal, curr_time) > time_to_die)
 	{
 		*flag = 1;
-		pthread_mutex_lock(&data->write_mutex);
+		sem_wait(&data->write_sem);
 		data->death = 1;
 		printf("%li ms %d has died\n", get_ms_runtime(), philo.id + 1);
-		pthread_mutex_unlock(&data->write_mutex);
+		sem_post(&data->write_sem);
 		return (1);
 	}
 	return (0);
@@ -150,12 +150,12 @@ int	check_finished_eating(t_data *data, int *flag)
 	int	bool;
 
 	bool = 0;
-	pthread_mutex_lock(&data->status_mutex);
+	sem_wait(&data->status_sem);
 	if (data->finished_eating >= (int)data->philo_count)
 	{
 		bool ++;
 		*flag = 1;
 	}
-	pthread_mutex_unlock(&data->status_mutex);
+	sem_post(&data->status_sem);
 	return (bool);
 }

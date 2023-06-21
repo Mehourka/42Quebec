@@ -17,7 +17,7 @@
 # life
 # ARGS	=  2 410 200 200 # l
 # ARGS	=  200 410 200 200 # l
-ARGS	=  3 410 200 200 2# d
+ARGS	=  200 410 200 200 7# d
 
 # ARGS	=  2 200 100 100
 
@@ -90,7 +90,6 @@ $(OBJDIR)%.o : $(SRCDIR)%.c
 bonus : $(B_OBJS)
 	@echo "$(GREEN)	Compiling $@ ... $(NC)"
 	$(CC) $(CFLAGS) $(B_OBJS) $(LIBS) -o $@ $(INCLUDES)
-	./bonus $(ARGS)
 
 $(OBJDIR)%.o : $(BONDIR)%.c
 	@mkdir -p $(OBJDIR);

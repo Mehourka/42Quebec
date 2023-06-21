@@ -12,30 +12,18 @@
 
 #include "bonus_philosophers.h"
 
-void	destroy_mutex(t_data *data);
+void	destroy_sem(t_data *data);
 
 void	free_tdata(t_data *data)
 {
-	destroy_mutex(data);
+	destroy_sem(data);
 	free(data->philosophers);
 	free(data);
 }
 
-void	destroy_mutex(t_data *data)
+void	destroy_sem(t_data *data)
 {
-	int				mutex_num;
-	int				i;
-	pthread_mutex_t	*mutex_arr;
-
-	mutex_num = data->philo_count;
-	mutex_arr = data->fork_mutex;
-	i = 0;
-	while (i < mutex_num)
-	{
-		pthread_mutex_destroy(&(mutex_arr[i]));
-		i++;
-	}
-	pthread_mutex_destroy(&(data->write_mutex));
-	pthread_mutex_destroy(&(data->status_mutex));
-	free(mutex_arr);
+	sem_destroy(&data->sema_forks);
+	sem_destroy(&data->write_sem);
+	sem_destroy(&data->status_sem);
 }

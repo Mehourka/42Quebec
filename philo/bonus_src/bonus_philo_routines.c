@@ -12,8 +12,8 @@
 
 #include "bonus_philosophers.h"
 
-void	lock_forks(t_philo *philo);
-void	unlock_forks(t_philo *philo);
+void	lock_forks(sem_t *sema_forks, int id);
+void	unlock_forks(sem_t *sema_forks);
 void	eat_routine(t_data *data, int id, struct timeval *last_meal_tv);
 void	sleep_routine(t_data *data, int id);
 void	think_routine(t_data *data, int id);
@@ -31,39 +31,39 @@ void	*philo_routine(void *arg)
 		micro_sleep(data->time_to.eat / 2);
 	while (meal_count != 0)
 	{
-		pthread_mutex_lock(&data->write_mutex);
+		sem_wait(&data->write_sem);
 		if (data->death)
 		{
-			pthread_mutex_unlock(&data->write_mutex);
+			sem_post(&data->write_sem);
 			break ;
 		}
-		pthread_mutex_unlock(&data->write_mutex);
-		lock_forks(philo);
+		sem_post(&data->write_sem);
+		lock_forks(&data->sema_forks, philo->id);
 		eat_routine(data, philo->id, &philo->last_meal_tv);
-		unlock_forks(philo);
+		unlock_forks(&data->sema_forks);
 		sleep_routine(data, philo->id);
 		think_routine(data, philo->id);
 		meal_count--;
 	}
-	pthread_mutex_lock(&data->status_mutex);
+	sem_wait(&data->status_sem);
 	data->finished_eating++;
 	philo->is_full = 1;
-	pthread_mutex_unlock(&data->status_mutex);
+	sem_post(&data->status_sem);
 	return (NULL);
 }
 
-void	lock_forks(t_philo *philo)
+void	lock_forks(sem_t *sema_forks, int id)
 {
-	pthread_mutex_lock(philo->left_fork);
-	print_log(philo->id, LOG_FORK);
-	pthread_mutex_lock(philo->right_fork);
-	print_log(philo->id, LOG_FORK);
+	sem_wait(sema_forks);
+	print_log(id, LOG_FORK);
+	sem_wait(sema_forks);
+	print_log(id, LOG_FORK);
 }
 
-void	unlock_forks(t_philo *philo)
+void	unlock_forks(sem_t *sema_forks)
 {
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	sem_post(sema_forks);
+	sem_post(sema_forks);
 }
 
 void	eat_routine(t_data *data, int id, struct timeval *last_meal_tv)

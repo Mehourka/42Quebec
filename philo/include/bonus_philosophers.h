@@ -51,9 +51,8 @@ typedef struct s_philo_times
 typedef struct s_philo
 {
 	int					id;
-	pthread_t			thread;
+	struct s_data				*data;
 	struct timeval		last_meal_tv;
-	int					is_full;
 
 }						t_philo;
 
@@ -98,7 +97,7 @@ void					free_tdata(t_data *data);
 // Parsing
 int						parse_arguments(int argc, char *argv[], t_data *data);
 void					*test_routine(void *arg);
-int						is_dead(t_philo philo, t_data *data, int *flag);
+int						is_dead(t_philo *philo);
 
 # define STDOUT_FILENO 1
 #endif

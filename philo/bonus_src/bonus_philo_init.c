@@ -44,6 +44,7 @@ int	philo_init(t_data *data, int argc, char *argv[])
 void	init_philosophers(t_data *data)
 {
 	int	philo_count;
+	t_philo *philo;
 	int	i;
 
 	philo_count = data->philo_count;
@@ -51,9 +52,11 @@ void	init_philosophers(t_data *data)
 	i = 0;
 	while (i < philo_count)
 	{
-		data->philosophers[i].id = i + 1;
-		data->philosophers[i].last_meal_tv = get_start_tv();
-		data->philosophers[i].is_full = 0;
+		philo = &data->philosophers[i];
+		philo->id = i + 1;
+		philo->data = data;
+		philo->last_meal_tv.tv_sec = 0;
+		philo->last_meal_tv.tv_usec = 0;
 		i++;
 	}
 }

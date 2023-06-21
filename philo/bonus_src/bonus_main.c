@@ -70,60 +70,60 @@ void wait_children(t_data *data)
 	}
 }
 
-void creat_threads(t_data *data)
-{
-	t_philo		*philo;
-	pthread_t	*thread;
-	int			count;
-	int			i;
+// void creat_threads(t_data *data)
+// {
+// 	t_philo		*philo;
+// 	pthread_t	*thread;
+// 	int			count;
+// 	int			i;
 
-	i = 0;
-	count = data->philo_count;
-	while (i < count)
-	{
-		philo = &data->philosophers[i];
-		thread = &philo->thread;
-		pthread_create(thread, NULL, philo_routine, philo);
-		// pthread_create(thread, NULL, test_routine, philo);
-		i++;
-	}
-}
+// 	i = 0;
+// 	count = data->philo_count;
+// 	while (i < count)
+// 	{
+// 		philo = &data->philosophers[i];
+// 		thread = &philo->thread;
+// 		pthread_create(thread, NULL, philo_routine, philo);
+// 		// pthread_create(thread, NULL, test_routine, philo);
+// 		i++;
+// 	}
+// }
 
-void join_threads(t_data *data)
-{
-	t_philo		*philo;
-	pthread_t	*thread;
-	int			count;
-	int			i;
+// void join_threads(t_data *data)
+// {
+// 	t_philo		*philo;
+// 	pthread_t	*thread;
+// 	int			count;
+// 	int			i;
 
-	i = 0;
-	count = data->philo_count;
-	while (i < count)
-	{
-		philo = &data->philosophers[i];
-		thread = &philo->thread;
-		pthread_join(*thread, NULL);
-		i++;
-	}
-}
+// 	i = 0;
+// 	count = data->philo_count;
+// 	while (i < count)
+// 	{
+// 		philo = &data->philosophers[i];
+// 		thread = &philo->thread;
+// 		pthread_join(*thread, NULL);
+// 		i++;
+// 	}
+// }
 
-void detach_threads(t_data *data)
-{
-	t_philo		*philo;
-	pthread_t	*thread;
-	int			count;
-	int			i;
+// void detach_threads(t_data *data)
+// {
+// 	t_philo		*philo;
+// 	pthread_t	*thread;
+// 	int			count;
+// 	int			i;
 
-	i = 0;
-	count = data->philo_count;
-	while (i < count)
-	{
-		philo = &data->philosophers[i];
-		thread = &philo->thread;
-		pthread_detach(*thread);
-		i++;
-	}
-}
+// 	i = 0;
+// 	count = data->philo_count;
+// 	while (i < count)
+// 	{
+// 		philo = &data->philosophers[i];
+// 		thread = &philo->thread;
+// 		pthread_detach(*thread);
+// 		i++;
+// 	}
+// }
 
 
 void	death_loop(t_data *data)
@@ -142,9 +142,9 @@ void	death_loop(t_data *data)
 		i = 0;
 		while (i < philo_count)
 		{
-			if (is_dead(philosophers[i], data, &flag))
+			if (is_dead(&philosophers[i]))
 			{
-				detach_threads(data);
+				// detach_threads(data);
 				break ;
 			}
 			if (check_finished_eating(data, &flag))
@@ -154,28 +154,22 @@ void	death_loop(t_data *data)
 	}
 }
 
-int	is_dead(t_philo philo, t_data *data, int *flag)
+int	is_dead(t_philo *philo)
 {
 	long int		time_to_die;
 	struct timeval	last_meal;
 	struct timeval	curr_time;
+	t_data *data;
 
-	sem_wait(data->state_sem);
-	if (philo.is_full)
-	{
-		sem_post(data->state_sem);
-		return (0);
-	}
-	sem_post(data->state_sem);
+	data = philo->data;
 	time_to_die = data->time_to.die;
-	last_meal = philo.last_meal_tv;
+	last_meal = philo->last_meal_tv;
 	gettimeofday(&curr_time, NULL);
 	if (delta_ms(last_meal, curr_time) > time_to_die)
 	{
-		*flag = 1;
 		sem_wait(data->write_sem);
 		data->death = 1;
-		printf("%li ms %d has died\n", get_ms_runtime(), philo.id);
+		printf("%li ms %d has died\n", get_ms_runtime(), philo->id);
 		sem_post(data->write_sem);
 		return (1);
 	}

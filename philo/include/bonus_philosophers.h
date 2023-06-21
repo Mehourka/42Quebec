@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 # define PHILO_COUNT 1
 # define TIMETO_DIE 420
@@ -66,6 +67,7 @@ typedef struct s_data
 	sem_t				*sema_forks;
 	sem_t				*write_sem;
 	sem_t				*state_sem;
+	int					*pids;
 	t_philo_times		time_to;
 }						t_data;
 

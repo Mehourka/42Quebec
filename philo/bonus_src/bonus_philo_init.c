@@ -34,6 +34,7 @@ int	philo_init(t_data *data, int argc, char *argv[])
 	{
 		return (1);
 	}
+	data->pids = malloc(sizeof(int) * data->philo_count);
 	init_semaforks(data);
 	init_philosophers(data);
 	get_start_tv();

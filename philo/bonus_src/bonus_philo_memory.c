@@ -18,7 +18,8 @@ void	free_tdata(t_data *data)
 {
 	free(data->philosophers);
 	destroy_sem(data);
-     	free(data);
+	free(data->pids);
+	free(data);
 }
 
 void	destroy_sem(t_data *data)

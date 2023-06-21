@@ -14,8 +14,8 @@
 
 void	death_loop(t_data *data);
 int		check_finished_eating(t_data *data, int *flag);
-void	creat_threads(t_data *data);
-void	join_threads(t_data *data);
+void	create_children(t_data *data);
+void	wait_children(t_data *data);
 void	detach_threads(t_data *data);
 
 int	main(int argc, char *argv[])
@@ -27,11 +27,47 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (philo_init(data, argc, argv))
 		return (1);
-	creat_threads(data);
-	death_loop(data);
-	join_threads(data);
+	create_children(data);
+	// death_loop(data);
+	wait_children(data);
 	free_tdata(data);
 	return (0);
+}
+
+void create_children(t_data *data)
+{
+	int *pids;
+	u_int32_t i;
+	t_philo *philo;
+
+	pids = data->pids;
+	i = 0;
+	while(i < data->philo_count)
+	{
+		philo = &data->philosophers[i];
+		pids[i] = fork();
+		if (pids[i] == 0)
+		{
+			// test_routine(philo);
+			philo_routine(philo);
+			return;
+		}
+		i++;
+	}
+}
+
+void wait_children(t_data *data)
+{
+	// int *pids;
+	u_int32_t i;
+
+	// pids = data->pids;
+	i = 0;
+	while(i < data->philo_count)
+	{
+		waitpid( -1, NULL, 0);
+		i++;
+	}
 }
 
 void creat_threads(t_data *data)

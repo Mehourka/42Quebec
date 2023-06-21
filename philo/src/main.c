@@ -14,33 +14,59 @@
 
 void	death_loop(t_data *data);
 int		check_finished_eating(t_data *data, int *flag);
+void	creat_threads(t_data *data);
+void	join_threads(t_data *data);
 
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
-	int		i;
 
-	i = 0;
 	data = get_data();
 	if (!data)
 		return (1);
 	if (philo_init(data, argc, argv))
 		return (1);
-	while (i < (int)data->philo_count)
-	{
-		pthread_create(&(data->philosophers[i].thread), NULL, philo_routine,
-			&(data->philosophers[i]));
-		i++;
-	}
+	creat_threads(data);
 	death_loop(data);
-	i = 0;
-	while (i < (int)data->philo_count)
-	{
-		pthread_detach(data->philosophers[i].thread);
-		i++;
-	}
+	join_threads(data);
 	free_tdata(data);
 	return (0);
+}
+
+void creat_threads(t_data *data)
+{
+	t_philo		*philo;
+	pthread_t	*thread;
+	int			count;
+	int			i;
+
+	i = 0;
+	count = data->philo_count;
+	while (i < count)
+	{
+		philo = &data->philosophers[i];
+		thread = &philo->thread;
+		pthread_create(thread, NULL, philo_routine, philo);
+		i++;
+	}
+}
+
+void join_threads(t_data *data)
+{
+	t_philo		*philo;
+	pthread_t	*thread;
+	int			count;
+	int			i;
+
+	i = 0;
+	count = data->philo_count;
+	while (i < count)
+	{
+		philo = &data->philosophers[i];
+		thread = &philo->thread;
+		pthread_join(*thread, NULL);
+		i++;
+	}
 }
 
 int	is_dead(t_philo philo, t_data *data, int *flag)
@@ -64,7 +90,7 @@ int	is_dead(t_philo philo, t_data *data, int *flag)
 		*flag = 1;
 		pthread_mutex_lock(&data->write_mutex);
 		data->death = 1;
-		printf("%li ms %d has died", get_ms_runtime(), philo.id + 1);
+		printf("%li ms %d has died\n", get_ms_runtime(), philo.id + 1);
 		pthread_mutex_unlock(&data->write_mutex);
 		return (1);
 	}

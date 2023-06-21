@@ -17,16 +17,14 @@ void	ft_putstr(char *string);
 
 void	print_log(int philo_id, char *action)
 {
-	long int	timestamp;
 	t_data		*data;
 
 	data = get_data();
 	philo_id += 1;
 	pthread_mutex_lock(&data->write_mutex);
-	timestamp = get_ms_runtime();
 	if (!data->death)
 	{
-		printf("%li ms %d %s", timestamp, philo_id, action);
+		printf("%li ms %d %s", get_ms_runtime(), philo_id, action);
 	}
 	pthread_mutex_unlock(&data->write_mutex);
 }

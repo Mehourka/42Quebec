@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 14:54:14 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:00:33 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	*death_loop(void *arg);
 void	*wait_children(void *arg);
-int		check_finished_eating(t_data *data, int *flag);
 void	create_children(t_data *data);
-void	detach_threads(t_data *data);
 void	kill_children(t_data *data);
 
 int	main(int argc, char *argv[])
@@ -36,81 +34,26 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
-void create_children(t_data *data)
+void	create_children(t_data *data)
 {
-	int *pids;
-	u_int32_t i;
-	t_philo *philo;
+	int			*pids;
+	u_int32_t	i;
+	t_philo		*philo;
 
 	pids = data->pids;
 	i = 0;
-	while(i < data->philo_count)
+	while (i < data->philo_count)
 	{
 		philo = &data->philosophers[i];
 		pids[i] = fork();
 		if (pids[i] == 0)
 		{
-			// test_routine(philo);
 			philo_routine(philo);
-			return;
+			return ;
 		}
-		i++;git s
-	}
-}
-
-void *wait_children(void *arg)
-{
-	int *pids;
-	t_data *data;
-	u_int32_t i;
-
-	data = arg;
-	pids = data->pids;
-	i = 0;
-	while(i < data->philo_count)
-	{
-		waitpid(-1, NULL, 0);
-		i++;
-	}
-	sem_wait(data->write_sem);
-	sem_post(data->state_sem);
-	return (NULL);
-}
-
-void kill_children(t_data *data)
-{
-	// int *pids;
-	u_int32_t i;
-
-	// pids = data->pids;
-	sem_wait(data->state_sem);
-	i = 0;
-	while(i < data->philo_count)
-	{
-		kill( data->pids[i], SIGKILL);
 		i++;
 	}
 }
-
-
-// void detach_threads(t_data *data)
-// {
-// 	t_philo		*philo;
-// 	pthread_t	*thread;
-// 	int			count;
-// 	int			i;
-
-// 	i = 0;
-// 	count = data->philo_count;
-// 	while (i < count)
-// 	{
-// 		philo = &data->philosophers[i];
-// 		thread = &philo->thread;
-// 		pthread_detach(*thread);
-// 		i++;
-// 	}
-// }
-
 
 void	*death_loop(void *arg)
 {
@@ -122,36 +65,34 @@ void	*death_loop(void *arg)
 	return (NULL);
 }
 
-int	is_dead(t_philo *philo)
+void	*wait_children(void *arg)
 {
-	long int		time_to_die;
-	struct timeval	last_meal;
-	struct timeval	curr_time;
-	t_data *data;
+	int			*pids;
+	t_data		*data;
+	u_int32_t	i;
 
-	data = philo->data;
-	time_to_die = data->time_to.die;
-	last_meal = philo->last_meal_tv;
-	gettimeofday(&curr_time, NULL);
-	
-	if (delta_ms(last_meal, curr_time) > (int) time_to_die)
+	data = arg;
+	pids = data->pids;
+	i = 0;
+	while (i < data->philo_count)
 	{
-		return (1);
+		waitpid(-1, NULL, 0);
+		i++;
 	}
-	return (0);
+	sem_wait(data->write_sem);
+	sem_post(data->state_sem);
+	return (NULL);
 }
 
-int	check_finished_eating(t_data *data, int *flag)
+void	kill_children(t_data *data)
 {
-	int	bool;
+	u_int32_t	i;
 
-	bool = 0;
 	sem_wait(data->state_sem);
-	if (data->finished_eating >= (int)data->philo_count)
+	i = 0;
+	while (i < data->philo_count)
 	{
-		bool ++;
-		*flag = 1;
+		kill(data->pids[i], SIGKILL);
+		i++;
 	}
-	sem_post(data->state_sem);
-	return (bool);
 }

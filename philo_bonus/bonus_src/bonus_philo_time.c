@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:19 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 13:53:31 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:06:37 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void	micro_sleep(useconds_t milliseconds)
 		usleep(50);
 }
 
-
 int64_t	get_tv_ms(struct timeval tv)
 {
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
-
-

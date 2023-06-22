@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/22 14:53:28 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/22 15:02:56 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS	:=	main.c			\
 			philo_routines.c\
 			philo_log.c\
 			philo_parse.c\
+			philo_checks.c
 
 
 SRCS	:=	$(SRCS:%=bonus_%)

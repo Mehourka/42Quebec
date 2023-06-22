@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 13:55:14 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:05:34 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_semaforks(t_data *data);
 
 t_data	*get_data(void)
 {
-	static t_data	*data = NULL;
+	static t_data	*data;
 
 	if (!data)
 		data = malloc(sizeof(t_data));
@@ -43,9 +43,9 @@ int	philo_init(t_data *data, int argc, char *argv[])
 
 void	init_philosophers(t_data *data)
 {
-	int	philo_count;
-	t_philo *philo;
-	int	i;
+	int		philo_count;
+	t_philo	*philo;
+	int		i;
 
 	philo_count = data->philo_count;
 	data->philosophers = malloc(sizeof(t_philo) * philo_count);
@@ -65,7 +65,6 @@ void	init_semaforks(t_data *data)
 	int	philo_count;
 
 	philo_count = data->philo_count;
-
 	sem_unlink(FORKS_SEM);
 	sem_unlink(WRITE_SEM);
 	sem_unlink(STATE_SEM);

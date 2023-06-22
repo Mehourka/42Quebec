@@ -2,4 +2,5 @@ obj/
 philo/philo
 .vscode/
 bonus
+philo_bonus/philo_bonus
 *.dSYM

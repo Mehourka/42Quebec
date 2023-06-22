@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/22 11:04:18 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/22 11:07:52 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@
 # life
 # ARGS	=  2 410 200 200 # l
 # ARGS	=  200 410 200 200 # l
-ARGS	=  200 310 200 200 4 # d
+ARGS	=  2 410 200 200 1 # d
 
 # ARGS	=  2 200 100 100
 
-NAME	=	philo
+NAME	=	philo_bonus
 
 # Colors
 GREEN	=	\033[0;32m
@@ -32,7 +32,7 @@ NC		=	\033[0m
 # Directories
 LIBDIR	=	lib/
 INCDIR	=	include/
-SRCDIR	=	src/
+SRCDIR	=	bonus_src/
 
 # Libraries
 INCLUDES=	-I $(INCDIR)
@@ -53,10 +53,16 @@ SRCS	:=	main.c			\
 			philo_log.c\
 			philo_parse.c\
 
+
+SRCS	:=	$(SRCS:%=bonus_%)
+
+
 # Objects
 OBJDIR	=	obj/
 OBJS		:=	$(SRCS:%.c=$(OBJDIR)%.o)
 SRCS		:=	$(SRCS:%.c=$(SRCDIR)%.c)
+B_OBJS	:=	$(B_SRCS:%.c=$(OBJDIR)%.o)
+B_SRCS		:=	$(B_SRCS:%=$(BONDIR)%)
 DEPS		:=	$(OBJS:%.o=%.d)
 
 

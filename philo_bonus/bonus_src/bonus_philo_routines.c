@@ -36,6 +36,12 @@ void	*philo_routine(void *arg)
 	while (meal_count != 0)
 	{
 		lock_forks(data->sema_forks, philo->id);
+		if(is_dead(philo))
+		{
+			sem_wait(philo->data->write_sem);
+			sem_post(philo->data->state_sem);
+			printf("%li ms %d has died\n", get_ms_runtime(), philo->id);
+		}
 		eat_routine(data, philo->id, &philo->last_meal_tv);
 		meal_count--;
 		unlock_forks(data->sema_forks);

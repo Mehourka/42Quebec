@@ -67,12 +67,10 @@ void	*death_loop(void *arg)
 
 void	*wait_children(void *arg)
 {
-	int			*pids;
 	t_data		*data;
 	u_int32_t	i;
 
 	data = arg;
-	pids = data->pids;
 	i = 0;
 	while (i < data->philo_count)
 	{

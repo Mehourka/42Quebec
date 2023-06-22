@@ -31,8 +31,9 @@ void	*philo_routine(void *arg)
 		micro_sleep(data->time_to.eat / 2);
 	while (meal_count != 0)
 	{
-		check_philos_death(data);
 		lock_forks(philo);
+		if(!check_philos_death(data))
+			micro_sleep(10);
 		eat_routine(data, philo->id, &philo->last_meal_tv);
 		unlock_forks(philo);
 		sleep_routine(data, philo->id);

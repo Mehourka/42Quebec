@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 13:34:27 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:28:21 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 # define BONUS_PHILOSOPHERS_H
 
 # include <limits.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <sys/time.h>
+# include <string.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <sys/wait.h>
 # include <signal.h>
 
-# define PHILO_COUNT 1
+# define PHILO_COUNT 2
 # define TIMETO_DIE 420
 # define TIMETO_EAT 69
 # define TIMETO_SLEEP 69
@@ -52,7 +52,7 @@ typedef struct s_philo_times
 typedef struct s_philo
 {
 	int					id;
-	struct s_data				*data;
+	struct s_data		*data;
 	struct timeval		last_meal_tv;
 
 }						t_philo;
@@ -82,8 +82,6 @@ void					micro_sleep(useconds_t milliseconds);
 struct timeval			get_start_tv(void);
 int64_t					get_tv_ms(struct timeval tv);
 
-// Thread functions
-
 // Thread routines
 void					*philo_routine(void *data);
 
@@ -97,8 +95,6 @@ void					free_tdata(t_data *data);
 
 // Parsing
 int						parse_arguments(int argc, char *argv[], t_data *data);
-void					*test_routine(void *arg);
 int						is_dead(t_philo *philo);
 
-# define STDOUT_FILENO 1
 #endif

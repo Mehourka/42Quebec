@@ -6,14 +6,13 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 17:59:22 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:20:19 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 void	death_loop(t_data *data);
-int		check_finished_eating(t_data *data, int *flag);
 void	creat_threads(t_data *data);
 void	join_threads(t_data *data);
 void	detach_threads(t_data *data);
@@ -34,7 +33,7 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
-void creat_threads(t_data *data)
+void	creat_threads(t_data *data)
 {
 	t_philo		*philo;
 	pthread_t	*thread;
@@ -52,7 +51,7 @@ void creat_threads(t_data *data)
 	}
 }
 
-void join_threads(t_data *data)
+void	join_threads(t_data *data)
 {
 	t_philo		*philo;
 	pthread_t	*thread;
@@ -70,7 +69,7 @@ void join_threads(t_data *data)
 	}
 }
 
-void detach_threads(t_data *data)
+void	detach_threads(t_data *data)
 {
 	t_philo		*philo;
 	pthread_t	*thread;
@@ -87,7 +86,6 @@ void detach_threads(t_data *data)
 		i++;
 	}
 }
-
 
 void	death_loop(t_data *data)
 {
@@ -107,7 +105,7 @@ void	death_loop(t_data *data)
 		{
 			if (is_dead(philosophers[i], data, &flag))
 			{
-				// detach_threads(data);
+				detach_threads(data);
 				break ;
 			}
 			if (check_finished_eating(data, &flag))
@@ -115,47 +113,4 @@ void	death_loop(t_data *data)
 			i++;
 		}
 	}
-}
-
-int	is_dead(t_philo philo, t_data *data, int *flag)
-{
-	long int		time_to_die;
-	struct timeval	last_meal;
-	struct timeval	curr_time;
-
-	pthread_mutex_lock(&data->status_mutex);
-	if (philo.is_full)
-	{
-		pthread_mutex_unlock(&data->status_mutex);
-		return (0);
-	}
-	pthread_mutex_unlock(&data->status_mutex);
-	time_to_die = data->time_to.die;
-	last_meal = philo.last_meal_tv;
-	gettimeofday(&curr_time, NULL);
-	if (delta_ms(last_meal, curr_time) > time_to_die)
-	{
-		*flag = 1;
-		pthread_mutex_lock(&data->write_mutex);
-		data->death = 1;
-		printf("%li ms %d has died\n", get_ms_runtime(), philo.id + 1);
-		pthread_mutex_unlock(&data->write_mutex);
-		return (1);
-	}
-	return (0);
-}
-
-int	check_finished_eating(t_data *data, int *flag)
-{
-	int	bool;
-
-	bool = 0;
-	pthread_mutex_lock(&data->status_mutex);
-	if (data->finished_eating >= (int)data->philo_count)
-	{
-		bool ++;
-		*flag = 1;
-	}
-	pthread_mutex_unlock(&data->status_mutex);
-	return (bool);
 }

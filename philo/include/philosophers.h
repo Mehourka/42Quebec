@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 18:25:05 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:20:16 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void					free_tdata(t_data *data);
 
 // Parsing
 int						parse_arguments(int argc, char *argv[], t_data *data);
-void					test_routine(void *arg);
 int						is_dead(t_philo philo, t_data *data, int *flag);
-
+int						check_philos_death(t_data *data);
+int						check_finished_eating(t_data *data, int *flag);
 # define STDOUT_FILENO 1
 #endif

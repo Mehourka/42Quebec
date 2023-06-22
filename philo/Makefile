@@ -6,20 +6,13 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/22 13:29:47 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/22 15:20:32 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #------------------------------------------------------------------------------#
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
-
-# life
-# ARGS	=  2 410 200 200 # l
-# ARGS	=  200 410 200 200 # l
-ARGS	=  200 410 200 200 # d
-
-# ARGS	=  2 200 100 100
 
 NAME	=	philo
 
@@ -41,7 +34,6 @@ LIBS	=
 # Compiler and flags
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra -g
-# CFLAGS +=	-fsanitize=thread
 RM		=	rm
 
 # Sources
@@ -52,6 +44,7 @@ SRCS	:=	main.c			\
 			philo_routines.c\
 			philo_log.c\
 			philo_parse.c\
+			philo_checks.c
 
 # Objects
 OBJDIR	=	obj/
@@ -65,7 +58,7 @@ DEPS		:=	$(OBJS:%.o=%.d)
 #------------------------------------------------------------------------------#
 
 all : $(NAME)
-	./$(NAME) $(ARGS)
+#	./$(NAME) $(ARGS)
 
 # Compile program
 $(NAME) : $(LIBFT) $(OBJS)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routines.c                                   :+:      :+:    :+:   */
+/*   bonus_philo_routines.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 18:23:33 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:51:40 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,11 @@ void	*philo_routine(void *arg)
 	meal_count = data->meal_count;
 
 	pthread_create(&checker, NULL, check_self, (void*) philo);
-	if (philo->id % 2)
+	pthread_detach(checker);
+	if (philo->id % 2 == 0)
 		micro_sleep(data->time_to.eat / 2);
 	while (meal_count != 0)
 	{
-		sem_wait(data->write_sem);
-		if (data->death)
-		{
-			sem_post(data->write_sem);
-			break ;
-		}
-		sem_post(data->write_sem);
 		lock_forks(data->sema_forks, philo->id);
 		eat_routine(data, philo->id, &philo->last_meal_tv);
 		meal_count--;
@@ -51,22 +45,23 @@ void	*philo_routine(void *arg)
 		sleep_routine(data, philo->id);
 		think_routine(data, philo->id);
 	}
-	sem_wait(data->state_sem);
-	pthread_detach(checker);
-	sem_post(data->state_sem);
-
-	return (NULL);
+	exit(0);
 }
 
 void	*check_self(void* arg)
 {
 	t_philo *philo;
-
+	
 	philo = arg;
 	while(1)
 	{
-		printf("Checking on %d\n", philo->id);
-		break;
+		usleep(1000);
+		if(is_dead(philo))
+		{
+			sem_wait(philo->data->write_sem);
+			sem_post(philo->data->state_sem);
+			printf("%li ms %d has died\n", get_ms_runtime(), philo->id);
+		}
 	}
 	return (NULL);
 }
@@ -108,28 +103,38 @@ void	think_routine(t_data *data, int id)
 {
 	(void)data;
 	print_log(id, LOG_THINK);
-	usleep(50);
+	usleep(500);
 }
 
+# include <time.h>
+# include <unistd.h>
 void	*test_routine(void *arg)
 {
-	t_data *data;
-	t_philo *philo;
+	(void) arg;
+	
+	t_data		*data;
+	t_philo		*philo;
+	int			meal_count;
+	pthread_t	checker;
 
 	data = get_data();
 	philo = arg;
-	int id = philo->id;
-	// sem_t *write_sem = sem_open(WRITE_SEM, O_RDWR);
+	meal_count = data->meal_count;
 
-	// sem_t *write_sem = data->write_sem;
-	if (id % 2 == 0)
+	pthread_create(&checker, NULL, check_self, (void*) philo);
+	pthread_detach(checker);
+
+	int i = 1;
+	while(i--)
 	{
-		printf("%li ms %d holds back\n", get_ms_runtime(), id);
-		micro_sleep(data->time_to.eat / 2);
+		sem_wait(data->write_sem);
+
+		printf("%d Working\n", philo->id);
+		sleep(1);
+		
+		sem_post(data->write_sem);
 	}
-	lock_forks(data->sema_forks,id);
-	printf("%li ms %d started the routine\n", get_ms_runtime(), id);
-	micro_sleep(data->time_to.eat);
-	unlock_forks(data->sema_forks);
-	return (NULL);
+	
+	exit(0);
 }
+

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_init.c                                       :+:      :+:    :+:   */
+/*   bonus_philo_init.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 18:19:02 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:55:14 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void	init_philosophers(t_data *data)
 		philo = &data->philosophers[i];
 		philo->id = i + 1;
 		philo->data = data;
-		philo->last_meal_tv.tv_sec = 0;
-		philo->last_meal_tv.tv_usec = 0;
+		philo->last_meal_tv = get_start_tv();
 		i++;
 	}
 }
@@ -71,6 +70,6 @@ void	init_semaforks(t_data *data)
 	sem_unlink(WRITE_SEM);
 	sem_unlink(STATE_SEM);
 	data->sema_forks = sem_open(FORKS_SEM, O_CREAT | O_EXCL, 0644, philo_count);
-	data->write_sem = sem_open(WRITE_SEM, O_CREAT | O_EXCL, 0644, 12);
-	data->state_sem = sem_open(STATE_SEM, O_CREAT | O_EXCL, 0644, 12);
+	data->write_sem = sem_open(WRITE_SEM, O_CREAT | O_EXCL, 0644, 1);
+	data->state_sem = sem_open(STATE_SEM, O_CREAT | O_EXCL, 0644, 0);
 }

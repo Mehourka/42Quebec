@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/22 11:07:52 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/22 14:53:28 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 # life
 # ARGS	=  2 410 200 200 # l
 # ARGS	=  200 410 200 200 # l
-ARGS	=  2 410 200 200 1 # d
+ARGS	=  100 410 200 200# d
 
 # ARGS	=  2 200 100 100
 
@@ -71,7 +71,9 @@ DEPS		:=	$(OBJS:%.o=%.d)
 #------------------------------------------------------------------------------#
 
 all : $(NAME)
-	./$(NAME) $(ARGS)
+#	./$(NAME) $(ARGS)
+
+bonus : all
 
 # Compile program
 $(NAME) : $(LIBFT) $(OBJS)
@@ -100,7 +102,7 @@ fclean : clean
 re : fclean all
 
 # Valgrind leak check
-leak :
+leak : re
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)
 

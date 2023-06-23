@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/23 10:50:32 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/23 11:47:58 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ LIBS	=
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -g
-# CFLAGS	+=	-fsanitize=thread
+CFLAGS	=	-Wall -Werror -Wextra
+# CFLAGS	+=	-g -fsanitize=thread
 RM		=	rm
 
 # Sources
@@ -90,7 +90,7 @@ re : fclean all
 # Valgrind leak check
 leak :
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=no ./$(NAME) $(ARGS)
+	valgrind --leak-check=full --show-leak-kinds=all --tool=drd./$(NAME) $(ARGS)
 
 .PHONY:
 	all clean fclean re leak bonus

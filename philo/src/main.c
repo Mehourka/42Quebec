@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:16:25 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:24:20 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	inner_death_loop(t_data *data)
 		{
 			pthread_mutex_lock(&data->write_mutex);
 			detach_threads(data);
-			printf("%li ms %d has died\n",
+			printf("%li %d died\n",
 				get_ms_runtime(), philosophers[i].id);
 			return (1);
 		}

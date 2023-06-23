@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:50:59 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 17:51:04 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:24:01 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ void	print_log(int philo_id, char *action)
 	t_data		*data;
 
 	data = get_data();
-	philo_id += 1;
 	pthread_mutex_lock(&data->write_mutex);
 	if (!data->death)
 	{
-		printf("%li ms %d %s", get_ms_runtime(), philo_id, action);
+		printf("%li %d %s\n", get_ms_runtime(), philo_id, action);
 	}
 	pthread_mutex_unlock(&data->write_mutex);
 }

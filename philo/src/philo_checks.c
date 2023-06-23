@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:12:32 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:17:57 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:36:02 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_dead(t_philo philo, t_data *data)
 	time_to_die = data->time_to.die;
 	last_meal = philo.last_meal_tv;
 	gettimeofday(&curr_time, NULL);
-	if (delta_ms(last_meal, curr_time) > time_to_die)
+	if (delta_ms(last_meal, curr_time) >= time_to_die)
 	{
 		return (1);
 	}
@@ -68,7 +68,7 @@ void	death_loop(t_data *data)
 	stop_flag = 0;
 	while (stop_flag == 0)
 	{
-		usleep(3500);
+		usleep(50);
 		stop_flag = inner_death_loop(data);
 	}
 }

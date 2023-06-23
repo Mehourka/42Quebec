@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:05:34 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:28:21 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ t_data	*get_data(void)
 int	philo_init(t_data *data, int argc, char *argv[])
 {
 	data->meal_count = -1;
-	data->death = 0;
-	data->finished_eating = 0;
-	if (parse_arguments(argc, argv, data))
+	if (parse_arguments(argc, argv, data) != 0)
 	{
 		return (1);
 	}
@@ -55,7 +53,6 @@ void	init_philosophers(t_data *data)
 		philo = &data->philosophers[i];
 		philo->id = i + 1;
 		philo->data = data;
-		philo->last_meal_tv = get_start_tv();
 		i++;
 	}
 }

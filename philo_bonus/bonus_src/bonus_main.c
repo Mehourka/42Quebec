@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:00:33 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:21:33 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ void	create_children(t_data *data)
 
 	pids = data->pids;
 	i = 0;
+	get_start_tv();
 	while (i < data->philo_count)
 	{
 		philo = &data->philosophers[i];
 		pids[i] = fork();
+		philo->last_meal_tv = get_start_tv();
 		if (pids[i] == 0)
 		{
 			philo_routine(philo);

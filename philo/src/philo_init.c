@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 18:19:02 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:19:40 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	philo_init(t_data *data, int argc, char *argv[])
 	}
 	init_fork_mutex(data);
 	init_philosophers(data);
-	get_start_tv();
 	return (0);
 }
 

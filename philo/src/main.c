@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:20:19 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:20:47 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	creat_threads(t_data *data)
 
 	i = 0;
 	count = data->philo_count;
+	get_start_tv();
 	while (i < count)
 	{
 		philo = &data->philosophers[i];

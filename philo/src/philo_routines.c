@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:18:28 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:23:09 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	*philo_routine(void *arg)
 	while (meal_count != 0)
 	{
 		lock_forks(philo);
-		if(!check_philos_death(data))
-			micro_sleep(10);
+		// if(!check_philos_death(data))
+			// micro_sleep(10);
 		eat_routine(data, philo->id, &philo->last_meal_tv);
 		unlock_forks(philo);
 		sleep_routine(data, philo->id);

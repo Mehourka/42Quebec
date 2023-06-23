@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:28:21 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:27:57 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ typedef struct s_data
 {
 	u_int32_t			philo_count;
 	u_int32_t			meal_count;
-	int					finished_eating;
-	int					death;
 	t_philo				*philosophers;
 	sem_t				*sema_forks;
 	sem_t				*write_sem;

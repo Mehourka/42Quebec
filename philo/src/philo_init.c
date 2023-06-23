@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 10:19:40 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:52:29 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_philosophers(t_data *data)
 	i = 0;
 	while (i < philo_count)
 	{
-		data->philosophers[i].id = i;
+		data->philosophers[i].id = i + 1;
 		data->philosophers[i].left_fork = &data->fork_mutex[i];
 		data->philosophers[i].right_fork = &data->fork_mutex[(i + 1)
 			% philo_count];

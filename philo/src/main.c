@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 10:20:47 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:02:18 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,19 @@ void	death_loop(t_data *data)
 		i = 0;
 		while (i < philo_count)
 		{
-			if (is_dead(philosophers[i], data, &flag))
+			if (is_dead(philosophers[i], data))
 			{
+				pthread_mutex_lock(&data->write_mutex);
 				detach_threads(data);
+				printf("%li ms %d has died\n", get_ms_runtime(), philosophers[i].id);
+				flag++;
 				break ;
 			}
-			if (check_finished_eating(data, &flag))
+			if (check_finished_eating(data))
+			{
+				flag++;
 				break ;
+			}
 			i++;
 		}
 	}

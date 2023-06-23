@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:20:16 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:53:08 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ struct timeval			get_start_tv(void);
 int64_t					get_tv_ms(struct timeval tv);
 
 // Thread functions
+void	detach_threads(t_data *data);
 
 // Thread routines
 void					*philo_routine(void *data);
@@ -91,8 +92,8 @@ void					free_tdata(t_data *data);
 
 // Parsing
 int						parse_arguments(int argc, char *argv[], t_data *data);
-int						is_dead(t_philo philo, t_data *data, int *flag);
+int						is_dead(t_philo philo, t_data *data);
 int						check_philos_death(t_data *data);
-int						check_finished_eating(t_data *data, int *flag);
+int						check_finished_eating(t_data *data);
 # define STDOUT_FILENO 1
 #endif

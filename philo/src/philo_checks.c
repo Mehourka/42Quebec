@@ -6,28 +6,25 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:12:32 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:19:39 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:02:16 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	check_finished_eating(t_data *data, int *flag)
+int	check_finished_eating(t_data *data)
 {
 	int	bool;
 
 	bool = 0;
 	pthread_mutex_lock(&data->status_mutex);
 	if (data->finished_eating >= (int)data->philo_count)
-	{
 		bool ++;
-		*flag = 1;
-	}
 	pthread_mutex_unlock(&data->status_mutex);
 	return (bool);
 }
 
-int	is_dead(t_philo philo, t_data *data, int *flag)
+int	is_dead(t_philo philo, t_data *data)
 {
 	long int		time_to_die;
 	struct timeval	last_meal;
@@ -45,11 +42,6 @@ int	is_dead(t_philo philo, t_data *data, int *flag)
 	gettimeofday(&curr_time, NULL);
 	if (delta_ms(last_meal, curr_time) > time_to_die)
 	{
-		*flag = 1;
-		pthread_mutex_lock(&data->write_mutex);
-		data->death = 1;
-		printf("%li ms %d has died\n", get_ms_runtime(), philo.id + 1);
-		pthread_mutex_unlock(&data->write_mutex);
 		return (1);
 	}
 	return (0);
@@ -69,14 +61,14 @@ void	unlock_forks(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-int	check_philos_death(t_data *data)
-{
-	pthread_mutex_lock(&data->write_mutex);
-	if (data->death)
-	{
-		pthread_mutex_unlock(&data->write_mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(&data->write_mutex);
-	return (0);
-}
+// int	check_philos_death(t_data *data)
+// {
+// 	pthread_mutex_lock(&data->write_mutex);
+// 	if (data->death)
+// 	{
+// 		pthread_mutex_unlock(&data->write_mutex);
+// 		return (1);
+// 	}
+// 	pthread_mutex_unlock(&data->write_mutex);
+// 	return (0);
+// }

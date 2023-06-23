@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 10:23:09 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:58:41 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	lock_forks(t_philo *philo);
 void	unlock_forks(t_philo *philo);
-void	eat_routine(t_data *data, int id, struct timeval *last_meal_tv);
+void	eat_routine(t_data *data, t_philo *philo);
 void	sleep_routine(t_data *data, int id);
 void	think_routine(t_data *data, int id);
 
@@ -32,9 +32,7 @@ void	*philo_routine(void *arg)
 	while (meal_count != 0)
 	{
 		lock_forks(philo);
-		// if(!check_philos_death(data))
-			// micro_sleep(10);
-		eat_routine(data, philo->id, &philo->last_meal_tv);
+		eat_routine(data, philo);
 		unlock_forks(philo);
 		sleep_routine(data, philo->id);
 		think_routine(data, philo->id);
@@ -47,13 +45,17 @@ void	*philo_routine(void *arg)
 	return (NULL);
 }
 
-void	eat_routine(t_data *data, int id, struct timeval *last_meal_tv)
+void	eat_routine(t_data *data, t_philo *philo)
 {
 	long int	eat_time;
 
 	eat_time = data->time_to.eat;
-	print_log(id, LOG_EAT);
-	gettimeofday(last_meal_tv, NULL);
+	if (is_dead(*philo, data))
+	{
+		micro_sleep(100);
+	}
+	gettimeofday(&philo->last_meal_tv, NULL);
+	print_log(philo->id, LOG_EAT);
 	micro_sleep(eat_time);
 }
 

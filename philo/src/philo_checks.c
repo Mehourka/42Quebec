@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:12:32 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:02:16 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:17:57 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ void	unlock_forks(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-// int	check_philos_death(t_data *data)
-// {
-// 	pthread_mutex_lock(&data->write_mutex);
-// 	if (data->death)
-// 	{
-// 		pthread_mutex_unlock(&data->write_mutex);
-// 		return (1);
-// 	}
-// 	pthread_mutex_unlock(&data->write_mutex);
-// 	return (0);
-// }
+void	death_loop(t_data *data)
+{
+	int	stop_flag;
+
+	stop_flag = 0;
+	while (stop_flag == 0)
+	{
+		usleep(3500);
+		stop_flag = inner_death_loop(data);
+	}
+}

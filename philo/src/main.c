@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:02:18 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:16:25 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	death_loop(t_data *data);
 void	creat_threads(t_data *data);
 void	join_threads(t_data *data);
 void	detach_threads(t_data *data);
+int		inner_death_loop(t_data *data);
 
 int	main(int argc, char *argv[])
 {
@@ -88,7 +89,7 @@ void	detach_threads(t_data *data)
 	}
 }
 
-void	death_loop(t_data *data)
+int	inner_death_loop(t_data *data)
 {
 	int		i;
 	int		philo_count;
@@ -98,26 +99,20 @@ void	death_loop(t_data *data)
 	flag = 0;
 	philo_count = data->philo_count;
 	philosophers = data->philosophers;
-	while (!flag)
+	i = 0;
+	while (i < philo_count)
 	{
-		usleep(3000);
-		i = 0;
-		while (i < philo_count)
+		if (is_dead(philosophers[i], data))
 		{
-			if (is_dead(philosophers[i], data))
-			{
-				pthread_mutex_lock(&data->write_mutex);
-				detach_threads(data);
-				printf("%li ms %d has died\n", get_ms_runtime(), philosophers[i].id);
-				flag++;
-				break ;
-			}
-			if (check_finished_eating(data))
-			{
-				flag++;
-				break ;
-			}
-			i++;
+			pthread_mutex_lock(&data->write_mutex);
+			detach_threads(data);
+			printf("%li ms %d has died\n",
+				get_ms_runtime(), philosophers[i].id);
+			return (1);
 		}
+		if (check_finished_eating(data))
+			return (1);
+		i++;
 	}
+	return (0);
 }

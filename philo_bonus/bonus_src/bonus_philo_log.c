@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_log.c                                        :+:      :+:    :+:   */
+/*   bonus_philo_log.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:50:59 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/20 17:51:04 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:18:11 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	print_log(int philo_id, char *action)
 
 	data = get_data();
 	sem_wait(data->write_sem);
-	if (!data->death)
-	{
-		printf("%li ms %d %s", get_ms_runtime(), philo_id, action);
-	}
+	printf("%li ms %d %s", get_ms_runtime(), philo_id, action);
 	sem_post(data->write_sem);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/22 15:08:12 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:18:23 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,22 @@ void	*philo_routine(void *arg)
 {
 	t_data		*data;
 	t_philo		*philo;
-	int			meal_count;
 	pthread_t	checker;
 
 	data = get_data();
 	philo = arg;
-	meal_count = data->meal_count;
 	pthread_create(&checker, NULL, check_self, (void *)philo);
 	pthread_detach(checker);
 	if (philo->id % 2 == 0)
 		micro_sleep(data->time_to.eat / 2);
-	while (meal_count != 0)
+	while (data->meal_count != 0)
 	{
 		lock_forks(data->sema_forks, philo->id);
-		if(is_dead(philo))
-		{
-			sem_wait(philo->data->write_sem);
-			sem_post(philo->data->state_sem);
-			printf("%li ms %d has died\n", get_ms_runtime(), philo->id);
-		}
+		is_dead(philo);
 		eat_routine(data, philo->id, &philo->last_meal_tv);
-		meal_count--;
+		data->meal_count--;
 		unlock_forks(data->sema_forks);
-		if (meal_count == 0)
+		if (data->meal_count == 0)
 			break ;
 		sleep_routine(data, philo->id);
 		think_routine(data, philo->id);
@@ -76,5 +69,4 @@ void	think_routine(t_data *data, int id)
 {
 	(void)data;
 	print_log(id, LOG_THINK);
-	usleep(500);
 }

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 10:21:33 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:16:17 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char *argv[])
 	create_children(data);
 	pthread_create(&watcher, NULL, wait_children, data);
 	kill_children(data);
+	pthread_detach(watcher);
 	free_tdata(data);
 	return (0);
 }
@@ -76,7 +77,7 @@ void	*wait_children(void *arg)
 	i = 0;
 	while (i < data->philo_count)
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(0, NULL, 0);
 		i++;
 	}
 	sem_wait(data->write_sem);

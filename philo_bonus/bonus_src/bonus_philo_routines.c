@@ -27,14 +27,14 @@ void	*philo_routine(void *arg)
 	data = get_data();
 	philo = arg;
 	if (philo->id % 2 == 0)
-		micro_sleep(data->time_to.eat / 2);
+		micro_sleep(data->time_to_eat / 2);
 	while (data->meal_count != 0)
 	{
 		lock_forks(data->sema_forks, philo->id);
 		is_dead(philo);
 		eat_routine(philo);
-		data->meal_count--;
 		unlock_forks(data->sema_forks);
+		data->meal_count--;
 		if (data->meal_count == 0)
 			break ;
 		sleep_routine(philo);
@@ -46,40 +46,35 @@ void	*philo_routine(void *arg)
 
 void	eat_routine(t_philo *philo)
 {
-	long int	eat_time;
-	int64_t	target;
+	int	target;
 
-	eat_time = philo->data->time_to.eat;
-	target = get_ms_runtime() + eat_time;
+	target = get_ms_runtime() + philo->data->time_to_eat;
+	is_dead(philo);
 	print_log(philo->id, LOG_EAT);
 	gettimeofday(&philo->last_meal_tv, NULL);
 	while (get_ms_runtime() < target)
 	{
 		is_dead(philo);
-		usleep(500);
+		usleep(750);
 	}
-	// micro_sleep(eat_time);
 }
 
 void	sleep_routine(t_philo *philo)
 {
-	long int	sleep_time;
-	int64_t	target;
+	int	target;
 
-	sleep_time = philo->data->time_to.sleep;
-	target = get_ms_runtime() + sleep_time;
+	target = get_ms_runtime() + philo->data->time_to_sleep;
 	print_log(philo->id, LOG_SLEEP);
 	while (get_ms_runtime() < target)
 	{
 		is_dead(philo);
 		usleep(100);
 	}
-
-	// micro_sleep(sleep_time);
 }
 
 void	think_routine(t_philo *philo)
 {
 	print_log(philo->id, LOG_THINK);
-	// usleep(500);
+	usleep(500);
+	is_dead(philo);
 }

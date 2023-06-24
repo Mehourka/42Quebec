@@ -28,8 +28,8 @@
 
 # define LOG_FORK "has taken a fork"
 # define LOG_EAT "is eating"
-# define LOG_SLEEP " is sleeping"
-# define LOG_THINK " is thinking"
+# define LOG_SLEEP "is sleeping"
+# define LOG_THINK "is thinking"
 
 # define MIN_ARG_NUM 5
 # define MAX_ARG_NUM 6

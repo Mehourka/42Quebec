@@ -40,14 +40,6 @@
 
 # define FORKS_SEM "/semaforks"
 # define WRITE_SEM "/writesem"
-# define STATE_SEM "/statesem"
-
-typedef struct s_philo_times
-{
-	u_int32_t			die;
-	u_int32_t			eat;
-	u_int32_t			sleep;
-}						t_philo_times;
 
 typedef struct s_philo
 {
@@ -59,14 +51,15 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	u_int32_t			philo_count;
-	u_int32_t			meal_count;
+	int					philo_count;
+	int					meal_count;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
 	t_philo				*philosophers;
 	sem_t				*sema_forks;
 	sem_t				*write_sem;
-	sem_t				*state_sem;
 	int					*pids;
-	t_philo_times		time_to;
 }						t_data;
 
 // Initialisation

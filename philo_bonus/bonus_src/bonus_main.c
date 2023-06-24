@@ -37,7 +37,7 @@ int	main(int argc, char *argv[])
 void	create_children(t_data *data)
 {
 	int			*pids;
-	u_int32_t	i;
+	int			i;
 	t_philo		*philo;
 
 	pids = data->pids;
@@ -58,20 +58,10 @@ void	create_children(t_data *data)
 	}
 }
 
-void	*death_loop(void *arg)
-{
-	t_data	*data;
-
-	data = arg;
-	sem_wait(data->state_sem);
-	kill_children(data);
-	return (NULL);
-}
-
 void	*wait_children(void *arg)
 {
 	t_data		*data;
-	u_int32_t	i;
+	int	i;
 	int status;
 
 	data = arg;
@@ -89,14 +79,12 @@ void	*wait_children(void *arg)
 			}
 		}
 	}
-	// sem_wait(data->write_sem);
-	// sem_post(data->state_sem);
 	return (NULL);
 }
 
 void	kill_children(t_data *data)
 {
-	u_int32_t	i;
+	int	i;
 
 	i = 0;
 	while (i < data->philo_count)

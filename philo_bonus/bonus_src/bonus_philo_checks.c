@@ -14,19 +14,16 @@
 
 int	is_dead(t_philo *philo)
 {
-	long int		time_to_die;
 	struct timeval	last_meal;
 	struct timeval	curr_time;
 	t_data			*data;
 
 	data = philo->data;
-	time_to_die = data->time_to.die;
 	last_meal = philo->last_meal_tv;
 	gettimeofday(&curr_time, NULL);
-	if (delta_ms(last_meal, curr_time) >= (int)time_to_die)
+	if (delta_ms(last_meal, curr_time) >= data->time_to_die)
 	{
 		sem_wait(philo->data->write_sem);
-		sem_post(philo->data->state_sem);
 		printf("%li %d died\n", get_ms_runtime(), philo->id);
 		free_tdata(data);
 		exit (1);

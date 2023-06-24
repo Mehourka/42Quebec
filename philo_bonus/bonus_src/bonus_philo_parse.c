@@ -13,7 +13,7 @@
 #include "bonus_philosophers.h"
 
 void	print_usage(char *argv[]);
-int		parse_uint(char *nb, u_int32_t *dest);
+int		parse_uint(char *nb, int *dest);
 int		ft_isdigit(int c);
 
 int	parse_arguments(int argc, char *argv[], t_data *data)
@@ -24,9 +24,9 @@ int	parse_arguments(int argc, char *argv[], t_data *data)
 		return (1);
 	}
 	if (parse_uint(argv[1], &data->philo_count)
-		|| parse_uint(argv[2], &(data->time_to.die))
-		|| parse_uint(argv[3], &(data->time_to.eat))
-		|| parse_uint(argv[4], &(data->time_to.sleep)))
+		|| parse_uint(argv[2], &(data->time_to_die))
+		|| parse_uint(argv[3], &(data->time_to_eat))
+		|| parse_uint(argv[4], &(data->time_to_sleep)))
 	{
 		print_usage(argv);
 		return (1);
@@ -53,7 +53,7 @@ Retruns :
 	0 if str represents a valid int
 	1 otherwise
 */
-int	parse_uint(char *nb, u_int32_t *dest)
+int	parse_uint(char *nb, int *dest)
 {
 	int			i;
 	long int	result;
@@ -71,7 +71,7 @@ int	parse_uint(char *nb, u_int32_t *dest)
 		result = 10 * result + (nb[i] - '0');
 		i++;
 	}
-	if (result == 0 || result > INT_MAX)
+	if (result <= 0 || result > INT_MAX)
 		return (1);
 	*dest = result;
 	return (0);

@@ -36,7 +36,6 @@ int	philo_init(t_data *data, int argc, char *argv[])
 	data->pids = malloc(sizeof(int) * data->philo_count);
 	init_semaforks(data);
 	init_philosophers(data);
-	get_start_tv();
 	return (0);
 }
 
@@ -65,8 +64,6 @@ void	init_semaforks(t_data *data)
 	philo_count = data->philo_count;
 	sem_unlink(FORKS_SEM);
 	sem_unlink(WRITE_SEM);
-	sem_unlink(STATE_SEM);
 	data->sema_forks = sem_open(FORKS_SEM, O_CREAT | O_EXCL, 0644, philo_count);
 	data->write_sem = sem_open(WRITE_SEM, O_CREAT | O_EXCL, 0644, 1);
-	data->state_sem = sem_open(STATE_SEM, O_CREAT | O_EXCL, 0644, 0);
 }

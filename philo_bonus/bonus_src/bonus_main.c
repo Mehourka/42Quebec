@@ -48,7 +48,8 @@ void	create_children(t_data *data)
 	{
 		philo = &data->philosophers[i];
 		pids[i] = fork();
-		philo->last_meal_tv = get_start_tv();
+		// philo->last_meal_tv = get_start_tv();
+		gettimeofday(&philo->last_meal_tv, NULL);
 		if (pids[i] == 0)
 		{
 			philo_routine(philo);

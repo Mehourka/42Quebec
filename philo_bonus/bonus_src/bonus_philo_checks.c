@@ -27,8 +27,9 @@ int	is_dead(t_philo *philo)
 	{
 		sem_wait(philo->data->write_sem);
 		sem_post(philo->data->state_sem);
-		printf("%li ms %d has died\n", get_ms_runtime(), philo->id);
-		return (1);
+		printf("%li %d died\n", get_ms_runtime(), philo->id);
+		free_tdata(data);
+		exit (1);
 	}
 	return (0);
 }

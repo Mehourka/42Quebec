@@ -21,7 +21,7 @@ void	print_log(int philo_id, char *action)
 
 	data = get_data();
 	sem_wait(data->write_sem);
-	printf("%li ms %d %s", get_ms_runtime(), philo_id, action);
+	printf("%li %d %s\n", get_ms_runtime(), philo_id, action);
 	sem_post(data->write_sem);
 }
 

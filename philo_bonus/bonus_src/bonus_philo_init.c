@@ -30,6 +30,7 @@ int	philo_init(t_data *data, int argc, char *argv[])
 	data->meal_count = -1;
 	if (parse_arguments(argc, argv, data) != 0)
 	{
+		free(data);
 		return (1);
 	}
 	data->pids = malloc(sizeof(int) * data->philo_count);

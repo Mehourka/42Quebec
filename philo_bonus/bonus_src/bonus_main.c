@@ -29,8 +29,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	create_children(data);
 	pthread_create(&watcher, NULL, wait_children, data);
-	kill_children(data);
-	pthread_detach(watcher);
+	pthread_join(watcher, NULL);
 	free_tdata(data);
 	return (0);
 }
@@ -73,16 +72,25 @@ void	*wait_children(void *arg)
 {
 	t_data		*data;
 	u_int32_t	i;
+	int status;
 
 	data = arg;
 	i = 0;
 	while (i < data->philo_count)
 	{
-		waitpid(0, NULL, 0);
+		waitpid(0, &status, 0);
 		i++;
+		if(WIFEXITED(status))
+		{
+			if(WEXITSTATUS(status) != 0)
+			{
+				kill_children(data);
+				break ;
+			}
+		}
 	}
-	sem_wait(data->write_sem);
-	sem_post(data->state_sem);
+	// sem_wait(data->write_sem);
+	// sem_post(data->state_sem);
 	return (NULL);
 }
 
@@ -90,7 +98,6 @@ void	kill_children(t_data *data)
 {
 	u_int32_t	i;
 
-	sem_wait(data->state_sem);
 	i = 0;
 	while (i < data->philo_count)
 	{

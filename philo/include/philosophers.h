@@ -34,6 +34,9 @@
 # define MIN_ARG_NUM 5
 # define MAX_ARG_NUM 6
 
+# define TRUE 1
+# define FALSE 0
+
 typedef struct s_philo_times
 {
 	int			die;
@@ -48,6 +51,7 @@ typedef struct s_philo
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
 	struct timeval		last_meal_tv;
+	struct s_data		*data;
 	int					is_full;
 
 }	t_philo;
@@ -72,7 +76,7 @@ int						philo_init(t_data *data, int argc, char *argv[]);
 // Time functions
 long int				delta_ms(struct timeval statrt, struct timeval end);
 long int				get_ms_runtime(void);
-void					micro_sleep(useconds_t milliseconds);
+void					micro_sleep(long int milliseconds);
 struct timeval			get_start_tv(void);
 long int				get_tv_ms(struct timeval tv);
 
@@ -83,6 +87,10 @@ void					detach_threads(t_data *data);
 void					*philo_routine(void *data);
 void					death_loop(t_data *data);
 int						inner_death_loop(t_data *data);
+
+
+// Checks
+	int		check_no_dead(t_data *data);
 // Logs
 void					ft_putnbr(long int number);
 void					ft_putstr(char *string);

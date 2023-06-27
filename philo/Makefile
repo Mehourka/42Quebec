@@ -14,7 +14,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-# ARGS	=	/philo 199 599 200 200 2
+ARGS	=	2 301 200c 200 30
 NAME	=	philo
 
 # Colors
@@ -34,7 +34,7 @@ LIBS	=
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra -pthread -O2
 # CFLAGS	+=	-g -fsanitize=thread
 RM		=	rm
 
@@ -89,9 +89,9 @@ fclean : clean
 re : fclean all
 
 # Valgrind leak check
-leak :
+leak : re
 	echo "$(BLUE)	Checking leaks ...	$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --tool=drd./$(NAME) $(ARGS)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(ARGS)
 
 .PHONY:
 	all clean fclean re leak bonus

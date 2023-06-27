@@ -13,8 +13,8 @@
 #include "philosophers.h"
 
 void	init_philosophers(t_data *data);
-void	init_philo_times(t_data *data);
 void	init_fork_mutex(t_data *data);
+void	swap_forks(t_philo *philo);
 
 t_data	*get_data(void)
 {
@@ -54,8 +54,11 @@ void	init_philosophers(t_data *data)
 		data->philosophers[i].left_fork = &data->fork_mutex[i];
 		data->philosophers[i].right_fork = &data->fork_mutex[(i + 1)
 			% philo_count];
+		if(i % 2 == 1)
+			swap_forks(&data->philosophers[i]);
 		data->philosophers[i].last_meal_tv = get_start_tv();
 		data->philosophers[i].is_full = 0;
+
 		i++;
 	}
 }
@@ -75,4 +78,13 @@ void	init_fork_mutex(t_data *data)
 	}
 	pthread_mutex_init(&data->write_mutex, NULL);
 	pthread_mutex_init(&data->status_mutex, NULL);
+}
+
+void	swap_forks(t_philo *philo)
+{
+	pthread_mutex_t *tmp;
+
+	tmp = philo->right_fork;
+	philo->right_fork = philo->left_fork;
+	philo->left_fork = tmp;
 }

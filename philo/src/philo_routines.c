@@ -27,14 +27,12 @@ void	*philo_routine(void *arg)
 	data = get_data();
 	philo = arg;
 	meal_count = data->meal_count;
-	if (philo->id % 2)
+	if (philo->id % 2 == 0)
 		micro_sleep(data->time_to.eat / 2);
-	while (meal_count != 0)
+	while (check_no_dead(data) && meal_count != 0)
 	{
-		lock_forks(philo);
 		eat_routine(data, philo);
 		meal_count--;
-		unlock_forks(philo);
 		if (meal_count == 0)
 			break ;
 		sleep_routine(data, philo->id);
@@ -52,13 +50,15 @@ void	eat_routine(t_data *data, t_philo *philo)
 	long int	eat_time;
 
 	eat_time = data->time_to.eat;
-	if (is_dead(*philo, data))
-	{
-		micro_sleep(100);
-	}
+	lock_forks(philo);
+	is_dead(*philo, data);
+	pthread_mutex_lock(&data->status_mutex);
 	gettimeofday(&philo->last_meal_tv, NULL);
+	pthread_mutex_unlock(&data->status_mutex);
 	print_log(philo->id, LOG_EAT);
 	micro_sleep(eat_time);
+	unlock_forks(philo);
+
 }
 
 void	sleep_routine(t_data *data, int id)
@@ -74,5 +74,6 @@ void	think_routine(t_data *data, int id)
 {
 	(void)data;
 	print_log(id, LOG_THINK);
-	usleep(50);
+	// usleep(5000);
 }
+

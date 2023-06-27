@@ -36,12 +36,17 @@ int	is_dead(t_philo philo, t_data *data)
 		pthread_mutex_unlock(&data->status_mutex);
 		return (0);
 	}
+	last_meal = philo.last_meal_tv;
 	pthread_mutex_unlock(&data->status_mutex);
 	time_to_die = data->time_to.die;
-	last_meal = philo.last_meal_tv;
 	gettimeofday(&curr_time, NULL);
 	if (delta_ms(last_meal, curr_time) >= time_to_die)
 	{
+		pthread_mutex_lock(&data->write_mutex);
+		if (!data->death++)
+			printf("%li %d died\n",
+				get_ms_runtime(), philo.id);
+		pthread_mutex_unlock(&data->write_mutex);
 		return (1);
 	}
 	return (0);
@@ -49,16 +54,16 @@ int	is_dead(t_philo philo, t_data *data)
 
 void	lock_forks(t_philo *philo)
 {
-	pthread_mutex_lock(philo->left_fork);
-	print_log(philo->id, LOG_FORK);
-	pthread_mutex_lock(philo->right_fork);
-	print_log(philo->id, LOG_FORK);
+		pthread_mutex_lock(philo->right_fork);
+		print_log(philo->id, LOG_FORK);
+		pthread_mutex_lock(philo->left_fork);
+		print_log(philo->id, LOG_FORK);
 }
 
 void	unlock_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
 }
 
 void	death_loop(t_data *data)
@@ -68,7 +73,19 @@ void	death_loop(t_data *data)
 	stop_flag = 0;
 	while (stop_flag == 0)
 	{
-		usleep(50);
+		usleep(250);
 		stop_flag = inner_death_loop(data);
 	}
+}
+
+int check_no_dead(t_data *data)
+{
+	pthread_mutex_lock(&data->write_mutex);
+	if(data->death)
+	{
+		pthread_mutex_unlock(&data->write_mutex);
+		return (FALSE);
+	}
+	pthread_mutex_unlock(&data->write_mutex);
+	return (TRUE);
 }

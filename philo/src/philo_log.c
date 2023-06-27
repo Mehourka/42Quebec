@@ -27,24 +27,3 @@ void	print_log(int philo_id, char *action)
 	}
 	pthread_mutex_unlock(&data->write_mutex);
 }
-
-void	ft_putnbr(long int number)
-{
-	char	c;
-
-	if (number > 9)
-		ft_putnbr(number / 10);
-	c = number % 10 + '0';
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char *string)
-{
-	if (!string)
-		return ;
-	while (*string)
-	{
-		write(1, string, 1);
-		string++;
-	}
-}

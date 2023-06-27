@@ -56,7 +56,7 @@ long int get_microsec(void)
 	return (curr.tv_sec * 1000000 + curr.tv_usec);
 }
 
-void	micro_sleep(useconds_t milliseconds)
+void	micro_sleep(long int milliseconds)
 {
 	long int	target;
 

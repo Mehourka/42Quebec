@@ -85,6 +85,7 @@ void					detach_threads(t_data *data);
 
 // Thread routines
 void					*philo_routine(void *data);
+void					*lonely_philo(void *arg);
 void					death_loop(t_data *data);
 int						inner_death_loop(t_data *data);
 
@@ -101,7 +102,7 @@ void					free_tdata(t_data *data);
 
 // Parsing
 int						parse_arguments(int argc, char *argv[], t_data *data);
-int						is_dead(t_philo philo, t_data *data);
+int						is_dead(t_philo *philo, t_data *data);
 int						check_finished_eating(t_data *data);
 # define STDOUT_FILENO 1
 #endif

@@ -45,13 +45,28 @@ void	*philo_routine(void *arg)
 	return (NULL);
 }
 
+void	*lonely_philo(void *arg)
+{
+	t_data	*data;
+	t_philo	*philo;
+
+	data = get_data();
+	philo = arg;
+	pthread_mutex_lock(philo->right_fork);
+	print_log(philo->id, LOG_FORK);
+	while (is_dead(philo, data) != 1)
+		usleep(1000);
+	pthread_mutex_unlock(philo->right_fork);
+	return (NULL);
+}
+
 void	eat_routine(t_data *data, t_philo *philo)
 {
 	long int	eat_time;
 
 	eat_time = data->time_to.eat;
 	lock_forks(philo);
-	is_dead(*philo, data);
+	is_dead(philo, data);
 	pthread_mutex_lock(&data->status_mutex);
 	gettimeofday(&philo->last_meal_tv, NULL);
 	pthread_mutex_unlock(&data->status_mutex);

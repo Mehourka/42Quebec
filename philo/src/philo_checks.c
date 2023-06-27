@@ -24,19 +24,19 @@ int	check_finished_eating(t_data *data)
 	return (bool);
 }
 
-int	is_dead(t_philo philo, t_data *data)
+int	is_dead(t_philo *philo, t_data *data)
 {
 	long int		time_to_die;
 	struct timeval	last_meal;
 	struct timeval	curr_time;
 
 	pthread_mutex_lock(&data->status_mutex);
-	if (philo.is_full)
+	if (philo->is_full)
 	{
 		pthread_mutex_unlock(&data->status_mutex);
 		return (0);
 	}
-	last_meal = philo.last_meal_tv;
+	last_meal = philo->last_meal_tv;
 	pthread_mutex_unlock(&data->status_mutex);
 	time_to_die = data->time_to.die;
 	gettimeofday(&curr_time, NULL);
@@ -45,7 +45,7 @@ int	is_dead(t_philo philo, t_data *data)
 		pthread_mutex_lock(&data->write_mutex);
 		if (!data->death++)
 			printf("%li %d died\n",
-				get_ms_runtime(), philo.id);
+				get_ms_runtime(), philo->id);
 		pthread_mutex_unlock(&data->write_mutex);
 		return (1);
 	}

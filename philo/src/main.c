@@ -44,7 +44,13 @@ void	creat_threads(t_data *data)
 	i = 0;
 	count = data->philo_count;
 	get_start_tv();
-	while (i < count)
+	if (count == 1)
+	{
+		philo = &data->philosophers[0];
+		thread = &philo->thread;
+		pthread_create(thread, NULL, lonely_philo, philo);
+	}
+	else while (i < count)
 	{
 		philo = &data->philosophers[i];
 		thread = &philo->thread;
@@ -102,7 +108,7 @@ int	inner_death_loop(t_data *data)
 	i = 0;
 	while (i < philo_count)
 	{
-		if (is_dead(philosophers[i], data))
+		if (is_dead(&philosophers[i], data))
 		{
 			return (1);
 		}

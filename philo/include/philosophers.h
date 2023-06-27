@@ -36,9 +36,9 @@
 
 typedef struct s_philo_times
 {
-	u_int32_t			die;
-	u_int32_t			eat;
-	u_int32_t			sleep;
+	int			die;
+	int			eat;
+	int			sleep;
 }						t_philo_times;
 
 typedef struct s_philo
@@ -50,12 +50,12 @@ typedef struct s_philo
 	struct timeval		last_meal_tv;
 	int					is_full;
 
-}						t_philo;
+}	t_philo;
 
 typedef struct s_data
 {
-	u_int32_t			philo_count;
-	u_int32_t			meal_count;
+	int					philo_count;
+	int					meal_count;
 	int					finished_eating;
 	int					death;
 	t_philo				*philosophers;
@@ -63,7 +63,7 @@ typedef struct s_data
 	pthread_mutex_t		write_mutex;
 	pthread_mutex_t		status_mutex;
 	t_philo_times		time_to;
-}						t_data;
+}	t_data;
 
 // Initialisation
 t_data					*get_data(void);
@@ -74,7 +74,7 @@ long int				delta_ms(struct timeval statrt, struct timeval end);
 long int				get_ms_runtime(void);
 void					micro_sleep(useconds_t milliseconds);
 struct timeval			get_start_tv(void);
-int64_t					get_tv_ms(struct timeval tv);
+long int				get_tv_ms(struct timeval tv);
 
 // Thread functions
 void					detach_threads(t_data *data);

@@ -13,7 +13,7 @@
 #include "philosophers.h"
 
 void	print_usage(char *argv[]);
-int		parse_uint(char *nb, u_int32_t *dest);
+int		parse_uint(char *nb, int *dest);
 int		ft_isdigit(int c);
 
 int	parse_arguments(int argc, char *argv[], t_data *data)
@@ -53,7 +53,7 @@ Retruns :
 	0 if str represents a valid int
 	1 otherwise
 */
-int	parse_uint(char *nb, u_int32_t *dest)
+int	parse_uint(char *nb, int *dest)
 {
 	int			i;
 	long int	result;

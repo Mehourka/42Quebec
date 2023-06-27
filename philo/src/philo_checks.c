@@ -57,8 +57,8 @@ void	lock_forks(t_philo *philo)
 
 void	unlock_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 }
 
 void	death_loop(t_data *data)

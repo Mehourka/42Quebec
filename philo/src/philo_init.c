@@ -32,6 +32,7 @@ int	philo_init(t_data *data, int argc, char *argv[])
 	data->finished_eating = 0;
 	if (parse_arguments(argc, argv, data))
 	{
+		free(data);
 		return (1);
 	}
 	init_fork_mutex(data);

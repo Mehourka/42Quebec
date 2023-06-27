@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-int64_t			get_tv_ms(struct timeval tv);
+long int		get_tv_ms(struct timeval tv);
 
 struct timeval	get_start_tv(void)
 {
@@ -47,17 +47,26 @@ long int	delta_ms(struct timeval start, struct timeval end)
 	return (delta_s * 1000 + delta_us / 1000);
 }
 
+/*Get the current time (aka micro seconds since Jan 1970)*/
+long int get_microsec(void)
+{
+	struct timeval curr;
+
+	gettimeofday(&curr, NULL);
+	return (curr.tv_sec * 1000000 + curr.tv_usec);
+}
+
 void	micro_sleep(useconds_t milliseconds)
 {
-	int64_t	target;
+	long int	target;
 
-	target = get_ms_runtime() + milliseconds;
-	usleep((milliseconds - 10) * 1000);
-	while (get_ms_runtime() < target)
+	target = get_microsec() + milliseconds * 1000;
+	usleep((milliseconds - 1) * 1000);
+	while (get_microsec() < target)
 		usleep(50);
 }
 
-int64_t	get_tv_ms(struct timeval tv)
+long int	get_tv_ms(struct timeval tv)
 {
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

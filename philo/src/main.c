@@ -94,9 +94,9 @@ int	inner_death_loop(t_data *data)
 	int		i;
 	int		philo_count;
 	t_philo	*philosophers;
-	int		flag;
+	// int		flag;
 
-	flag = 0;
+	// flag = 0;
 	philo_count = data->philo_count;
 	philosophers = data->philosophers;
 	i = 0;

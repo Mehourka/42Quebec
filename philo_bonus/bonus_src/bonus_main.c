@@ -42,13 +42,16 @@ void	create_children(t_data *data)
 
 	pids = data->pids;
 	i = 0;
-	get_start_tv();
 	while (i < data->philo_count)
 	{
-		philo = &data->philosophers[i];
+		philo = &data->philosopher;
+		get_start_tv();
+		// gettimeofday(&philo->last_meal_tv, NULL);
+		philo->last_meal_tv = get_start_tv();
 		pids[i] = fork();
-		// philo->last_meal_tv = get_start_tv();
-		gettimeofday(&philo->last_meal_tv, NULL);
+
+		philo->id = i + 1;
+
 		if (pids[i] == 0)
 		{
 			philo_routine(philo);

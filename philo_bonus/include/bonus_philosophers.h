@@ -56,7 +56,7 @@ typedef struct s_data
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-	t_philo				*philosophers;
+	t_philo				philosopher;
 	sem_t				*sema_forks;
 	sem_t				*write_sem;
 	int					*pids;
@@ -69,7 +69,7 @@ int						philo_init(t_data *data, int argc, char *argv[]);
 // Time functions
 long int				delta_ms(struct timeval statrt, struct timeval end);
 long int				get_ms_runtime(void);
-void					micro_sleep(useconds_t milliseconds);
+void					micro_sleep(long int milliseconds);
 struct timeval			get_start_tv(void);
 int64_t					get_tv_ms(struct timeval tv);
 

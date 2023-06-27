@@ -47,13 +47,21 @@ long int	delta_ms(struct timeval start, struct timeval end)
 	return (delta_s * 1000 + delta_us / 1000);
 }
 
-void	micro_sleep(useconds_t milliseconds)
+long int get_microsec(void)
 {
-	int64_t	target;
+	struct timeval curr;
 
-	target = get_ms_runtime() + milliseconds;
-	usleep((milliseconds - 10) * 1000);
-	while (get_ms_runtime() < target)
+	gettimeofday(&curr, NULL);
+	return (curr.tv_sec * 1000000 + curr.tv_usec);
+}
+
+void	micro_sleep(long int milliseconds)
+{
+	long int	target;
+
+	target = get_microsec() + milliseconds * 1000;
+	usleep((milliseconds - 1) * 1000);
+	while (get_microsec() < target)
 		usleep(50);
 }
 

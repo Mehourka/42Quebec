@@ -17,7 +17,7 @@
 # life
 # ARGS	=  2 410 200 200 # l
 # ARGS	=  200 410 200 200 # l
-ARGS	=  2 44410 200 100 2 # d
+ARGS	=  2 410 200 100 2 # d
 
 # ARGS	=  2 200 100 100
 
@@ -40,7 +40,7 @@ LIBS	=
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -g
+CFLAGS	=	-Wall -Werror -Wextra -O2
 # CFLAGS +=	-fsanitize=thread -g
 RM		=	rm
 

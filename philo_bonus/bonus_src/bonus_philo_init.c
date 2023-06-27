@@ -41,20 +41,18 @@ int	philo_init(t_data *data, int argc, char *argv[])
 
 void	init_philosophers(t_data *data)
 {
-	int		philo_count;
 	t_philo	*philo;
-	int		i;
+	// int		i;
 
-	philo_count = data->philo_count;
-	data->philosophers = malloc(sizeof(t_philo) * philo_count);
-	i = 0;
-	while (i < philo_count)
-	{
-		philo = &data->philosophers[i];
-		philo->id = i + 1;
+	// data->philosopher = malloc(sizeof(t_philo) * philo_count);
+	// while (i < philo_count)
+	// {
+		// philo = &data->philosophers[i];
+		philo = &data->philosopher;
+		// philo->id = i + 1;
 		philo->data = data;
-		i++;
-	}
+		// i++;
+	// }
 }
 
 void	init_semaforks(t_data *data)

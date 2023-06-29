@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 08:59:34 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 10:47:03 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	join_threads(t_data *data)
 		thread = &philo->thread;
 		pthread_join(*thread, NULL);
 		i++;
-		// printf("Philo %d joined, finished_eatin -> %d\n", i, philo->is_full);
 	}
 }
 
@@ -108,14 +107,21 @@ int	inner_death_loop(t_data *data)
 	philo_count = data->philo_count;
 	philosophers = data->philosophers;
 	i = 0;
+	if (all_finished_eating(data) == 1)
+	{
+		return (1);
+	}
 	while (i < philo_count)
 	{
+		if(is_full(&philosophers[i], data))
+		{
+			i++;
+			continue ;
+		}
 		if (is_dead(&philosophers[i], data))
 		{
 			return (1);
 		}
-		if (check_finished_eating(data))
-			return (1);
 		i++;
 	}
 	return (0);

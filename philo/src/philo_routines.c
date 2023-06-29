@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 08:48:31 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 10:57:29 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*philo_routine(void *arg)
 	meal_count = data->meal_count;
 	if (philo->id % 2 == 0)
 		micro_sleep(data->time_to.eat / 2);
-	while (check_no_dead(data) && meal_count != 0)
+	while (check_death(data) == 0)
 	{
 		eat_routine(data, philo);
 		meal_count--;
@@ -42,6 +42,7 @@ void	*philo_routine(void *arg)
 	data->finished_eating++;
 	philo->is_full = 1;
 	pthread_mutex_unlock(&data->status_mutex);
+	// printf("DEBUG - %d++\n", data->finished_eating);
 	return (NULL);
 }
 
@@ -52,6 +53,7 @@ void	*lonely_philo(void *arg)
 
 	data = get_data();
 	philo = arg;
+	philo->last_meal_us = get_curr_us();
 	pthread_mutex_lock(philo->right_fork);
 	print_log(philo->id, LOG_FORK);
 	while (is_dead(philo, data) != 1)
@@ -73,7 +75,6 @@ void	eat_routine(t_data *data, t_philo *philo)
 	print_log(philo->id, LOG_EAT);
 	micro_sleep(eat_time);
 	unlock_forks(philo);
-
 }
 
 void	sleep_routine(t_data *data, int id)
@@ -89,6 +90,6 @@ void	think_routine(t_data *data, int id)
 {
 	(void)data;
 	print_log(id, LOG_THINK);
-	// usleep(5000);
+	usleep(250);
 }
 

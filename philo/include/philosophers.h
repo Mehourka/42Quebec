@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 08:51:22 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 09:18:18 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ int						inner_death_loop(t_data *data);
 
 
 // Checks
-	int		check_no_dead(t_data *data);
+int						check_death(t_data *data);
+int						is_full(t_philo *philo, t_data *data);
+int						all_finished_eating(t_data *data);
+
 // Logs
 void					print_log(int philo_id, char *action);
 
@@ -103,6 +106,5 @@ void					free_tdata(t_data *data);
 // Parsing
 int						parse_arguments(int argc, char *argv[], t_data *data);
 int						is_dead(t_philo *philo, t_data *data);
-int						check_finished_eating(t_data *data);
 # define STDOUT_FILENO 1
 #endif

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:19 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 08:54:34 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 10:17:01 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ long int	get_start_us(void)
 	return (start_time);
 }
 
+long int	get_runtime(void)
+{
+	return (get_curr_us() - get_start_us());
+}
+
 /*Gives the elapsed milliseconds since the first call to this function*/
 long int	get_ms_runtime(void)
 {
 	return ((get_curr_us() - get_start_us()) / 1000);
 }
+
 
 /*Compute the time difference between two timevals in milliseconds*/
 long int	delta_ms(long int start_us, long int end_us)
@@ -51,10 +57,10 @@ void	micro_sleep(long int milliseconds)
 {
 	long int	target;
 
-	target = get_curr_us() + milliseconds * 1000;
-	usleep((milliseconds - 1) * 1000);
-	while (get_curr_us() < target)
-		usleep(50);
+	target = get_ms_runtime() + milliseconds;
+	usleep((milliseconds - 5) * 1000);
+	while (get_ms_runtime() < target)
+		usleep(100);
 }
 
 long int	get_tv_ms(struct timeval tv)

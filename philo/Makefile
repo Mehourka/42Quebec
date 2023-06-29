@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/29 08:30:41 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/29 10:52:08 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-ARGS	=	2 301 200c 200 30
+ARGS	=	200 0 0 200 5
 NAME	=	philo
 
 # Colors
@@ -34,7 +34,7 @@ LIBS	=
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -pthread 
+CFLAGS	=	-Wall -Werror -Wextra
 # CFLAGS	+=	-g -fsanitize=thread
 RM		=	rm
 
@@ -60,7 +60,7 @@ DEPS		:=	$(OBJS:%.o=%.d)
 #------------------------------------------------------------------------------#
 
 all : $(NAME)
-#	./$(NAME) $(ARGS)
+	# ./$(NAME) $(ARGS)
 
 # Compile program
 $(NAME) : $(LIBFT) $(OBJS)

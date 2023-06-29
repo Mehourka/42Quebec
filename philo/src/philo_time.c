@@ -6,13 +6,12 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:19 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 11:05:57 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:20:59 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-long int	get_tv_ms(struct timeval tv);
 long int	get_curr_us(void);
 
 long int	get_start_us(void)
@@ -54,5 +53,5 @@ void	micro_sleep(long int milliseconds)
 	target = get_ms_runtime() + milliseconds;
 	usleep((milliseconds - 5) * 1000);
 	while (get_ms_runtime() < target)
-		usleep(100);
+		usleep(5);
 }

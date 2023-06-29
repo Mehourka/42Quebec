@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/23 12:12:48 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/29 11:40:53 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 # life
 # ARGS	=  2 410 200 200 # l
 # ARGS	=  200 410 200 200 # l
-ARGS	=  2 410 200 100 2 # d
+ARGS	=  2 310 200 100 2 # d
 
 # ARGS	=  2 200 100 100
 
@@ -40,7 +40,7 @@ LIBS	=
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -O2
+CFLAGS	=	-Wall -Werror -Wextra
 # CFLAGS +=	-fsanitize=thread -g
 RM		=	rm
 

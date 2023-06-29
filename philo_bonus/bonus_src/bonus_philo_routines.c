@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 12:18:23 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:48:38 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ void	*check_self(void *arg);
 
 void	*philo_routine(void *arg)
 {
-	t_data		*data;
-	t_philo		*philo;
+	t_data	*data;
+	t_philo	*philo;
 
 	data = get_data();
 	philo = arg;
+	philo->last_meal_us = get_start_us();
 	if (philo->id % 2 == 0)
 		micro_sleep(data->time_to_eat / 2);
 	while (data->meal_count != 0)
@@ -51,7 +52,7 @@ void	eat_routine(t_philo *philo)
 	target = get_ms_runtime() + philo->data->time_to_eat;
 	is_dead(philo);
 	print_log(philo->id, LOG_EAT);
-	gettimeofday(&philo->last_meal_tv, NULL);
+	philo->last_meal_us = get_curr_us();
 	while (get_ms_runtime() < target)
 	{
 		is_dead(philo);
@@ -68,7 +69,7 @@ void	sleep_routine(t_philo *philo)
 	while (get_ms_runtime() < target)
 	{
 		is_dead(philo);
-		usleep(100);
+		usleep(750);
 	}
 }
 
@@ -76,5 +77,20 @@ void	think_routine(t_philo *philo)
 {
 	print_log(philo->id, LOG_THINK);
 	usleep(500);
-	is_dead(philo);
+}
+
+void	*lonely_philo(void *arg)
+{
+	t_data	*data;
+	t_philo	*philo;
+
+	data = get_data();
+	philo = arg;
+	philo->last_meal_us = get_curr_us();
+	sem_wait(data->sema_forks);
+	print_log(philo->id, LOG_FORK);
+	while (is_dead(philo) != 1)
+		usleep(1000);
+	sem_post(data->sema_forks);
+	return (NULL);
 }

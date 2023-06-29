@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:04:11 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 12:07:01 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:49:04 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 int	is_dead(t_philo *philo)
 {
-	struct timeval	last_meal;
-	struct timeval	curr_time;
-	t_data			*data;
+	long int	last_meal;
+	t_data		*data;
 
 	data = philo->data;
-	last_meal = philo->last_meal_tv;
-	gettimeofday(&curr_time, NULL);
-	if (delta_ms(last_meal, curr_time) >= data->time_to_die)
+	last_meal = philo->last_meal_us;
+	if (delta_ms(last_meal, get_curr_us()) >= data->time_to_die)
 	{
 		sem_wait(philo->data->write_sem);
 		printf("%li %d died\n", get_ms_runtime(), philo->id);
 		free_tdata(data);
-		exit (1);
+		exit(1);
 	}
 	return (0);
 }

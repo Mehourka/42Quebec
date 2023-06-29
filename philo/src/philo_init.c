@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 08:57:15 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:02:39 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,9 @@ void	init_philosophers(t_data *data)
 		data->philosophers[i].left_fork = &data->fork_mutex[i];
 		data->philosophers[i].right_fork = &data->fork_mutex[(i + 1)
 			% philo_count];
-		if(i % 2 == 1)
+		if (i % 2 == 1)
 			swap_forks(&data->philosophers[i]);
-		// data->philosophers[i].last_meal_us = get_start_us();
 		data->philosophers[i].is_full = 0;
-
 		i++;
 	}
 }
@@ -82,7 +80,7 @@ void	init_fork_mutex(t_data *data)
 
 void	swap_forks(t_philo *philo)
 {
-	pthread_mutex_t *tmp;
+	pthread_mutex_t	*tmp;
 
 	tmp = philo->right_fork;
 	philo->right_fork = philo->left_fork;

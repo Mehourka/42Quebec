@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 10:47:03 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:04:27 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (philo_init(data, argc, argv))
 		return (1);
-
 	creat_threads(data);
 	death_loop(data);
 	join_threads(data);
@@ -50,8 +49,9 @@ void	creat_threads(t_data *data)
 		philo = &data->philosophers[0];
 		thread = &philo->thread;
 		pthread_create(thread, NULL, lonely_philo, philo);
+		return ;
 	}
-	else while (i < count)
+	while (i < count)
 	{
 		philo = &data->philosophers[i];
 		thread = &philo->thread;
@@ -70,7 +70,6 @@ void	join_threads(t_data *data)
 
 	i = 0;
 	count = data->philo_count;
-
 	while (i < count)
 	{
 		philo = &data->philosophers[i];
@@ -113,7 +112,7 @@ int	inner_death_loop(t_data *data)
 	}
 	while (i < philo_count)
 	{
-		if(is_full(&philosophers[i], data))
+		if (is_full(&philosophers[i], data))
 		{
 			i++;
 			continue ;

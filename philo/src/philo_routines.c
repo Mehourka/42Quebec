@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/29 10:57:29 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 11:01:45 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	*philo_routine(void *arg)
 	data->finished_eating++;
 	philo->is_full = 1;
 	pthread_mutex_unlock(&data->status_mutex);
-	// printf("DEBUG - %d++\n", data->finished_eating);
 	return (NULL);
 }
 
@@ -92,4 +91,3 @@ void	think_routine(t_data *data, int id)
 	print_log(id, LOG_THINK);
 	usleep(250);
 }
-

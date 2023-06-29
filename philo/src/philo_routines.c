@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:16 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:56:50 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 08:48:31 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	eat_routine(t_data *data, t_philo *philo)
 	lock_forks(philo);
 	is_dead(philo, data);
 	pthread_mutex_lock(&data->status_mutex);
-	gettimeofday(&philo->last_meal_tv, NULL);
+	philo->last_meal_us = get_curr_us();
 	pthread_mutex_unlock(&data->status_mutex);
 	print_log(philo->id, LOG_EAT);
 	micro_sleep(eat_time);

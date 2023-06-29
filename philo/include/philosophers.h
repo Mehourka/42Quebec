@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:31 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:22:26 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 08:51:22 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	pthread_t			thread;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
-	struct timeval		last_meal_tv;
+	long				last_meal_us;
 	struct s_data		*data;
 	int					is_full;
 
@@ -62,10 +62,11 @@ typedef struct s_data
 	int					meal_count;
 	int					finished_eating;
 	int					death;
+	long				start_time_us;
 	t_philo				*philosophers;
 	pthread_mutex_t		*fork_mutex;
 	pthread_mutex_t		write_mutex;
-	pthread_mutex_t		status_mutex;
+	pthread_mutex_t		status_mutex;	
 	t_philo_times		time_to;
 }	t_data;
 
@@ -74,11 +75,12 @@ t_data					*get_data(void);
 int						philo_init(t_data *data, int argc, char *argv[]);
 
 // Time functions
-long int				delta_ms(struct timeval statrt, struct timeval end);
+long int				delta_ms(long int start_us, long int end_us);
 long int				get_ms_runtime(void);
 void					micro_sleep(long int milliseconds);
-struct timeval			get_start_tv(void);
-long int				get_tv_ms(struct timeval tv);
+long int				get_start_us(void);
+long int				get_curr_us(void);
+// long int				get_tv_ms(struct timeval tv);
 
 // Thread functions
 void					detach_threads(t_data *data);
@@ -93,8 +95,6 @@ int						inner_death_loop(t_data *data);
 // Checks
 	int		check_no_dead(t_data *data);
 // Logs
-void					ft_putnbr(long int number);
-void					ft_putstr(char *string);
 void					print_log(int philo_id, char *action);
 
 // Memory managment

@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:12:32 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:36:02 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 08:51:45 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,13 @@ int	check_finished_eating(t_data *data)
 int	is_dead(t_philo *philo, t_data *data)
 {
 	long int		time_to_die;
-	struct timeval	last_meal;
-	struct timeval	curr_time;
+	long int		last_meal_us;
 
 	pthread_mutex_lock(&data->status_mutex);
-	if (philo->is_full)
-	{
-		pthread_mutex_unlock(&data->status_mutex);
-		return (0);
-	}
-	last_meal = philo->last_meal_tv;
+	last_meal_us = philo->last_meal_us;
 	pthread_mutex_unlock(&data->status_mutex);
 	time_to_die = data->time_to.die;
-	gettimeofday(&curr_time, NULL);
-	if (delta_ms(last_meal, curr_time) >= time_to_die)
+	if (delta_ms(last_meal_us, get_curr_us()) >= time_to_die)
 	{
 		pthread_mutex_lock(&data->write_mutex);
 		if (!data->death++)
@@ -73,7 +66,7 @@ void	death_loop(t_data *data)
 	stop_flag = 0;
 	while (stop_flag == 0)
 	{
-		usleep(250);
+		usleep(5000);
 		stop_flag = inner_death_loop(data);
 	}
 }

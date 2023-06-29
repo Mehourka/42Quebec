@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:29 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 10:52:29 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 08:57:15 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	init_philosophers(t_data *data)
 			% philo_count];
 		if(i % 2 == 1)
 			swap_forks(&data->philosophers[i]);
-		data->philosophers[i].last_meal_tv = get_start_tv();
+		// data->philosophers[i].last_meal_us = get_start_us();
 		data->philosophers[i].is_full = 0;
 
 		i++;

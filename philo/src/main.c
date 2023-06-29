@@ -6,7 +6,7 @@
 /*   By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:30:12 by kmehour           #+#    #+#             */
-/*   Updated: 2023/06/23 11:24:20 by kmehour          ###   ########.fr       */
+/*   Updated: 2023/06/29 08:59:34 by kmehour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (philo_init(data, argc, argv))
 		return (1);
+
 	creat_threads(data);
 	death_loop(data);
 	join_threads(data);
@@ -43,7 +44,7 @@ void	creat_threads(t_data *data)
 
 	i = 0;
 	count = data->philo_count;
-	get_start_tv();
+	get_start_us();
 	if (count == 1)
 	{
 		philo = &data->philosophers[0];
@@ -54,6 +55,7 @@ void	creat_threads(t_data *data)
 	{
 		philo = &data->philosophers[i];
 		thread = &philo->thread;
+		philo->last_meal_us = get_curr_us();
 		pthread_create(thread, NULL, philo_routine, philo);
 		i++;
 	}

@@ -6,7 +6,7 @@
 #    By: kmehour <kmehour@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/16 16:30:35 by kmehour           #+#    #+#              #
-#    Updated: 2023/06/23 11:47:58 by kmehour          ###   ########.fr        #
+#    Updated: 2023/06/29 08:30:41 by kmehour          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIBS	=
 
 # Compiler and flags
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -pthread -O2
+CFLAGS	=	-Wall -Werror -Wextra -pthread 
 # CFLAGS	+=	-g -fsanitize=thread
 RM		=	rm
 
